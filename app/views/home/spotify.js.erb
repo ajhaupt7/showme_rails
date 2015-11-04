@@ -1,0 +1,8 @@
+$('#query').val("")
+$("#result").empty().append(
+  "<ul>" +
+    "<% @result.each_with_index do |result, index| %>" +
+      "<li><%= index + 1 %> ) <%= result.name %> - <%= result.popularity %></li>" +
+    "<% end %>" +
+  "</ul>"
+)
