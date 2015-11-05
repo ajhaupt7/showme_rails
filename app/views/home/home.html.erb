@@ -7,11 +7,12 @@
 <div id="search-form">
   <form class="form-horizontal">
     <div class="form-group">
-      <%= select_date Date.today, prefix: :date, id: 'date' %>
+      <input id="start_date" type="text" name="start_date" />
+      <input id="end_date" type="text" name="end_date" />
     </div>
     <div class="form-group">
-      <%= text_field_tag :city, nil, placeholder:"Enter a City", id:"city-input" %>
-      <%= select_tag :state, options_for_select(us_states), id:"state-input", prompt: "Select a State ↓" %>
+      <%= text_field_tag :city, nil, placeholder:"Enter a City", id:"city-input", required: true %>
+      <%= select_tag :state, options_for_select(us_states), id:"state-input", prompt: "Select a State ↓", required: true %>
     </div>
     <div class="form-group">
       <br><br>
@@ -22,14 +23,22 @@
 
 <div id="current-view">
 
-  <h3 id="band-name"></h3>
+  <div id="band-name"></div>
+  <div id="venue"></div>
+  <div id="event-time"></div>
+  <div id="spotify-preview"></div>
 
-  <button id="reject-btn">Reject</button>
-  <button id="accept-btn">Accept</button>
+  <div class="tickets">
+    <div id="buy-tix"></div>
+    <div><a class='btn btn-primary' id='reject-btn'>Next</a></div>
+  </div>
 
   <div id="accept-field" class="hidden">
     <button id="buy-tickets">Buy</button>
   </div>
+
+  <button id="reload-btn">Pick Another Date</button>
+
 </div>
 
 <div class="spinner">
@@ -49,22 +58,39 @@
   var events = "defined";
 
   $(".spinner").hide();
+  $("#current-view").hide();
+
+  $("#reject-btn").on("click", function() {
+    events.shift();
+    if (events.length === 0) {
+      $("#current-view").text("No more bands on this date. Try another!")
+      $("#reload-btn").show();
+    } else {
+      displayEvent();
+    }
+  });
+
+  $("#reload-btn").on("click", function() {
+    window.location.reload();
+  });
 
   function displayEvent() {
     $("#band-name").text(events[0]['artists'][0]['name']);
+    $("#venue").text(events[0]['venue']['name']);
+    $("#event-time").text(events[0]['datetime']);
+    $("#buy-tix").html("<a href=" + events[0]['ticket_url'] + " target=_blank class='btn btn-primary'> Buy Tickets </a>");
   };
 
   $("form").submit(function(event) {
     event.preventDefault();
     $(".spinner").show();
     var formParams = {
-      dateYear: $("#date_year").val(),
-      dateMonth: $("#date_month").val(),
-      dateDay: $("#date_day").val(),
+      start_date: $("#start_date").val(),
+      end_date: $("#end_date").val(),
       city: $("#city-input").val(),
       state: $("#state-input").val()
     };
-
+    $("form").hide();
     $.ajax({
       type: 'POST',
       data: formParams,
@@ -72,12 +98,22 @@
       url: '/home/spotify'
     })
     .done(function(data) {
-      console.log('ajax finished' + data);
+      console.log('Data returned: ' + data);
+      if(!data || data === "[]") {
+        $(".spinner").hide();
+        console.log("no matches found.");
+        $("#current-view").show();
+        $("#current-view").html("No matches found. <br><a class='btn btn-primary' href='/'>Try again?</a>");
+
+      }
       events = JSON.parse(data);
       displayEvent();
+      $("#current-view").show();
     })
-    .fail(function(error) {
-      console.log('messed up because of ' + error)
+    .fail(function(jqxhr, error) {
+      $(".spinner").hide();
+      console.log("no matches found.");
+      $("#current-view").html("No matches found. <br><a class='btn btn-primary' href='/'>Try again?</a>");
     })
     .always(function() {
       console.log('finished loading user info');

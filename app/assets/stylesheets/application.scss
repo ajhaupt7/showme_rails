@@ -162,3 +162,11 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
     -webkit-transform: scaleY(1.0);
   }
 }
+
+// Display Page
+
+.tickets {
+  div {
+    display: inline;
+  }
+}
