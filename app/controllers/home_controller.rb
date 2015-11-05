@@ -5,7 +5,8 @@ class HomeController < ApplicationController
   end
 
   def spotify
-    @result = return_similar(params[:query])
+    @events = search_bandsintown(params[:artist], params[:city], params[:state])
+
   end
 
 end

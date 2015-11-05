@@ -1,8 +1,10 @@
 $('#query').val("")
 $("#result").empty().append(
   "<ul>" +
-    "<% @result.each_with_index do |result, index| %>" +
-      "<li><%= index + 1 %> ) <%= result.name %> - <%= result.popularity %></li>" +
+    "<% @events.each_with_index do |event, index| %>" +
+      "<li><%= index + 1 %> ) <%= event['venue']['name'] %>" +
+        "<%= event['artists'][0]['name'] %>" +
+      "</li>" +
     "<% end %>" +
   "</ul>"
 )

@@ -1,8 +1,10 @@
 <h1>Home</h1>
 
 <%= form_tag(home_spotify_path, controller: 'home', action: 'spotify', id: "search-form", remote: true) do %>
-  <%= label_tag :query %>
-  <%= text_field_tag :query %>
+  <%= label_tag :artist %>
+  <%= text_field_tag :artist %>
+  <%= text_field_tag :city %>
+  <%= text_field_tag :state %>
   <button type="submit">Search</button>
 <% end %>
 

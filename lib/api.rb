@@ -1,8 +1,11 @@
 require 'rspotify'
+require 'rest_client'
+
 
 module Api
 
-  def return_similar(artist)
+  def return_similar(artist, city, state)
+    upcoming_events = []
     results = []
     results.push(get_more(artist))
     random_num = Random.rand(results[0].length - 1)
@@ -12,7 +15,16 @@ module Api
       results.push(get_more(results[random_num].name))
     end
     results.flatten!
-    return results.uniq { |result| result.name }
+    concert_artists = results.uniq { |result| result.name }
+
+    concert_artists.each do |artist|
+      concert = search_bandsintown(artist.name, city, state)
+      if concert != nil
+        upcoming_events.push(search_bandsintown(artist.name, city, state))
+      end
+    end
+
+    return upcoming events
   end
 
 
@@ -43,25 +55,48 @@ module Api
     related_artists = found_artist.related_artists
   end
 
-  # def search_spotify(query)
-  #   artists = RSpotify::Artist.search(query)
-  #   found_artist = artists.first
-  #   albums = found_artist.albums
-  #   returned = []
-  #   albums.each do |album|
-  #     if album.name.include?("Deluxe") || album.name.include?("Remix") || album.name.include?("Acoustic") || album.name.include?("Live") || album.name.include?("Remastered") || album.name.include?("International") || album.name.include?("Version") || album.name.include?("Greatest Hits")
-  #       puts album.name
-  #     else
-  #       returned.push(album)
-  #     end
-  #   end
-  #
-  #   return returned
-  # end
-
-
-  def search_songkick
-
+  def search_bandsintown(artist, city, state)
+    begin
+      base_url = "http://api.bandsintown.com/events/search?artists[]=#{artist}&location=#{city},#{state}&radius=25&format=json&app_id=#{ENV['BANDSINTOWN_ID']}"
+      unclean = RestClient.get(base_url)
+      events = JSON.parse(unclean)
+      return events
+    rescue RestClient::ResourceNotFound => e
+      puts "No events for #{artist}"
+    rescue URI::InvalidURIError => e
+      puts "Artist name no English #{artist}"
+    end
+    binding.pry
+    return events if events
   end
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
