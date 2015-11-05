@@ -24,16 +24,14 @@ html, body {
   color: $primary;
   text-align: center;
   h1 {
-    font-family: 'Yesteryear', cursive;
-    font-size: 10rem;
+    // font-family: 'Yesteryear', cursive;
+    font-size: 8rem;
   }
   h3 {
-    margin-top: -2%;
     font-size: 2.5rem;
   }
   img {
     width: 10rem;
-    margin-top: -2%;
   }
 }
 
@@ -73,22 +71,24 @@ html, body {
     margin-left:0;
     outline: none;
     height: 4rem;
-    width: 50rem;
+    width: 44rem;
     text-align:center;
   }
   #city-input {
-    width: 35rem;
+    width: 30rem;
   }
   #state-input {
     background: rgba(0,0,0,0.1);
-    width: 14rem;
-    margin-left: 1rem;
+    outline: none;
+    width: 13.5rem;
+    margin-left: 0.5rem;
     padding-left: 1.5rem;
     cursor: pointer;
     line-height: 1;
     border: 0;
     border-radius: 0;
     height: 4rem;
+    opacity:0.75;
     -webkit-appearance: none;
   }
 }
