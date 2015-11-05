@@ -98,14 +98,6 @@ module Api
 
 
   def search_bandsintown(date, city, state)
-    year = date['year']
-    month = date['month']
-    day = date['day']
-    if day.to_i < 10
-      day = '0' + day.to_s
-    end
-
-    date = "#{year}-#{month}-#{day}"
     found_events = []
 
     begin
