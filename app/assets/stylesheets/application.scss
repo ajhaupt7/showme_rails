@@ -1,0 +1,99 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
+
+// Variables
+$primary: #DD9189;
+$primary-light: lighten($primary, 15%);
+$primary-dark: darken($primary, 10%);
+$primary-very-dark: darken($primary, 25%);
+
+// Application
+
+html, body {
+  background: #CA5447;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.main-container {
+  margin-top: 2%;
+}
+
+.header {
+  color: $primary;
+  text-align: center;
+  h1 {
+    font-family: 'Yesteryear', cursive;
+    font-size: 10rem;
+  }
+  h3 {
+    margin-top: -2%;
+    font-size: 2.5rem;
+  }
+  img {
+    width: 10rem;
+    margin-top: -2%;
+  }
+}
+
+.btn {
+  border-radius: 0px;
+  transition: all 0.4s ease-out;
+  min-width: 20rem;
+  height: 5rem;
+}
+
+.btn-primary {
+  border-radius: 0px;
+  background-color: $primary-very-dark;
+  border: 2px solid $primary-very-dark;
+  &:hover {
+   background: $primary-dark;
+   border: 2px solid $primary-dark;
+  }
+  &:focus:active {
+   background: $primary-dark;
+   border: 2px solid $primary-dark;
+  }
+  &:focus, &:active {
+    background: $primary-very-dark;
+    border: 2px solid $primary-very-dark;
+    outline: none;
+  }
+}
+
+#search-form {
+  margin:5rem auto 0 auto;
+  display: block;
+  text-align:center;
+  input {
+    background: rgba(255,255,255,0.5);
+    border: transparent;
+    margin-left:0;
+    outline: none;
+    height: 4rem;
+    width: 50rem;
+    text-align:center;
+  }
+  #city-input {
+    width: 35rem;
+  }
+  #state-input {
+    background: rgba(255,255,255,0.5);
+    width: 14rem;
+    margin-left: 1rem;
+    padding-left: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    height: 4rem;
+    -webkit-appearance: none;
+  }
+}
+
+input::-webkit-input-placeholder { color: #fff; opacity:0.75 }
+input:-moz-placeholder { color: #fff; opacity:0.75 }
+input::-moz-placeholder { color: #fff; opacity:0.75 }
+input:-ms-input-placeholder { color: #fff; opacity:0.75 }

@@ -1,14 +1,23 @@
-<h1>Home</h1>
+<div class="header">
+  <h1>little brother</h1>
+  <h3>go see bands you've never heard of</h3>
+</div>
 
-<%= form_tag(home_spotify_path, controller: 'home', action: 'spotify', id: "search-form", remote: true) do %>
-  <%= label_tag :artist %>
-  <%= text_field_tag :artist %>
-  <%= label_tag :city %>
-  <%= text_field_tag :city %>
-  <%= label_tag :state %>
-  <%= text_field_tag :state %>
-  <button type="submit">Search</button>
-<% end %>
+<div id="search-form">
+  <%= form_tag(home_spotify_path, controller: 'home', action: 'spotify', class:"form-horizontal", remote: true) do %>
+    <div class="form-group">
+      <%= text_field_tag :artist, nil, placeholder:"Artist" %>
+    </div>
+    <div class="form-group">
+      <%= text_field_tag :city, nil, placeholder:"City", id:"city-input" %>
+      <%= select_tag :state, options_for_select(us_states), id:"state-input", prompt: "Select a State ↓" %>
+    </div>
+    <div class="form-group">
+      <br><br>
+      <button type="submit" class="btn btn-primary" id="submit-btn">Search</button>
+    </div>
+  <% end %>
+</div>
 
 <div class="spinner">
   <div class="rect1"></div>
