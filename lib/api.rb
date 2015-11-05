@@ -24,7 +24,7 @@ module Api
       end
     end
 
-    return upcoming events
+    return upcoming_events
   end
 
 
@@ -56,17 +56,24 @@ module Api
   end
 
   def search_bandsintown(artist, city, state)
+    artist = artist.tr(
+    "ÀÁÂÃÄÅàáâãäåĀāĂăĄąÇçĆćĈĉĊċČčÐðĎďĐđÈÉÊËèéêëĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħÌÍÎÏìíîïĨĩĪīĬĭĮįİıĴĵĶķĸĹĺĻļĽľĿŀŁłÑñŃńŅņŇňŉŊŋÒÓÔÕÖØòóôõöøŌōŎŏŐőŔŕŖŗŘřŚśŜŝŞşŠšſŢţŤťŦŧÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųŴŵÝýÿŶŷŸŹźŻżŽž",
+    "AAAAAAaaaaaaAaAaAaCcCcCcCcCcDdDdDdEEEEeeeeEeEeEeEeEeGgGgGgGgHhHhIIIIiiiiIiIiIiIiIiJjKkkLlLlLlLlLlNnNnNnNnnNnOOOOOOooooooOoOoOoRrRrRrSsSsSsSssTtTtTtUUUUuuuuUuUuUuUuUuUuWwYyyYyYZzZzZz")
     begin
       base_url = "http://api.bandsintown.com/events/search?artists[]=#{artist}&location=#{city},#{state}&radius=25&format=json&app_id=#{ENV['BANDSINTOWN_ID']}"
       unclean = RestClient.get(base_url)
       events = JSON.parse(unclean)
+      puts "#{artist} - #{events}"
       return events
     rescue RestClient::ResourceNotFound => e
       puts "No events for #{artist}"
     rescue URI::InvalidURIError => e
       puts "Artist name no English #{artist}"
+    rescue RestClient::BadRequest => e
+      puts "Bad request #{e}"
+    rescue => e
+      puts "Something went terribly wrong :( #{e}"
     end
-    binding.pry
     return events if events
   end
 

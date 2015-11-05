@@ -1,10 +1,15 @@
 $('#query').val("")
 $("#result").empty().append(
-  "<ul>" +
-    "<% @events.each_with_index do |event, index| %>" +
-      "<li><%= index + 1 %> ) <%= event['venue']['name'] %>" +
-        "<%= event['artists'][0]['name'] %>" +
-      "</li>" +
-    "<% end %>" +
-  "</ul>"
+  "<% if @events %>" +
+    "<ul>" +
+      "<% @events.each do |event| %>" +
+        "<li>Artist: <%= event[0]['artists'][0]['name'] %>" +
+        "<br>Venue: <%= event[0]['venue']['name'] %>" +
+        "<br>Buy Tickets: <%= event[0]['ticket_url'] %>" +
+        "</li>" +
+      "<% end %>" +
+    "</ul>" +
+  "<% else %>" +
+    "<p>No Events Found </p>" +
+  "<% end %>"
 )

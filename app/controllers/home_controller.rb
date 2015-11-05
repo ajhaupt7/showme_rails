@@ -5,8 +5,8 @@ class HomeController < ApplicationController
   end
 
   def spotify
-    @events = search_bandsintown(params[:artist], params[:city], params[:state])
-
+    @events = return_similar(params[:artist], params[:city], params[:state])
+    @events.reject! { |event| event.empty? }
   end
 
 end
