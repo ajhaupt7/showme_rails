@@ -6,10 +6,10 @@
 <div id="search-form">
   <%= form_tag(home_spotify_path, controller: 'home', action: 'spotify', class:"form-horizontal", remote: true) do %>
     <div class="form-group">
-      <%= text_field_tag :artist, nil, placeholder:"Artist" %>
+      <%= text_field_tag :artist, nil, placeholder:"Enter an Artist" %>
     </div>
     <div class="form-group">
-      <%= text_field_tag :city, nil, placeholder:"City", id:"city-input" %>
+      <%= text_field_tag :city, nil, placeholder:"Enter a City", id:"city-input" %>
       <%= select_tag :state, options_for_select(us_states), id:"state-input", prompt: "Select a State ↓" %>
     </div>
     <div class="form-group">
