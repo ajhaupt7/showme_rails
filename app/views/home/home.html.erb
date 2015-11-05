@@ -1,13 +1,13 @@
 <div class="header">
   <%= image_tag 'groupiethick2.png' %>
-  <h1>GROUPIE GATHER</h1>
-  <h3>see bands play before they get big</h3>
+  <h1>SHOWME</h1>
+  <h3>tinder for little known bands</h3>
 </div>
 
 <div id="search-form">
   <%= form_tag(home_spotify_path, controller: 'home', action: 'spotify', class:"form-horizontal", remote: true) do %>
     <div class="form-group">
-      <%= text_field_tag :artist, nil, placeholder:"Enter an Artist" %>
+      <%= select_date Date.today, prefix: :date %>
     </div>
     <div class="form-group">
       <%= text_field_tag :city, nil, placeholder:"Enter a City", id:"city-input" %>
