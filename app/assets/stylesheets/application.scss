@@ -2,6 +2,18 @@
 @import "bootstrap";
 @import "font-awesome";
 
+//
+#current-view {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+
 // Variables
 $primary: #DD9189;
 $primary-light: lighten($primary, 15%);

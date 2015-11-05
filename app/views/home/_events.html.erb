@@ -1,0 +1,10 @@
+"refillFields();" +
+"$('#band-name').text( events[0]['artists'][0]['name'] );" +
+"$('#reject-btn').on('click', function() {" +
+"events.unshift()" +
+"$('#current-view').empty()" +
+"refillFields();" +
+"});" +
+"function refillFields() {" +
+"$('#band-name').text( events[0]['artists'][0]['name'] );" +
+"}"

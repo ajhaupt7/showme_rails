@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   end
 
   def spotify
-    @event = search_bandsintown(params[:date], params[:city], params[:state])
+    @events = search_bandsintown(params[:date], params[:city], params[:state])
   end
 
 end

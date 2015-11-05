@@ -77,6 +77,8 @@ module Api
   #   return events if events
   # end
 
+  @@events = nil
+
   def search_spotify(query)
     puts "Query: #{query}"
     result = nil
@@ -104,7 +106,7 @@ module Api
     end
 
     date = "#{year}-#{month}-#{day}"
-    found_event = nil
+    found_events = []
 
     begin
       base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city},#{state}"
@@ -115,27 +117,18 @@ module Api
 
       events.each do |event|
         spotify_search_result = search_spotify(event['artists'][0]['name'])
-        if spotify_search_result != nil
-          found_event = event
+        if spotify_search_result != nil && event['ticket_status'] == 'available'
+          found_events.push(event)
         end
-        if found_event
-          return found_event
-        end
+        # if found_event
+        #   return found_event
+        # end
       end
-    # rescue RestClient::ResourceNotFround => e
-    #   puts "No events for #{date}"
-    #   return false
-    # rescue URI::InvalidURIError => e
-    #   puts "Artist name no English #{date}"
-    #   return false
-    # rescue RestClient::BadRequest => e
-    #   puts "Bad request #{e}"
-    #   return false
     rescue => e
       puts "Something went terribly wrong :( #{e}"
       return false
     end
-    return found_event
+    return found_events
   end
 end
 

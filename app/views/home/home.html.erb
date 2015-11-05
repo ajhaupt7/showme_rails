@@ -20,6 +20,18 @@
   <% end %>
 </div>
 
+<div id="current-view">
+
+  <h3 id="band-name"></h3>
+
+  <button id="reject-btn">Reject</button>
+  <button id="accept-btn">Accept</button>
+
+  <div id="accept-field" class="hidden">
+    <button id="buy-tickets">Buy</button>
+  </div>
+</div>
+
 <div class="spinner">
   <div class="rect1"></div>
   <div class="rect2"></div>
@@ -28,11 +40,11 @@
   <div class="rect5"></div>
 </div>
 
-<div id="result">
+<div id="view-container" >
 
 </div>
 
-<script>
+<script id="script">
   // hide spinner
   $(".spinner").hide();
 
@@ -45,4 +57,5 @@
   $(document).ajaxStop(function(){
     $(".spinner").hide();
   });
+
 </script>
