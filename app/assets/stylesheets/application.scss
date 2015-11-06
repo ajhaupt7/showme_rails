@@ -101,8 +101,7 @@ html, body {
   #state-input {
     background: rgba(0,0,0,0.1);
     outline: none;
-    width: 13.5rem;
-    margin-left: 0.5rem;
+    width: 14rem;
     padding-left: 1.5rem;
     cursor: pointer;
     line-height: 1;
@@ -214,4 +213,8 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
   div {
     display: inline;
   }
+}
+
+p {
+  cursor: pointer;
 }

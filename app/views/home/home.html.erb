@@ -2,14 +2,14 @@
   <%= image_tag 'groupiethick2.png' %><br><br>
   <%= image_tag('showme.png', id:"showme") %>
   <!-- <h1>SHOWME</h1> -->
-  <h3>tinder for little known bands</h3>
+  <h3>live music from artists who haven't made it big yet</h3>
 </div>
 
 <div id="search-form">
   <form class="form-horizontal">
     <div class="form-group">
-      <input id="start_date" type="text" name="start_date" required=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
-      <input id="end_date" type="text" name="end_date" required=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
+      <input id="start_date" type="text" name="start_date" required=true readonly=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
+      <input id="end_date" type="text" name="end_date" required=true readonly=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
     </div>
     <div class="form-group">
       <%= text_field_tag :city, nil, placeholder:"Enter a City", id:"city-input", required: true %>
@@ -40,8 +40,6 @@
 
   <div id="audio-container">
   </div>
-
-  <button id="reload-btn">Pick Another Date</button>
 
 </div>
 
@@ -77,8 +75,7 @@
   $("#reject-btn").on("click", function() {
     events.shift();
     if (events.length === 0) {
-      $("#current-view").text("No more bands on this date. Try another!")
-      $("#reload-btn").show();
+      $("#current-view").html("That's all the events for now. <br><a class='btn btn-primary' href='/'>Try again.</a>");
     } else {
       displayEvent();
     }
@@ -127,7 +124,7 @@
         $(".spinner").hide();
         console.log("no matches found.");
         $("#current-view").show();
-        $("#current-view").html("No matches found. <br><a class='btn btn-primary' href='/'>Try again?</a>");
+        $("#current-view").html("No matches found. <br><a class='btn btn-primary' href='/'>Try again.</a>");
 
       }
       events = JSON.parse(data);
