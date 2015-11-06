@@ -35,6 +35,11 @@ module Api
         puts "here"
         spotify_search_result = search_spotify(event['artists'][0]['name'])
         if spotify_search_result != nil && event['ticket_status'] == 'available'
+          if spotify_search_result.top_tracks(:US) != []
+             event['url'] = spotify_search_result.top_tracks(:US).first.preview_url
+          else
+            event['url'] = nil
+          end
           found_events.push(event)
         end
       end

@@ -37,6 +37,9 @@
     <button id="buy-tickets">Buy</button>
   </div>
 
+  <div id="audio-container">
+  </div>
+
   <button id="reload-btn">Pick Another Date</button>
 
 </div>
@@ -79,6 +82,15 @@
     $("#venue").text(events[0]['venue']['name']);
     $("#event-time").text(events[0]['datetime']);
     $("#buy-tix").html("<a href=" + events[0]['ticket_url'] + " target=_blank class='btn btn-primary'> Buy Tickets </a>");
+    var element = document.createElement("audio");
+    element.src = events[0]['url'];
+    $("#audio-container").html( element );
+    var controls = document.createElement("p");
+    controls.innerHTML = "Play";
+    $("#audio-container").append( controls );
+    controls.addEventListener("click", function() {
+      element.play();
+    });
   };
 
   $("form").submit(function(event) {
