@@ -16,6 +16,7 @@ gem 'jquery-turbolinks'
 gem 'rspotify'
 gem 'rest-client'
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
+gem 'jquery-ui-rails'
 
 group :development do
   gem 'byebug'

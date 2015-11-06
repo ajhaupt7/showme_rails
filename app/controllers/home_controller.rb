@@ -5,6 +5,7 @@ class HomeController < ApplicationController
   end
 
   def spotify
+    binding.pry
     # Timeout::timeout(15) {
       @events = search_bandsintown(params[:start_date], params[:end_date], params[:city], params[:state])
       respond_to do |format|
