@@ -33,11 +33,7 @@ module Api
         artist['name'].sub!('+', "Plus")
         spotify_search_result = search_spotify(artist['name'])
           if spotify_search_result != nil && event['ticket_status'] == 'available'
-            if spotify_search_result.top_tracks(:US) != []
-               artist['url'] = spotify_search_result.top_tracks(:US).first.preview_url
-            else
-              artist['url'] = nil
-            end
+            artist['preview'] = spotify_search_result.top_tracks(:US).first.preview_url
             if !found_events.include?(event)
               found_events.push(event)
             end
