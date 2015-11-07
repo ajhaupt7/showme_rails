@@ -131,7 +131,7 @@
     .done(function(data) {
       if(data === "false") {
         $(".spinner").hide();
-        $("#error-container").show().html("No matches found. <br><a id='search-again' class='btn btn-primary' href='/'>Try again.</a>");
+        $("#error-container").show().html("No matches found. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
         $("#search-again").on("click", function() {
           searchAgain();
         });
