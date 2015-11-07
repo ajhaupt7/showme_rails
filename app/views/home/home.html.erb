@@ -82,6 +82,7 @@
         searchAgain();
       });
     } else {
+      $("#band-name").empty();
       displayEvent();
     }
   });
@@ -96,12 +97,14 @@
   }
 
   function displayEvent() {
-    $("#band-name").text(events[0]['artists'][0]['name']);
+    for (var i=0; i < events[0]['artists'].length; i++) {
+      $("#band-name").append(events[0]['artists'][i]['name'] + '<br>');
+    }
     $("#venue").text(events[0]['venue']['name']);
     $("#event-time").text(events[0]['datetime']);
     $("#buy-tix").html("<a href=" + events[0]['ticket_url'] + " target=_blank class='btn btn-primary'> Buy Tickets </a>");
     var element = document.createElement("audio");
-    element.src = events[0]['url'];
+    element.src = events[0]['artists'][0]['url'];
     $("#audio-container").html( element );
     var controls = document.createElement("p");
     controls.innerHTML = "Play";

@@ -8,9 +8,8 @@ module Api
     begin
       artists = RSpotify::Artist.search(query)
       found_artist = artists.first
-      if found_artist.popularity < 50
+      if found_artist.top_tracks(:US) != []
         result = found_artist
-        puts "#{result} in the loop"
       end
     rescue => e
       puts "Caught #{e}"
@@ -30,15 +29,19 @@ module Api
       found_artist = nil
 
       events.each do |event|
-        puts "here"
-        spotify_search_result = search_spotify(event['artists'][0]['name'])
-        if spotify_search_result != nil && event['ticket_status'] == 'available'
-          if spotify_search_result.top_tracks(:US) != []
-             event['url'] = spotify_search_result.top_tracks(:US).first.preview_url
-          else
-            event['url'] = nil
+        event['artists'].each do |artist|
+        artist['name'].sub!('+', "Plus")
+        spotify_search_result = search_spotify(artist['name'])
+          if spotify_search_result != nil && event['ticket_status'] == 'available'
+            if spotify_search_result.top_tracks(:US) != []
+               artist['url'] = spotify_search_result.top_tracks(:US).first.preview_url
+            else
+              artist['url'] = nil
+            end
+            if !found_events.include?(event)
+              found_events.push(event)
+            end
           end
-          found_events.push(event)
         end
       end
     rescue => e
