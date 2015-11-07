@@ -6,7 +6,7 @@ class HomeController < ApplicationController
 
   def spotify
     Timeout::timeout(15) {
-      @events = search_bandsintown(params[:start_date], params[:end_date], params[:city], params[:state])
+      @events = search_bandsintown(params[:start_date], params[:city], params[:state])
       respond_to do |format|
         format.json { render json: @events }
       end

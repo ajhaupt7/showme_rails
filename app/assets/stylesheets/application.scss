@@ -6,10 +6,15 @@
  */
 
 //
-#current-view {
+#current-view,
+#error-container {
   display: block;
   margin: auto;
   text-align: center;
+}
+
+#error-container {
+  display: none;
 }
 
 .hidden {

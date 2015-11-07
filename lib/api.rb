@@ -19,11 +19,11 @@ module Api
     return result
   end
 
-  def search_bandsintown(start_date, end_date, city, state)
+  def search_bandsintown(start_date, city, state)
     found_events = []
 
     begin
-      base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{start_date},#{end_date}&location=#{city},#{state}"
+      base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{start_date}&location=#{city},#{state}"
       unclean = RestClient.get(base_url)
       events = JSON.parse(unclean)
 

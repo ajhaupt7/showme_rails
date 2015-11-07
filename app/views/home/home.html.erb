@@ -22,6 +22,10 @@
   </form>
 </div>
 
+<div id="error-container">
+
+</div>
+
 <div id="current-view">
 
   <div id="band-name"></div>
@@ -56,6 +60,10 @@
 </div>
 
 <script id="script">
+  var events;
+  $(".spinner").hide();
+  $("#current-view").hide();
+
   $(function() {
     $('.datepicker').datepicker({
       dateFormat: "yy-mm-dd",
@@ -67,24 +75,26 @@
     });
   });
 
-  var events = "defined";
-
-  $(".spinner").hide();
-  $("#current-view").hide();
-
   $("#reject-btn").on("click", function() {
     events.shift();
     if (events.length === 0) {
-      $("#current-view").html("That's all the events for now. <br><a class='btn btn-primary' href='/'>Try again.</a>");
+      $("#current-view").html("That's all the events for now. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
+      $("#search-again").on("click", function() {
+        searchAgain();
+      });
     } else {
       displayEvent();
     }
   });
 
-  $("#reload-btn").on("click", function() {
-    window.location.reload();
-  });
+  function searchAgain() {
+    events = undefined;
 
+    $("#search-again").off("click", function() { searchAgain(); });
+    $("form").show();
+    $("#current-view").empty();
+    $("#error-container").empty();
+  }
 
   function displayEvent() {
     $("#band-name").text(events[0]['artists'][0]['name']);
@@ -119,27 +129,28 @@
       url: '/home/spotify'
     })
     .done(function(data) {
-      console.log('Data returned: ' + data);
-      if(!data || data === "[]") {
+      if(data === "false") {
         $(".spinner").hide();
-        console.log("no matches found.");
+        $("#error-container").show().html("No matches found. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
+        $("#search-again").on("click", function() {
+          searchAgain();
+        });
+      } else {
+        events = JSON.parse(data);
+        displayEvent();
         $("#current-view").show();
-        $("#current-view").html("No matches found. <br><a class='btn btn-primary' href='/'>Try again.</a>");
-
       }
-      events = JSON.parse(data);
-      displayEvent();
-      $("#current-view").show();
     })
     .fail(function(jqxhr, error) {
       $(".spinner").hide();
-      console.log("no matches found.");
-      $("#current-view").html("No matches found. <br><a class='btn btn-primary' href='/'>Try again?</a>");
+      $("#error-container").show().html("No matches found. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
+      $("#search-again").on("click", function() {
+        searchAgain();
+      });
     })
     .always(function() {
-      console.log('finished loading user info');
+      console.log('finished');
       $(".spinner").hide();
     })
   });
-
 </script>
