@@ -1,7 +1,6 @@
 require 'rspotify'
 require 'rest_client'
 
-
 module Api
   def search_spotify(query)
     puts "Query: #{query}"
@@ -19,7 +18,6 @@ module Api
     puts "#{result} at the end"
     return result
   end
-
 
   def search_bandsintown(start_date, end_date, city, state)
     found_events = []
@@ -50,32 +48,3 @@ module Api
     return found_events
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#
