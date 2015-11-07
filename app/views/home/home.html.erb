@@ -98,20 +98,18 @@
   function displayEvent() {
     var time = moment(events[0]['datetime']).format("M/D - h:mm A");
     for (var i=0; i < events[0]['artists'].length; i++) {
-      $("#band-name").append(events[0]['artists'][i]['name'] + '<br>');
-    }
+      var playID = "play-btn-" + i
+      var audioID = "audio-" + i
+      $("#band-name").append(events[0]["artists"][i]["name"] + ' <audio id="' + audioID + '" src=' + events[0]["artists"][i]["url"] + '></audio>' + '<span id="' + playID + '" class="glyphicon glyphicon-play" aria-hidden="true"></span>' + '<br>')
+      document.getElementById(playID).addEventListener("click", function() {
+        document.getElementById(audioID).play();
+      });
+    };
     $("#venue").text(events[0]['venue']['name']);
     $("#event-time").text(time);
     $("#buy-tix").html("<a href=" + events[0]['ticket_url'] + " target=_blank class='btn btn-primary'> Buy Tickets </a>");
-    var element = document.createElement("audio");
-    element.src = events[0]['artists'][0]['url'];
-    $("#audio-container").html( element );
-    var controls = document.createElement("div");
-    controls.innerHTML = '<span class="glyphicon glyphicon-play" aria-hidden="true"></span>';
-    $("#audio-container").append( controls );
-    controls.addEventListener("click", function() {
-      element.play();
-    });
+
+
   };
 
   $("form").submit(function(event) {
