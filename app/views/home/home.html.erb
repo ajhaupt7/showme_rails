@@ -79,7 +79,7 @@
     if (events.length === 0) {
       $("#current-view").html("That's all the events for now. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
       $("#search-again").on("click", function() {
-        searchAgain();
+        window.location.reload();
       });
     } else {
       $("#band-name").empty();
@@ -87,14 +87,13 @@
     }
   });
 
-  function searchAgain() {
-    events = undefined;
-
-    $("#search-again").off("click", function() { searchAgain(); });
-    $("form").show();
-    $("#current-view").empty();
-    $("#error-container").empty();
-  }
+  // function searchAgain() {
+  //   events = undefined;
+  //   $("#search-again").off("click", function() { searchAgain(); });
+  //   $("form").show();
+  //   $("#current-view").empty();
+  //   $("#error-container").empty();
+  // }
 
   function displayEvent() {
     var time = moment(events[0]['datetime']).format("M/D - h:mm A");
@@ -107,8 +106,8 @@
     var element = document.createElement("audio");
     element.src = events[0]['artists'][0]['url'];
     $("#audio-container").html( element );
-    var controls = document.createElement("p");
-    controls.innerHTML = "Play";
+    var controls = document.createElement("div");
+    controls.innerHTML = '<span class="glyphicon glyphicon-play" aria-hidden="true"></span>';
     $("#audio-container").append( controls );
     controls.addEventListener("click", function() {
       element.play();
