@@ -22,6 +22,10 @@
   </form>
 </div>
 
+<div id="error-container">
+
+</div>
+
 <div id="current-view">
 
   <div id="band-name"></div>
@@ -120,16 +124,16 @@
     })
     .done(function(data) {
       console.log('Data returned: ' + data);
-      if(!data || data === "[]") {
-        $(".spinner").hide();
+      // debugger;
+      if(data === "false") {
         console.log("no matches found.");
+        $(".spinner").hide();
+        $("#error-container").show().html("No matches found. <br><a class='btn btn-primary' href='/'>Try again.</a>");
+      } else {
+        events = JSON.parse(data);
+        displayEvent();
         $("#current-view").show();
-        $("#current-view").html("No matches found. <br><a class='btn btn-primary' href='/'>Try again.</a>");
-
       }
-      events = JSON.parse(data);
-      displayEvent();
-      $("#current-view").show();
     })
     .fail(function(jqxhr, error) {
       $(".spinner").hide();
