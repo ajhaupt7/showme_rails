@@ -10,6 +10,7 @@ module Api
       found_artist = artists.first
       if found_artist.top_tracks(:US) != []
         result = found_artist
+        binding.pry
       end
     rescue => e
       puts "Caught #{e}"

@@ -1,8 +1,18 @@
 <div class="header">
   <%= image_tag 'groupiethick2.png' %><br><br>
   <%= image_tag('showme.png', id:"showme") %>
-  <!-- <h1>SHOWME</h1> -->
-  <h3>live music from artists who haven't made it big yet</h3>
+  <br>
+  <div id="slideshow">
+    <p class="tagline">
+      live music
+    </p>
+    <p class="tagline">
+      bands I've never heard before
+    </p>
+    <p class="tagline">
+      a llama with a hat
+    </p>
+  </div>
 </div>
 
 <div id="search-form">
@@ -59,10 +69,26 @@
 </div>
 
 <script id="script">
+
+  // Sliding Tagline
+  $("#slideshow > .tagline:gt(0)").hide();
+
+  setInterval(function() {
+    $('#slideshow > .tagline:first')
+      .fadeOut(1000)
+      .next()
+      .fadeIn(1000)
+      .end()
+      .appendTo('#slideshow');
+  },  3000);
+
+
+  // Hide Spinner to Start
   var events;
   $(".spinner").hide();
   $("#current-view").hide();
 
+  // Calendar from JQuery UI
   $(function() {
     $('.datepicker').datepicker({
       dateFormat: "yy-mm-dd",
@@ -74,18 +100,23 @@
     });
   });
 
+  // On Clicking Next Button
   $("#reject-btn").on("click", function() {
     events.shift();
     if (events.length === 0) {
-      $("#current-view").html("That's all the events for now. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
+      $("#current-view").html("That's all the events we have for now! <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
       $("#search-again").on("click", function() {
-        window.location.reload();
+        searchAgain();
       });
     } else {
       $("#band-name").empty();
       displayEvent();
     }
   });
+
+  function searchAgain() {
+    window.location.reload();
+  }
 
   // function searchAgain() {
   //   events = undefined;
@@ -95,6 +126,7 @@
   //   $("#error-container").empty();
   // }
 
+  // Load up new event
   function displayEvent() {
     console.log(events[0])
     var time = moment(events[0]['datetime']).format("M/D - h:mm A");
@@ -109,16 +141,25 @@
         '<span id="' + pauseID + '" class="glyphicon glyphicon-pause" aria-hidden="true"></span>' +
         '<br>')
         $('#' + pauseID).hide();
-        document.getElementById(playID).addEventListener("click", function() {
-          document.getElementById(audioID).play();
-          $('#' + pauseID).show();
-          $('#' + playID).hide();
-        });
-        document.getElementById(pauseID).addEventListener("click", function() {
-          document.getElementById(audioID).pause();
-          $('#' + pauseID).hide();
-          $('#' + playID).show();
-        });
+      }
+      var bandContainer = document.querySelector("#band-name");
+      bandContainer.addEventListener("click", playToggle, false);
+
+      function playToggle(e) {
+          if (e.target !== e.currentTarget) {
+              var clickedItem = e.target.id;
+              var itemID = clickedItem.charAt(clickedItem.length - 1)
+              if (clickedItem.charAt(1) === "l") {
+                $('#play-btn-' + itemID).hide();
+                $('#pause-btn-' + itemID).show();
+                document.getElementById("audio-" + itemID).play();
+              } else if (clickedItem.charAt(1) === "a") {
+                $('#play-btn-' + itemID).show();
+                $('#pause-btn-' + itemID).hide();
+                document.getElementById("audio-" + itemID).pause();
+              }
+          }
+          e.stopPropagation();
       }
     };
     $("#venue").text(events[0]['venue']['name']);
@@ -128,6 +169,7 @@
 
   };
 
+  // AJAX Form Request
   $("form").submit(function(event) {
     event.preventDefault();
     $(".spinner").show();
@@ -145,8 +187,9 @@
     })
     .done(function(data) {
       if(data === "false") {
+        console.log(data)
         $(".spinner").hide();
-        $("#error-container").show().html("No matches found. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
+        $("#error-container").show().html("Couldn't find that location. <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
         $("#search-again").on("click", function() {
           searchAgain();
         });
@@ -158,7 +201,7 @@
     })
     .fail(function(jqxhr, error) {
       $(".spinner").hide();
-      $("#error-container").show().html("No matches found. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
+      $("#error-container").show().html("There was an error with your request. <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
       $("#search-again").on("click", function() {
         searchAgain();
       });
@@ -167,5 +210,6 @@
       console.log('finished');
       $(".spinner").hide();
     })
+
   });
 </script>

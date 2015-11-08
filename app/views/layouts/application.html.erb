@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>LittleBrother</title>
+  <title>ShowMe Music</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <link href='https://fonts.googleapis.com/css?family=Yesteryear|Yellowtail|Montserrat:400,700' rel='stylesheet' type='text/css'>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -10,6 +10,13 @@
 <body>
 
 <div class="container main-container">
+  <nav id="my-menu">
+     <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about/">About us</a></li>
+        <li><a href="/contact/">Contact</a></li>
+     </ul>
+  </nav>
   <%= yield %>
 </div>
 
