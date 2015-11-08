@@ -4,6 +4,9 @@ class HomeController < ApplicationController
   def home
   end
 
+  def about
+  end
+
   def spotify
     # Timeout::timeout(15) {
       @events = search_bandsintown(params[:date], params[:city], params[:state])
