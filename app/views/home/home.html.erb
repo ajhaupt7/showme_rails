@@ -1,13 +1,13 @@
 <div class="header">
-  <%= image_tag 'groupiethick2.png' %><br><br>
+  <%= image_tag 'groupiethick.png' %><br><br>
   <%= image_tag('showme.png', id:"showme") %>
   <br>
   <div id="slideshow">
     <p class="tagline">
-      live music
+      what bands are playing tomorrow
     </p>
     <p class="tagline">
-      bands I've never heard before
+      concerts with tickets available
     </p>
     <p class="tagline">
       a llama with a hat
@@ -40,7 +40,7 @@
   <div id="band-name"></div>
   <div id="venue"></div>
   <div id="event-time"></div>
-  <div id="spotify-preview"></div>
+  <br>
 
   <div class="tickets">
     <div id="buy-tix"></div>
@@ -128,7 +128,7 @@
 
   // Load up new event
   function displayEvent() {
-    console.log(events[0])
+    $("#slideshow").hide();
     var time = moment(events[0]['datetime']).format("M/D - h:mm A");
     for (var i=0; i < events[0]['artists'].length; i++) {
       if (events[0]["artists"][i]["preview"]) {

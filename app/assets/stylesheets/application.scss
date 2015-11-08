@@ -51,7 +51,7 @@ html, body {
     font-size: 2.5rem;
   }
   img:first-child {
-    width: 10rem;
+    width: 12rem;
   }
   #showme {
     width: 40rem;
@@ -103,6 +103,13 @@ html, body {
   }
   #city-input {
     width: 30rem;
+    -webkit-text-fill-color: white !important;
+  }
+  #city-input:-webkit-autofill,
+  #city-input:-webkit-autofill:hover,
+  #city-input:-webkit-autofill:focus,
+  #city-input:-webkit-autofill:active {
+      transition: background-color 5000s ease-in-out 0s;
   }
   #state-input {
     background: rgba(0,0,0,0.1);
@@ -227,9 +234,9 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
 
 // Slider Tagline
 #slideshow {
-    margin: 1rem auto;
+    margin: 0.4rem auto;
     position: relative;
-    font-size: 1.5em;
+    font-size: 1.7em;
     width: 100%;
     height: 3rem;
     padding: 10px;
