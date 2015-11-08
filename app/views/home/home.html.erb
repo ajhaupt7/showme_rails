@@ -4,7 +4,7 @@
   <br>
   <div id="slideshow">
     <p class="tagline">
-      what bands are playing tomorrow
+      what bands are playing
     </p>
     <p class="tagline">
       concerts with tickets available
@@ -155,7 +155,7 @@
           e.stopPropagation();
       }
     };
-    $("#venue").text(events[0]['venue']['name']);
+    $("#venue").html("@ " + events[0]['venue']['name']);
     $("#event-time").text(time);
     $("#buy-tix").html("<a href=" + events[0]['ticket_url'] + " target=_blank class='btn btn-primary'> Get Tickets </a>");
 
