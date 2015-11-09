@@ -19,7 +19,6 @@ module Api
   end
 
   def search_bandsintown(date, city, state)
-    binding.pry
     city.downcase!
     found_events = []
 
@@ -28,16 +27,14 @@ module Api
         unclean = RestClient.get(base_url)
         events = JSON.parse(unclean)
 
-        if events
-          if CityDate.find_by(date: date, city: city)
-            city_date = CityDate.find_by(date: date, city: city, state:state)
-          else
-            city_date = CityDate.create(date: date, city: city, state:state)
-          end
-        else
-            puts "Something bad happened man"
-            binding.pry
+        if events == []
           return false
+        end
+
+        if CityDate.find_by(date: date, city: city)
+          city_date = CityDate.find_by(date: date, city: city, state:state)
+        else
+          city_date = CityDate.create(date: date, city: city, state:state)
         end
 
         found_artist = nil
@@ -67,7 +64,7 @@ module Api
           end
         end
       rescue => e
-        puts "Something went terribly wrong :( #{e}"
+        puts "Something went terribly wrong: #{e}"
         return false
       end
     return found_events
