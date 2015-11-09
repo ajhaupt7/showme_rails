@@ -28,11 +28,30 @@ module Api
         found_artist = nil
 
         events.each do |event|
-          binding.pry
+          new_event = Event.new
+          new_event.datetime = DateTime.parse(event['datetime'])
+          new_event.ticket_url = event['ticket_url']
+          new_event.venue_name = event['venue']['name']
+          new_event.venue_lat = event['venue']['latitude']
+          new_event.venue_long = event['venue']['longitude']
+          new_event.save
+
           event['artists'].each do |artist|
           artist['name'].sub!('+', "Plus")
           spotify_search_result = search_spotify(artist['name'])
             if spotify_search_result != nil && event['ticket_status'] == 'available'
+              new_artist = Artist.new
+              new_artist.name = spotify_search_result.name
+              new_artist.song_preview = spotify_search_result.top_tracks(:US).first.preview_url
+              if spotify_search_result.images[0]['url']
+                new_artist.image_url = spotify_search_result.images[0]['url']
+              elsif spotify_search_result.top_tracks(:US)[0].album.images[0]['url']
+                new_artist.image_url = spotify_search_result.top_tracks(:US)[0].album.images[0]['url']
+              else
+                new_artist.image_url = nil
+              end
+              new_artist.save
+              new_event.artists << new_artist
               artist['preview'] = spotify_search_result.top_tracks(:US).first.preview_url
               if !found_events.include?(event)
                 found_events.push(event)
