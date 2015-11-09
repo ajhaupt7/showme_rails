@@ -28,6 +28,7 @@ module Api
         found_artist = nil
 
         events.each do |event|
+          binding.pry
           event['artists'].each do |artist|
           artist['name'].sub!('+', "Plus")
           spotify_search_result = search_spotify(artist['name'])
