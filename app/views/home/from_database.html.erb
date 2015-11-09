@@ -1,0 +1,28 @@
+<div id="search-form">
+  <%= form_tag(newfeatures_results_path, controller: 'home', action: 'show', id: "database-form", method: :get) do %>
+    <div class="form-group">
+      <input id="date" type="text" name="date" required=true readonly=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
+    </div>
+    <div class="form-group">
+      <%= text_field_tag :city, nil, placeholder:"Enter a City", id:"city-input", required: true %>
+      <%= select_tag :state, options_for_select(us_states), id:"state-input", prompt: "Select a State ↓", required: true %>
+    </div>
+    <div class="form-group">
+      <br><br>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  <% end %>
+</div>
+
+<script charset="utf-8">
+$(function() {
+  $('.datepicker').datepicker({
+    dateFormat: "yy-mm-dd",
+    prevText: "<",
+    nextText: ">",
+    constrainInput: true,
+    duration: "medium",
+    maxDate: "+3m"
+  });
+});
+</script>

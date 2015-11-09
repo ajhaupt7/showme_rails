@@ -5,5 +5,8 @@ Rails.application.routes.draw do
   post 'home/spotify' => 'home#spotify'
   get 'about' => 'home#about'
 
+  get 'newfeatures' => 'home#from_database'
+  get 'newfeatures/results' => 'home#show'
+
 
 end

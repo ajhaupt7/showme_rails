@@ -7,6 +7,15 @@ class HomeController < ApplicationController
   def about
   end
 
+  def from_database
+    @city_date = CityDate.all
+  end
+
+  def show
+    @city_date = CityDate.find_by(date: params[:date], city: params[:city], state:params[:state])
+  end
+
+
   def spotify
     # Timeout::timeout(15) {
       @events = search_bandsintown(params[:date], params[:city], params[:state])

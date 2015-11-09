@@ -31,7 +31,7 @@ module Api
           return false
         end
 
-        if CityDate.find_by(date: date, city: city)
+        if CityDate.find_by(date: date, city: city, state:state)
           city_date = CityDate.find_by(date: date, city: city, state:state)
         else
           city_date = CityDate.create(date: date, city: city, state:state)
@@ -42,6 +42,7 @@ module Api
         events.each do |event|
           new_event = Event.create(datetime:DateTime.parse(event['datetime']), ticket_url:event['ticket_url'], venue_name:event['venue']['name'], venue_lat:event['venue']['latitude'], venue_long:event['venue']['longitude'])
           city_date.events << new_event
+
           event['artists'].each do |artist|
           artist['name'].sub!('+', "Plus")
           spotify_search_result = search_spotify(artist['name'])
@@ -61,6 +62,7 @@ module Api
                 found_events.push(event)
               end
             end
+            new_event.destroy if !new_event.artists.any?
           end
         end
       rescue => e
