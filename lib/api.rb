@@ -43,9 +43,9 @@ module Api
               new_artist = Artist.new
               new_artist.name = spotify_search_result.name
               new_artist.song_preview = spotify_search_result.top_tracks(:US).first.preview_url
-              if spotify_search_result.images[0]['url']
+              if spotify_search_result.images != []
                 new_artist.image_url = spotify_search_result.images[0]['url']
-              elsif spotify_search_result.top_tracks(:US)[0].album.images[0]['url']
+              elsif spotify_search_result.top_tracks(:US)[0].album.images != []
                 new_artist.image_url = spotify_search_result.top_tracks(:US)[0].album.images[0]['url']
               else
                 new_artist.image_url = nil
