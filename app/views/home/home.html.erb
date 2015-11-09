@@ -193,6 +193,7 @@
       }
     })
     .fail(function(jqxhr, error) {
+      console.log(jqxhr)
       $(".spinner").hide();
       $("#error-container").show().html("There was an error with your request. <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
       $("#search-again").on("click", function() {

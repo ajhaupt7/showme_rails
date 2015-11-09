@@ -206,6 +206,12 @@ html, body {
   }
 }
 
+@media(max-width: 450px) {
+  #state-input {
+    margin-top: 4%;
+  }
+}
+
 #ui-datepicker-div {
   display:none;
   background: rgba(255,255,255,0.8);
