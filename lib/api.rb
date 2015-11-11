@@ -74,3 +74,19 @@ module Api
     return found_events
   end
 end
+
+def city_events_month(city, state)
+  current_date = DateTime.now
+  input_date = current_date.strftime("%Y-%m-%d")
+  i = 0
+  while i < 31
+    search_bandsintown(input_date, city, state)
+    i += 1
+    current_date = DateTime.now + i
+    input_date = current_date.strftime("%Y-%m-%d")
+  end
+end
+
+def biggest_cities_events
+  
+end

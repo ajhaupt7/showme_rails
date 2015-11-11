@@ -15,6 +15,10 @@ class HomeController < ApplicationController
     @city_date = CityDate.find_by(date: params[:date], city: params[:city], state:params[:state])
   end
 
+  def save_data
+    city_events_month(params[:city], params[:state])
+    redirect_to newfeatures_path
+  end
 
   def spotify
     # Timeout::timeout(15) {
