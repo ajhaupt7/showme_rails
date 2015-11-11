@@ -12,7 +12,6 @@ class HomeController < ApplicationController
   end
 
   def results
-    binding.pry
     if CityDate.find_by(date: params[:date], city: params[:city], state:params[:state]) == nil
       search_bandsintown(params[:date], params[:city], params[:state])
     end
