@@ -1,4 +1,4 @@
 class Event < ActiveRecord::Base
-  has_many :artists, :dependent => :destroy
+  has_and_belongs_to_many :artists
   belongs_to :city_date
 end

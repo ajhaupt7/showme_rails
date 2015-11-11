@@ -10,6 +10,5 @@ RSpec.describe CityDate, type: :model do
     city_date.events << event
     city_date.destroy
     Event.all.should eq []
-    Artist.all.should eq []
   end
 end

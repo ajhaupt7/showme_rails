@@ -16,7 +16,7 @@
 </div>
 
 <div id="search-form">
-  <form class="form-horizontal">
+  <%= form_tag(results_path, controller: 'home', action: 'show', id: "database-form", method: :post) do %>
     <div class="form-group">
       <input id="date" type="text" name="date" required=true readonly=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
     </div>
@@ -26,27 +26,9 @@
     </div>
     <div class="form-group">
       <br><br>
-      <button type="submit" class="btn btn-primary" id="submit-btn">Search</button>
+      <button type="submit" class="btn btn-primary" id="search-btn">Search</button>
     </div>
-  </form>
-</div>
-
-<div id="error-container">
-
-</div>
-
-<div id="current-view">
-
-  <div id="artist-wrapper"></div>
-  <div id="venue"></div>
-  <div id="event-time"></div>
-  <br>
-
-  <div class="tickets">
-    <div id="buy-tix"></div>
-    <div><a class='btn btn-primary' id='reject-btn'>Next</a></div>
-  </div>
-
+  <% end %>
 </div>
 
 <div class="spinner">
@@ -56,22 +38,6 @@
   <div class="rect4"></div>
   <div class="rect5"></div>
 </div>
-
-<div id="view-container" >
-
-</div>
-
-<% if @city_date %>
-  <p>
-    Concerts in <%= @city_date.city %> on <%= @city_date.date %>
-  </p>
-  <ul>
-    <% @city_date.events.each do |event| %>
-      <li><% event.artists.each do |artist| %>
-        <%= artist.name + ", " %><%  end %> at <%=event.venue_name %> </li>
-    <% end %>
-  </ul>
-<% end %>
 
 <script id="script">
 
@@ -89,9 +55,7 @@
 
 
   // Hide Spinner to Start
-  var events;
   $(".spinner").hide();
-  $("#current-view").hide();
 
   // Calendar from JQuery UI
   $(function() {
@@ -101,122 +65,14 @@
       nextText: ">",
       constrainInput: true,
       duration: "medium",
-      maxDate: "+3m"
+      maxDate: "+3m",
+      minDate: "0d"
     });
   });
 
-  // On Clicking Next Button
-  $("#reject-btn").on("click", function() {
-    events.shift();
-    if (events.length === 0) {
-      $("#current-view").html("That's all the events we have for now! <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
-      $("#search-again").on("click", function() {
-        searchAgain();
-      });
-    } else {
-      $("#artist-wrapper").empty();
-      displayEvent();
-    }
-  });
-
-  function searchAgain() {
-    window.location.reload();
-  }
-
-  // function searchAgain() {
-  //   events = undefined;
-  //   $("#search-again").off("click", function() { searchAgain(); });
-  //   $("form").show();
-  //   $("#current-view").empty();
-  //   $("#error-container").empty();
-  // }
-
-  // Load up new event
-  function displayEvent() {
-    $("#slideshow").hide();
-    var time = moment(events[0]['datetime']).format("M/D - h:mm A");
-    for (var i=0; i < events[0]['artists'].length; i++) {
-      if (events[0]["artists"][i]["preview"]) {
-        var playID = "play-btn-" + i
-        var pauseID = "pause-btn-" + i
-        var audioID = "audio-" + i
-        $("#artist-wrapper").append(events[0]["artists"][i]["name"] +
-        ' <audio id="' + audioID + '" src=' + events[0]["artists"][i]["preview"] + '></audio>' +
-        '<span id="' + playID + '" class="glyphicon glyphicon-play" aria-hidden="true"></span>' +
-        '<span id="' + pauseID + '" class="glyphicon glyphicon-pause" aria-hidden="true"></span>' +
-        '<br>')
-        $('#' + pauseID).hide();
-      }
-      var bandContainer = document.querySelector("#artist-wrapper");
-      bandContainer.addEventListener("click", playToggle, false);
-
-      function playToggle(e) {
-          if (e.target !== e.currentTarget) {
-              var clickedItem = e.target.id;
-              var itemID = clickedItem.charAt(clickedItem.length - 1)
-              if (clickedItem.charAt(1) === "l") {
-                $('#play-btn-' + itemID).hide();
-                $('#pause-btn-' + itemID).show();
-                document.getElementById("audio-" + itemID).play();
-              } else if (clickedItem.charAt(1) === "a") {
-                $('#play-btn-' + itemID).show();
-                $('#pause-btn-' + itemID).hide();
-                document.getElementById("audio-" + itemID).pause();
-              }
-          }
-          e.stopPropagation();
-      }
-    };
-    $("#venue").html("@ " + events[0]['venue']['name']);
-    $("#event-time").text(time);
-    $("#buy-tix").html("<a href=" + events[0]['ticket_url'] + " target=_blank class='btn btn-primary'> Get Tickets </a>");
-
-
-  };
-
-  // AJAX Form Request
-  $("form").submit(function(event) {
-    event.preventDefault();
+  $("#search-btn").on("click", function() {
     $(".spinner").show();
-    var formParams = {
-      date: $("#date").val(),
-      city: $("#city-input").val(),
-      state: $("#state-input").val()
-    };
-    $("form").hide();
-    $.ajax({
-      type: 'POST',
-      data: formParams,
-      dataType: 'script',
-      url: '/home/spotify'
-    })
-    .done(function(data) {
-      if(data === "false") {
-        console.log(data)
-        $(".spinner").hide();
-        $("#error-container").show().html("Couldn't find that location. <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
-        $("#search-again").on("click", function() {
-          searchAgain();
-        });
-      } else {
-        events = JSON.parse(data);
-        displayEvent();
-        $("#current-view").show();
-      }
-    })
-    .fail(function(jqxhr, error) {
-      console.log(jqxhr)
-      $(".spinner").hide();
-      $(".main-container").html(jqxhr.responseText)
-      $("#error-container").show().html("There was an error with your request. <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
-      $("#search-again").on("click", function() {
-        searchAgain();
-      });
-    })
-    .always(function() {
-      console.log('finished');
-      $(".spinner").hide();
-    })
+    $("#search-form").hide();
+  })
 
-  });
 </script>
