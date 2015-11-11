@@ -1,5 +1,5 @@
 <div id="search-form">
-  <%= form_tag(newfeatures_results_path, controller: 'home', action: 'show', id: "database-form", method: :get) do %>
+  <%= form_tag(show_path, controller: 'home', action: 'show', id: "database-form", method: :post) do %>
     <div class="form-group">
       <input id="date" type="text" name="date" required=true readonly=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
     </div>
@@ -9,21 +9,18 @@
     </div>
     <div class="form-group">
       <br><br>
-      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="submit" class="btn btn-primary" id="search-btn">Search</button>
     </div>
   <% end %>
 </div>
 
-<%= form_tag(home_save_data_path, controller: 'home', action:'save_data', id: "database-form", method: :post) do %>
-  <div class="form-group">
-    <%= text_field_tag :city, nil, placeholder:"Enter a City", id:"city-input", required: true %>
-    <%= select_tag :state, options_for_select(us_states), id:"state-input", prompt: "Select a State ↓", required: true %>
-  </div>
-  <div class="form-group">
-    <br><br>
-    <button type="submit" class="btn btn-primary">Search</button>
-  </div>
-<% end %>
+<div class="spinner">
+  <div class="rect1"></div>
+  <div class="rect2"></div>
+  <div class="rect3"></div>
+  <div class="rect4"></div>
+  <div class="rect5"></div>
+</div>
 
 <script charset="utf-8">
 $(function() {
@@ -33,7 +30,17 @@ $(function() {
     nextText: ">",
     constrainInput: true,
     duration: "medium",
-    maxDate: "+3m"
+    maxDate: "+3m",
+    minDate: "0d"
   });
 });
+</script>
+
+<script type="text/javascript">
+  $(".spinner").hide();
+
+  $("#search-btn").on("click", function() {
+    $(".spinner").show();
+    $("#search-form").hide();
+  })
 </script>

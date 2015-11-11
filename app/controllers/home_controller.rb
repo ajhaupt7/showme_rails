@@ -12,6 +12,9 @@ class HomeController < ApplicationController
   end
 
   def show
+    if CityDate.find_by(date: params[:date], city: params[:city], state:params[:state]) == nil
+      search_bandsintown(params[:date], params[:city], params[:state])
+    end
     @city_date = CityDate.find_by(date: params[:date], city: params[:city], state:params[:state])
   end
 

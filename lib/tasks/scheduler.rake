@@ -1,4 +1,3 @@
-task :load_city => :environment do
-  city_events_month("portland", "OR")
+task :load_all_cities => :environment do
+  biggest_cities_events
 end
- 

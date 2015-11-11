@@ -22,7 +22,7 @@ module Api
     city.downcase!
     found_events = []
       begin
-      Timeout::timeout(15) {
+      # Timeout::timeout(15) {
         base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city},#{state}"
         unclean = RestClient.get(base_url)
         events = JSON.parse(unclean)
@@ -67,7 +67,7 @@ module Api
             new_event.destroy if !new_event.artists.any?
           end
         end
-      }
+      # }
       rescue Timeout::Error => e
         puts "Timeout #{e}"
       rescue => e
