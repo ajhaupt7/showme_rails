@@ -1,8 +1,18 @@
 <div class="header">
-  <%= image_tag 'groupiethick2.png' %><br><br>
+  <%= image_tag 'groupiethick.png' %><br><br>
   <%= image_tag('showme.png', id:"showme") %>
-  <!-- <h1>SHOWME</h1> -->
-  <h3>live music from artists who haven't made it big yet</h3>
+  <br>
+  <div id="slideshow">
+    <p class="tagline">
+      what bands are playing
+    </p>
+    <p class="tagline">
+      concerts with tickets available
+    </p>
+    <p class="tagline">
+      a llama with a hat
+    </p>
+  </div>
 </div>
 
 <div id="search-form">
@@ -27,21 +37,14 @@
 
 <div id="current-view">
 
-  <div id="band-name"></div>
+  <div id="artist-wrapper"></div>
   <div id="venue"></div>
   <div id="event-time"></div>
-  <div id="spotify-preview"></div>
+  <br>
 
   <div class="tickets">
     <div id="buy-tix"></div>
     <div><a class='btn btn-primary' id='reject-btn'>Next</a></div>
-  </div>
-
-  <div id="accept-field" class="hidden">
-    <button id="buy-tickets">Buy</button>
-  </div>
-
-  <div id="audio-container">
   </div>
 
 </div>
@@ -59,10 +62,26 @@
 </div>
 
 <script id="script">
+
+  // Sliding Tagline
+  $("#slideshow > .tagline:gt(0)").hide();
+
+  setInterval(function() {
+    $('#slideshow > .tagline:first')
+      .fadeOut(1000)
+      .next()
+      .fadeIn(1000)
+      .end()
+      .appendTo('#slideshow');
+  },  3000);
+
+
+  // Hide Spinner to Start
   var events;
   $(".spinner").hide();
   $("#current-view").hide();
 
+  // Calendar from JQuery UI
   $(function() {
     $('.datepicker').datepicker({
       dateFormat: "yy-mm-dd",
@@ -74,43 +93,76 @@
     });
   });
 
+  // On Clicking Next Button
   $("#reject-btn").on("click", function() {
     events.shift();
     if (events.length === 0) {
-      $("#current-view").html("That's all the events for now. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
+      $("#current-view").html("That's all the events we have for now! <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
       $("#search-again").on("click", function() {
         searchAgain();
       });
     } else {
+      $("#artist-wrapper").empty();
       displayEvent();
     }
   });
 
   function searchAgain() {
-    events = undefined;
-
-    $("#search-again").off("click", function() { searchAgain(); });
-    $("form").show();
-    $("#current-view").empty();
-    $("#error-container").empty();
+    window.location.reload();
   }
 
+  // function searchAgain() {
+  //   events = undefined;
+  //   $("#search-again").off("click", function() { searchAgain(); });
+  //   $("form").show();
+  //   $("#current-view").empty();
+  //   $("#error-container").empty();
+  // }
+
+  // Load up new event
   function displayEvent() {
-    $("#band-name").text(events[0]['artists'][0]['name']);
-    $("#venue").text(events[0]['venue']['name']);
-    $("#event-time").text(events[0]['datetime']);
-    $("#buy-tix").html("<a href=" + events[0]['ticket_url'] + " target=_blank class='btn btn-primary'> Buy Tickets </a>");
-    var element = document.createElement("audio");
-    element.src = events[0]['url'];
-    $("#audio-container").html( element );
-    var controls = document.createElement("p");
-    controls.innerHTML = "Play";
-    $("#audio-container").append( controls );
-    controls.addEventListener("click", function() {
-      element.play();
-    });
+    $("#slideshow").hide();
+    var time = moment(events[0]['datetime']).format("M/D - h:mm A");
+    for (var i=0; i < events[0]['artists'].length; i++) {
+      if (events[0]["artists"][i]["preview"]) {
+        var playID = "play-btn-" + i
+        var pauseID = "pause-btn-" + i
+        var audioID = "audio-" + i
+        $("#artist-wrapper").append(events[0]["artists"][i]["name"] +
+        ' <audio id="' + audioID + '" src=' + events[0]["artists"][i]["preview"] + '></audio>' +
+        '<span id="' + playID + '" class="glyphicon glyphicon-play" aria-hidden="true"></span>' +
+        '<span id="' + pauseID + '" class="glyphicon glyphicon-pause" aria-hidden="true"></span>' +
+        '<br>')
+        $('#' + pauseID).hide();
+      }
+      var bandContainer = document.querySelector("#artist-wrapper");
+      bandContainer.addEventListener("click", playToggle, false);
+
+      function playToggle(e) {
+          if (e.target !== e.currentTarget) {
+              var clickedItem = e.target.id;
+              var itemID = clickedItem.charAt(clickedItem.length - 1)
+              if (clickedItem.charAt(1) === "l") {
+                $('#play-btn-' + itemID).hide();
+                $('#pause-btn-' + itemID).show();
+                document.getElementById("audio-" + itemID).play();
+              } else if (clickedItem.charAt(1) === "a") {
+                $('#play-btn-' + itemID).show();
+                $('#pause-btn-' + itemID).hide();
+                document.getElementById("audio-" + itemID).pause();
+              }
+          }
+          e.stopPropagation();
+      }
+    };
+    $("#venue").html("@ " + events[0]['venue']['name']);
+    $("#event-time").text(time);
+    $("#buy-tix").html("<a href=" + events[0]['ticket_url'] + " target=_blank class='btn btn-primary'> Get Tickets </a>");
+
+
   };
 
+  // AJAX Form Request
   $("form").submit(function(event) {
     event.preventDefault();
     $(".spinner").show();
@@ -128,8 +180,9 @@
     })
     .done(function(data) {
       if(data === "false") {
+        console.log(data)
         $(".spinner").hide();
-        $("#error-container").show().html("No matches found. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
+        $("#error-container").show().html("Couldn't find that location. <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
         $("#search-again").on("click", function() {
           searchAgain();
         });
@@ -140,8 +193,9 @@
       }
     })
     .fail(function(jqxhr, error) {
+      console.log(jqxhr)
       $(".spinner").hide();
-      $("#error-container").show().html("No matches found. <br><a id='search-again' class='btn btn-primary'>Try again.</a>");
+      $("#error-container").show().html("There was an error with your request. <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
       $("#search-again").on("click", function() {
         searchAgain();
       });
@@ -150,5 +204,6 @@
       console.log('finished');
       $(".spinner").hide();
     })
+
   });
 </script>

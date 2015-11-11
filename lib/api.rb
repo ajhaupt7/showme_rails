@@ -8,9 +8,8 @@ module Api
     begin
       artists = RSpotify::Artist.search(query)
       found_artist = artists.first
-      if found_artist.popularity < 50
+      if found_artist.top_tracks(:US) != []
         result = found_artist
-        puts "#{result} in the loop"
       end
     rescue => e
       puts "Caught #{e}"
@@ -20,31 +19,74 @@ module Api
   end
 
   def search_bandsintown(date, city, state)
+    city.downcase!
     found_events = []
 
-    begin
-      base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city},#{state}"
-      unclean = RestClient.get(base_url)
-      events = JSON.parse(unclean)
+      begin
+        base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city},#{state}"
+        unclean = RestClient.get(base_url)
+        events = JSON.parse(unclean)
 
-      found_artist = nil
-
-      events.each do |event|
-        puts "here"
-        spotify_search_result = search_spotify(event['artists'][0]['name'])
-        if spotify_search_result != nil && event['ticket_status'] == 'available'
-          if spotify_search_result.top_tracks(:US) != []
-             event['url'] = spotify_search_result.top_tracks(:US).first.preview_url
-          else
-            event['url'] = nil
-          end
-          found_events.push(event)
+        if events == []
+          return false
         end
+
+        if CityDate.find_by(date: date, city: city, state:state)
+          city_date = CityDate.find_by(date: date, city: city, state:state)
+        else
+          city_date = CityDate.create(date: date, city: city, state:state)
+        end
+
+        found_artist = nil
+
+        events.each do |event|
+          if event['ticket_status'] == 'available' && Event.find_by(datetime:DateTime.parse(event['datetime']), ticket_url:event['ticket_url'], venue_name:event['venue']['name']) == nil
+            new_event = Event.create(datetime:DateTime.parse(event['datetime']), ticket_url:event['ticket_url'], venue_name:event['venue']['name'], venue_lat:event['venue']['latitude'], venue_long:event['venue']['longitude'])
+            city_date.events << new_event
+
+            event['artists'].each do |artist|
+              artist['name'].sub!('+', "Plus")
+              spotify_search_result = search_spotify(artist['name'])
+                if spotify_search_result != nil && (Artist.find_by(song_preview:spotify_search_result.top_tracks(:US).first.preview_url) == nil)
+                  new_artist = Artist.new(name: artist['name'], song_preview:spotify_search_result.top_tracks(:US).first.preview_url)
+                  if spotify_search_result.images != []
+                    new_artist.image_url = spotify_search_result.images[0]['url']
+                  elsif spotify_search_result.top_tracks(:US)[0].album.images != []
+                    new_artist.image_url = spotify_search_result.top_tracks(:US)[0].album.images[0]['url']
+                  else
+                    new_artist.image_url = nil
+                  end
+                  new_artist.save
+                  new_event.artists << new_artist
+                  artist['preview'] = spotify_search_result.top_tracks(:US).first.preview_url
+                  if !found_events.include?(event)
+                    found_events.push(event)
+                  end
+                end
+            end
+            new_event.destroy if !new_event.artists.any?
+          end
+        end
+      rescue => e
+        puts "Something went terribly wrong: #{e}"
+        return false
       end
-    rescue => e
-      puts "Something went terribly wrong :( #{e}"
-      return false
-    end
     return found_events
   end
+end
+
+def city_events_month(city, state)
+  current_date = DateTime.now
+  input_date = current_date.strftime("%Y-%m-%d")
+  i = 0
+  while i < 31
+    search_bandsintown(input_date, city, state)
+    i += 1
+    current_date = DateTime.now + i
+    input_date = current_date.strftime("%Y-%m-%d")
+  end
+end
+
+def biggest_cities_events
+  
 end

@@ -5,6 +5,12 @@
  *= require jquery-ui/datepicker
  */
 
+// Variables
+$primary: #DD9189;
+$primary-light: lighten($primary, 15%);
+$primary-dark: darken($primary, 10%);
+$primary-very-dark: darken($primary, 35%);
+
 //
 #current-view,
 #error-container {
@@ -21,12 +27,83 @@
   display: none;
 }
 
+// Navbar
+.navigation {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 5rem;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  background: transparent;
+}
 
-// Variables
-$primary: #DD9189;
-$primary-light: lighten($primary, 15%);
-$primary-dark: darken($primary, 10%);
-$primary-very-dark: darken($primary, 35%);
+/* Navigation Menu - List items */
+.nav-item {
+  width: 200px;
+  list-style-type: none;
+}
+
+.nav-item a {
+  /* non-critical appearance styles */
+  display: block;
+  padding: 1em;
+  background: transparent;
+  color: white;
+  font-size: 1.2em;
+  text-decoration: none;
+  transition: color 0.2s, background 0.5s;
+}
+
+.nav-item a:hover {
+  color: #c74438;
+  background: #fff;
+  transition: all 0.5s ease-out;
+}
+
+/* Site Wrapper - Everything that isn't navigation */
+.site-wrap {
+  min-height: 105%;
+  min-width: 100%;
+  background-color: #CA5447;
+  position: relative;
+  top: 0;
+  bottom: 100%;
+  left: 0;
+  z-index: 1;
+}
+
+/* Nav Trigger */
+.nav-trigger {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+}
+
+label[for="nav-trigger"] {
+  position: fixed;
+  left: 15px; top: 15px;
+  z-index: 2;
+
+  height: 45px;
+  width: 45px;
+  cursor: pointer;
+  background-image: url("hamburger.png");
+  background-size: contain;
+}
+
+.nav-trigger + label, .site-wrap {
+  transition: left 0.2s;
+}
+
+.nav-trigger:checked + label {
+  left: 215px;
+}
+
+.nav-trigger:checked ~ .site-wrap {
+  left: 200px;
+}
 
 // Application
 
@@ -34,6 +111,9 @@ html, body {
   background: #CA5447;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 .main-container {
@@ -51,7 +131,7 @@ html, body {
     font-size: 2.5rem;
   }
   img:first-child {
-    width: 10rem;
+    width: 12rem;
   }
   #showme {
     width: 40rem;
@@ -63,6 +143,7 @@ html, body {
   transition: all 0.4s ease-out;
   min-width: 20rem;
   height: 5rem;
+  line-height: 3.2rem;
 }
 
 .btn-primary {
@@ -102,6 +183,13 @@ html, body {
   }
   #city-input {
     width: 30rem;
+    -webkit-text-fill-color: white !important;
+  }
+  #city-input:-webkit-autofill,
+  #city-input:-webkit-autofill:hover,
+  #city-input:-webkit-autofill:focus,
+  #city-input:-webkit-autofill:active {
+      transition: background-color 5000s ease-in-out 0s;
   }
   #state-input {
     background: rgba(0,0,0,0.1);
@@ -115,6 +203,12 @@ html, body {
     height: 4rem;
     opacity:0.75;
     -webkit-appearance: none;
+  }
+}
+
+@media(max-width: 450px) {
+  #state-input {
+    margin-top: 4%;
   }
 }
 
@@ -220,6 +314,59 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
   }
 }
 
-p {
+.glyphicon {
   cursor: pointer;
+}
+
+// Slider Tagline
+#slideshow {
+    margin: 0.4rem auto;
+    position: relative;
+    font-size: 1.7em;
+    width: 100%;
+    height: 3rem;
+    padding: 10px;
+}
+
+#slideshow > .tagline {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+}
+
+// About
+
+#how-it-works {
+  margin-top: 10%;
+  text-align: center;
+}
+
+#about-wrapper {
+  margin-top: 2%;
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flexbox;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  justify-content: space-around;
+  font-size: 1.3em;
+  #about-content {
+    background: rgba(0,0,0,0.1);
+    color: $primary-light;
+    text-align: left;
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 5%;
+
+  }
 }

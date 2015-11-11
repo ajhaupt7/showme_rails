@@ -17,6 +17,8 @@ gem 'rspotify'
 gem 'rest-client'
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'jquery-ui-rails'
+gem 'hirb'
+gem 'whenever', :require => false
 
 group :development do
   gem 'byebug'

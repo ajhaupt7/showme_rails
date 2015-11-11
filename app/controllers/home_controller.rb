@@ -4,13 +4,29 @@ class HomeController < ApplicationController
   def home
   end
 
+  def about
+  end
+
+  def from_database
+    @city_date = CityDate.all
+  end
+
+  def show
+    @city_date = CityDate.find_by(date: params[:date], city: params[:city], state:params[:state])
+  end
+
+  def save_data
+    city_events_month(params[:city], params[:state])
+    redirect_to newfeatures_path
+  end
+
   def spotify
-    Timeout::timeout(15) {
-      @events = search_bandsintown(params[:start_date], params[:city], params[:state])
+    # Timeout::timeout(15) {
+      @events = search_bandsintown(params[:date], params[:city], params[:state])
       respond_to do |format|
         format.json { render json: @events }
       end
-    }
+    # }
   end
 
 end
