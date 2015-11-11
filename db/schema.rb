@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151111182428) do
+ActiveRecord::Schema.define(version: 20151111230524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20151111182428) do
     t.string   "image_url"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.integer  "event_id"
+    t.string   "spotify_link"
   end
 
   create_table "artists_events", force: :cascade do |t|
@@ -53,9 +53,10 @@ ActiveRecord::Schema.define(version: 20151111182428) do
     t.string   "venue_name"
     t.float    "venue_lat"
     t.float    "venue_long"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "city_date_id"
+    t.integer  "bandsintown_id"
   end
 
   create_table "stored_dates", force: :cascade do |t|
