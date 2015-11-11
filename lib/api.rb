@@ -88,5 +88,43 @@ def city_events_month(city, state)
 end
 
 def biggest_cities_events
-  
+  city_events_month("seattle", "WA")
+  city_events_month("new york", "NY")
+  city_events_month("los angeles", "CA")
+  city_events_month("chicago", "IL")
+  city_events_month("houston", "TX")
+  city_events_month("philadelphia", "PA")
+  city_events_month("phoenix", "AR")
+  city_events_month("san antonio", "TX")
+  city_events_month("san diego", "CA")
+  city_events_month("dallas", "TX")
+  city_events_month("san jose", "CA")
+  city_events_month("austin", "TX")
+  city_events_month("jacksonville", "FL")
+  city_events_month("san francisco", "IN")
+  city_events_month("columbus", "OH")
+  city_events_month("fort worth", "TX")
+  city_events_month("charlotte", "NC")
+  city_events_month("detroit", "MI")
+  city_events_month("el paso", "TX")
+  city_events_month("denver", "CO")
+  city_events_month("washington", "DC")
+  city_events_month("memphis", "TN")
+  city_events_month("boston", "MA")
+  city_events_month("nashville", "TN")
+  city_events_month("baltimore", "MD")
+  city_events_month("oklahoma city", "OK")
+  city_events_month("portland", "OR")
+  city_events_month("las vegas", "NV")
+  city_events_month("kansas city", "MO")
+  city_events_month("atlanta", "GA")
+  city_events_month("omaha", "NE")
+  city_events_month("raleigh", "NC")
+  city_events_month("minneapolis", "MN")
+  city_events_month("new orleans", "LA")
+  city_events_month("milwaukee", "WI")
+end
+
+def rufus
+  puts "I am rufus"
 end
