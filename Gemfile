@@ -19,6 +19,7 @@ gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'jquery-ui-rails'
 gem 'hirb'
 gem 'whenever', :require => false
+gem 'rufus-scheduler'
 
 group :development do
   gem 'byebug'
