@@ -61,6 +61,18 @@
 
 </div>
 
+<% if @city_date %>
+  <p>
+    Concerts in <%= @city_date.city %> on <%= @city_date.date %>
+  </p>
+  <ul>
+    <% @city_date.events.each do |event| %>
+      <li><% event.artists.each do |artist| %>
+        <%= artist.name + ", " %><%  end %> at <%=event.venue_name %> </li>
+    <% end %>
+  </ul>
+<% end %>
+
 <script id="script">
 
   // Sliding Tagline
@@ -195,6 +207,7 @@
     .fail(function(jqxhr, error) {
       console.log(jqxhr)
       $(".spinner").hide();
+      $(".main-container").html(jqxhr.responseText)
       $("#error-container").show().html("There was an error with your request. <br><br><a id='search-again' class='btn btn-primary'>Try again.</a>");
       $("#search-again").on("click", function() {
         searchAgain();
