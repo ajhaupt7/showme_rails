@@ -59,6 +59,7 @@
   $("#event-wrapper-" + i).show();
   document.querySelector("#back-btn-0").style.color = "#CA5447"
   document.querySelector("#back-btn-0").style.cursor = "default"
+  $("#back-btn-0").off();
 
 
   $(".forward-btn").on("click", function() {
@@ -70,6 +71,7 @@
     if (i === events.length - 1) {
       document.querySelector("#forward-btn-" + i).style.color = "#CA5447"
       document.querySelector("#forward-btn-" + i).style.cursor = "default"
+      $("#forward-btn-" + i).off();
     }
   });
   $("#event-wrapper-" + i).show();
@@ -82,6 +84,7 @@
     if (i === 0) {
       document.querySelector("#back-btn-0").style.color = "#CA5447"
       document.querySelector("#back-btn-0").style.cursor = "default"
+      $("#back-btn-" + i).off();
     }
   });
 
