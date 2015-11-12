@@ -461,7 +461,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
   font-size: 2rem;
   color: $primary;
   transition: all 0.5s ease-out;
-  &:hover {
+  &:hover, &:active, &:focus {
     color: $primary-dark;
     text-decoration: none;
   }
