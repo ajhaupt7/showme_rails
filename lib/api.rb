@@ -30,7 +30,6 @@ module Api
         if events == []
           return false
         end
-        binding.pry
 
         if CityDate.find_by(date: date, city: city, state:state)
           city_date = CityDate.find_by(date: date, city: city, state:state)
@@ -108,7 +107,8 @@ module Api
     city_events_month("san jose", "CA")
     city_events_month("austin", "TX")
     city_events_month("jacksonville", "FL")
-    city_events_month("san francisco", "IN")
+    city_events_month("indianapolis", "IN")
+    city_events_month("san francisco", "CA")
     city_events_month("columbus", "OH")
     city_events_month("fort worth", "TX")
     city_events_month("charlotte", "NC")

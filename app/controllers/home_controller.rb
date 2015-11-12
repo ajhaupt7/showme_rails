@@ -8,12 +8,13 @@ class HomeController < ApplicationController
   end
 
   def results
-    if params[:city] == nil
-      flash[:alert] = "You must fill out the city field."
-      redirect_to root_path
-    end
     if CityDate.find_by(date: params[:date], city: params[:city], state:params[:state]) == nil
-      search_bandsintown(params[:date], params[:city], params[:state])
+      result = search_bandsintown(params[:date], params[:city], params[:state])
+      if result == false
+        flash[:alert] = "We couldn't find that location. Try again!"
+        redirect_to root_path
+        return
+      end
     end
     @city_date = CityDate.find_by(date: params[:date], city: params[:city], state:params[:state])
     @events = @city_date.events

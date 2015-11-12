@@ -20,6 +20,18 @@ $primary-very-dark: darken($primary, 35%);
   text-align: center;
 }
 
+#flash {
+  position:absolute;
+  top: 0;
+  left: 35%;
+  margin: auto;
+  min-width: 40rem;
+  border-radius: 0px;
+  text-align: center;
+  background: rgba(255,255,255,0.8);
+  color: $primary-dark;
+}
+
 #error-container {
   display: none;
 }

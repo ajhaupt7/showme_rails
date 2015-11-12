@@ -16,7 +16,7 @@
 </div>
 
 <div id="search-form">
-  <%= form_tag(results_path, controller: 'home', action: 'show', id: "database-form", method: :post) do %>
+  <%= form_tag(results_path, controller: 'home', action: 'results', id: "database-form", method: :post) do %>
     <div class="form-group">
       <input id="date" type="text" name="date" required readonly=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
     </div>
@@ -71,7 +71,6 @@
   });
 
   $("form").submit(function(e) {
-    e.preventDefault();
     $(".spinner").show();
     $("#search-form").hide();
   })
