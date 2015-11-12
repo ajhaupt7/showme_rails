@@ -142,6 +142,7 @@ module Api
       else
         update_events_search(city_date.date, city_date.city, city_date.state)
       end
+      search_bandsintown(city_date.date + 31, city_date.city, city_date.state)
     end
   end
 
