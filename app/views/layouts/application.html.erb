@@ -17,9 +17,22 @@
   <input type="checkbox" id="nav-trigger" class="nav-trigger" />
   <label for="nav-trigger"></label>
 
-<div class="container main-container site-wrap">
-  <%= yield %>
-</div>
+  <div class="container site-wrap">
+    <% if notice %>
+      <p id ="flash" class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p id ="flash" class="alert alert-danger"><%= alert %></p>
+    <% end %>
+    <%= yield %>
+  </div>
 
+  <script type="text/javascript">
+    $(document).ready(function(){
+      setTimeout(function(){
+        $('#flash').fadeOut();
+      }, 1500);
+    })
+  </script>
 </body>
 </html>

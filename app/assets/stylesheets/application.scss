@@ -8,6 +8,7 @@
 // Variables
 $primary: #DD9189;
 $primary-light: lighten($primary, 15%);
+$primary-very-light: lighten($primary, 25%);
 $primary-dark: darken($primary, 10%);
 $primary-very-dark: darken($primary, 35%);
 
@@ -25,6 +26,11 @@ $primary-very-dark: darken($primary, 35%);
 
 .hidden {
   display: none;
+}
+
+hr {
+  border-bottom: 2px solid $primary-dark;
+  border-top: transparent;
 }
 
 // Navbar
@@ -65,6 +71,7 @@ $primary-very-dark: darken($primary, 35%);
 
 /* Site Wrapper - Everything that isn't navigation */
 .site-wrap {
+  margin-top: 2%;
   min-height: 105%;
   min-width: 100%;
   background-color: #CA5447;
@@ -114,10 +121,6 @@ html, body {
   overflow-x: hidden;
   height: 100%;
   width: 100%;
-}
-
-.main-container {
-  margin-top: 2%;
 }
 
 .header {
@@ -368,5 +371,66 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
     flex: 1;
     padding: 5%;
 
+  }
+}
+
+// Results Page
+
+#all-events-container {
+  margin: 5rem auto;
+  display: block;
+  text-align:center;
+  color: $primary-very-light;
+  .event-wrapper {
+    width: 50%;
+    margin:auto;
+    .back-btn, .forward-btn {
+      cursor: pointer;
+      font-size: 2.5rem;
+      color: $primary-light;
+      margin-top: 15%;
+    }
+    .back-btn {
+      float: left;
+      margin-right: 5%;
+    }
+    .forward-btn {
+      float: right;
+      margin-left: 5%;
+    }
+    .event-flexbox {
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 5%;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -webkit-flexbox;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-flow: column wrap;
+      justify-content: space-around;
+      background: rgba(0,0,0,0.07);
+      .artist-box {
+        text-align: center;
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        padding: 9% 2% 8% 2%;
+        font-size: 2.5rem;
+      }
+      .venue-box {
+        font-size: 2rem;
+        text-align: center;
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 2;
+        padding: 1% 2% 5% 2%;
+      }
+    }
   }
 }

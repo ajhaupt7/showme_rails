@@ -7,26 +7,22 @@ class HomeController < ApplicationController
   def about
   end
 
-  def from_database
-    @city_date = CityDate.all
-  end
-
-  def show
+  def results
+    if params[:city] == nil
+      flash[:alert] = "You must fill out the city field."
+      redirect_to root_path
+    end
+    if CityDate.find_by(date: params[:date], city: params[:city], state:params[:state]) == nil
+      search_bandsintown(params[:date], params[:city], params[:state])
+    end
     @city_date = CityDate.find_by(date: params[:date], city: params[:city], state:params[:state])
-  end
-
-  def save_data
-    city_events_month(params[:city], params[:state])
-    redirect_to newfeatures_path
-  end
-
-  def spotify
-    # Timeout::timeout(15) {
-      @events = search_bandsintown(params[:date], params[:city], params[:state])
-      respond_to do |format|
-        format.json { render json: @events }
+    @events = @city_date.events
+    @artists = []
+    @events.each do |event|
+      event.artists.each do |artist|
+        @artists.push(artist)
       end
-    # }
+    end
   end
 
 end
