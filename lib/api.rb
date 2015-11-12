@@ -30,6 +30,7 @@ module Api
         if events == []
           return false
         end
+        binding.pry
 
         if CityDate.find_by(date: date, city: city, state:state)
           city_date = CityDate.find_by(date: date, city: city, state:state)

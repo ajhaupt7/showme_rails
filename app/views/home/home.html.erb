@@ -18,7 +18,7 @@
 <div id="search-form">
   <%= form_tag(results_path, controller: 'home', action: 'show', id: "database-form", method: :post) do %>
     <div class="form-group">
-      <input id="date" type="text" name="date" required=true readonly=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
+      <input id="date" type="text" name="date" required readonly=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
     </div>
     <div class="form-group">
       <%= text_field_tag :city, nil, placeholder:"Enter a City", id:"city-input", required: true %>
@@ -70,7 +70,8 @@
     });
   });
 
-  $("#search-btn").on("click", function() {
+  $("form").submit(function(e) {
+    e.preventDefault();
     $(".spinner").show();
     $("#search-form").hide();
   })
