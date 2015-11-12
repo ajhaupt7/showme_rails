@@ -7,7 +7,14 @@ module Api
     result = nil
     begin
       artists = RSpotify::Artist.search(query)
-      found_artist = artists.first
+      found_artist = nil
+      artists.each do |artist|
+        if artist.name.downcase == query
+          found_artist = artist
+          puts "#{artist.name}"
+          break
+        end
+      end
       if found_artist.top_tracks(:US) != []
         result = found_artist
       end
@@ -46,7 +53,7 @@ module Api
 
             event['artists'].each do |artist|
               artist['name'].sub!('+', "Plus")
-              spotify_search_result = search_spotify(artist['name'])
+              spotify_search_result = search_spotify(artist['name'].downcase)
                 if spotify_search_result != nil
                   if (Artist.find_by(song_preview:spotify_search_result.top_tracks(:US).first.preview_url) != nil)
                     retrieved_artist = Artist.find_by(song_preview:spotify_search_result.top_tracks(:US).first.preview_url)

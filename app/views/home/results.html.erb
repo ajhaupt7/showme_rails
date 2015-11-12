@@ -33,8 +33,9 @@
           </div>
         </div>
         <div class="buy-tickets">
-          <a href="<%= @events[i].ticket_url %>" class="btn btn-primary">Get Tickets</a>
+          <a href="<%= @events[i].ticket_url %>" target="_blank" class="btn btn-primary">Get Tickets</a>
         </div>
+        <a class="home-btn" href="/"><i class="fa fa-arrow-circle-o-left"></i>&nbsp; search again</a>
       </div>
       <% i += 1 %>
     <% end %>
