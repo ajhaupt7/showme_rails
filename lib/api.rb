@@ -131,15 +131,6 @@ module Api
     city_events_month("milwaukee", "WI")
   end
 
-  def load_artist_spotify_previews
-    Artist.all.each do |artist|
-      artists = RSpotify::Artist.search(artist.name)
-      found_artist = artists.first
-      track = found_artist.top_tracks(:US).first
-      artist.spotify_link = track.external_urls['spotify']
-    end
-  end
-
   # def update_events
   #   CityDate.all.each do |city_date|
   #     city_date.events

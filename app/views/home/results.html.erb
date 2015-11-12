@@ -1,30 +1,51 @@
-<p>
-  Concerts in <%= @city_date.city %> on <%= @city_date.date %>
-</p>
+<div class="container">
+  <div class="header">
+    <h1><%= @city_date.city.capitalize %></h1>
+    <h3><%= @city_date.date %></h3>
+  </div>
 
-<% @events.each do |event| %>
-  <div id="event-wrapper-<%= event.id %>">
-      <% event.artists.each do |artist| %>
-        <div id="artist-wrapper-<%= artist.id %>">
-          <%= artist.name %>
-          <audio id="audio-<%=artist.id%>" src="<%=artist.song_preview%>"></audio>
-          <span id="play-btn-<%=artist.id%>" class="glyphicon glyphicon-play" aria-hidden="true"></span>
-          <span id="pause-btn-<%=artist.id%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
-          <br>
+  <div id="all-events-container">
+    <% i = 0 %>
+    <% while i < @events.length %>
+      <div id="event-wrapper-<%=i%>" class="event-wrapper">
+        <span class="glyphicon glyphicon-chevron-left back-btn"></span>
+        <span class="glyphicon glyphicon-chevron-right forward-btn"></span>
+        <div class="event-box">
+          <div class="artist-box">
+            <% @events[i].artists.each do |artist| %>
+              <div id="artist-wrapper-<%= artist.id %>" class="artist-wrapper">
+                <%= artist.name %>
+                <audio id="audio-<%=artist.id%>" src="<%=artist.song_preview%>"></audio>
+                <span id="play-btn-<%=artist.id%>" class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                <span id="pause-btn-<%=artist.id%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                <br>
+              </div>
+            <% end %>
+          </div>
         </div>
-      <% end %>
-        <div class="venue-name">
-          <%= event.venue_name %>
-        </div>
-        <div class="event-time">
-          <%= event.datetime %>
+        <div class="venue-box">
+          <div class="venue-name">
+            <%= @events[i].venue_name %>
+          </div>
+          <div class="event-time">
+            <%= @events[i].datetime.strftime("%I:%M %p") %>
+          </div>
         </div>
         <div class="buy-tickets">
-          <a href="<%= event.ticket_url %>" class="btn btn-primary">Get Tickets</a>
+          <a href="<%= @events[i].ticket_url %>" class="btn btn-primary">Get Tickets</a>
         </div>
+      </div>
+      <% i += 1 %>
+    <% end %>
   </div>
-<% end %>
+
+</div>
+
 
 <script type="text/javascript">
+  events = <%= raw @events.to_json(:include => :artists) %>
+  for(var i=1; i<events.length; i++) {
+    $("#event-wrapper-" + i).hide();
+  }
 
 </script>
