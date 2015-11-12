@@ -1,6 +1,6 @@
 <div class="container">
   <div class="header">
-    <h1><%= @city_date.city.capitalize %></h1>
+    <h1><%= @city_date.city %></h1>
     <h3><%= @city_date.date %></h3>
   </div>
 
@@ -8,27 +8,28 @@
     <% i = 0 %>
     <% while i < @events.length %>
       <div id="event-wrapper-<%=i%>" class="event-wrapper">
-        <span class="glyphicon glyphicon-chevron-left back-btn"></span>
-        <span class="glyphicon glyphicon-chevron-right forward-btn"></span>
-        <div class="event-box">
+        <span class="glyphicon glyphicon-chevron-left back-btn" id="back-btn-<%=i%>"></span>
+        <span class="glyphicon glyphicon-chevron-right forward-btn" id="forward-btn-<%=i%>"></span>
+        <div class="event-flexbox">
           <div class="artist-box">
-            <% @events[i].artists.each do |artist| %>
-              <div id="artist-wrapper-<%= artist.id %>" class="artist-wrapper">
-                <%= artist.name %>
-                <audio id="audio-<%=artist.id%>" src="<%=artist.song_preview%>"></audio>
-                <span id="play-btn-<%=artist.id%>" class="glyphicon glyphicon-play" aria-hidden="true"></span>
-                <span id="pause-btn-<%=artist.id%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
-                <br>
-              </div>
-            <% end %>
+              <% j = 0 %>
+              <% while j < @events[i].artists.length %>
+                <div id="artist-wrapper-<%=i%>-<%=j%>" class="artist-wrapper row">
+                  <audio id="audio-<%=i%>-<%=j%>" src="<%=@events[i].artists[j].song_preview%>"></audio>
+                  <span id="play-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                  <span id="pause-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                  <%= @events[i].artists[j].name %>
+                </div>
+              <% j += 1 %>
+              <% end %>
           </div>
-        </div>
-        <div class="venue-box">
-          <div class="venue-name">
-            <%= @events[i].venue_name %>
-          </div>
-          <div class="event-time">
-            <%= @events[i].datetime.strftime("%I:%M %p") %>
+          <div class="venue-box">
+            <div class="venue-name">
+              @ <%= @events[i].venue_name %>
+            </div>
+            <div class="event-time">
+              <%= @events[i].datetime.strftime("%I:%M %p") %>
+            </div>
           </div>
         </div>
         <div class="buy-tickets">
@@ -44,8 +45,75 @@
 
 <script type="text/javascript">
   events = <%= raw @events.to_json(:include => :artists) %>
-  for(var i=1; i<events.length; i++) {
+  artists = <%= raw @artists.to_json %>
+
+  function pauseAllAudio() {
+    var audios = document.getElementsByTagName('audio');
+    for(var h = 0; h < audios.length; h++){
+      audios[h].pause();
+    }
+  }
+
+  $(".event-wrapper").hide();
+  var i = 0
+  $("#event-wrapper-" + i).show();
+  document.querySelector("#back-btn-0").style.color = "#CA5447"
+  document.querySelector("#back-btn-0").style.cursor = "default"
+
+
+  $(".forward-btn").on("click", function() {
+    pauseAllAudio();
+    $(".back-btn").show();
     $("#event-wrapper-" + i).hide();
+    i++
+    $("#event-wrapper-" + i).show();
+    if (i === events.length - 1) {
+      document.querySelector("#forward-btn-" + i).style.color = "#CA5447"
+      document.querySelector("#forward-btn-" + i).style.cursor = "default"
+    }
+  });
+  $("#event-wrapper-" + i).show();
+  $(".back-btn").on("click", function() {
+    pauseAllAudio();
+    $(".forward-btn").show();
+    $("#event-wrapper-" + i).hide();
+    i--
+    $("#event-wrapper-" + i).show();
+    if (i === 0) {
+      document.querySelector("#back-btn-0").style.color = "#CA5447"
+      document.querySelector("#back-btn-0").style.cursor = "default"
+    }
+  });
+
+  $(".glyphicon-pause").hide();
+  for (var j=0; j < events.length; j++) {
+      var eventsWrapper = document.querySelector("#event-wrapper-" + j);
+      eventsWrapper.addEventListener("click", playToggle, false);
+  }
+
+  function playToggle(e) {
+      if (e.target !== e.currentTarget) {
+          var clickedItem = e.target.id;
+          var itemID = clickedItem.substring((clickedItem.indexOf("n-") + 2), clickedItem.length)
+          if (clickedItem.charAt(1) === "l") {
+            var audios = document.getElementsByTagName('audio');
+              for(var h = 0; h < audios.length; h++){
+                if(audios[h] != e.target){
+                  audios[h].pause();
+                }
+              }
+            $('.glyphicon-pause').hide();
+            $('.glyphicon-play').show();
+            $('#play-btn-' + itemID).hide();
+            $('#pause-btn-' + itemID).show();
+            document.getElementById("audio-" + itemID).play();
+          } else if (clickedItem.charAt(1) === "a") {
+            $('#play-btn-' + itemID).show();
+            $('#pause-btn-' + itemID).hide();
+            document.getElementById("audio-" + itemID).pause();
+          }
+      }
+    e.stopPropagation();
   }
 
 </script>

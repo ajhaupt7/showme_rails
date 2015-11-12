@@ -100,7 +100,7 @@ module Api
     city_events_month("chicago", "IL")
     city_events_month("houston", "TX")
     city_events_month("philadelphia", "PA")
-    city_events_month("phoenix", "AR")
+    city_events_month("phoenix", "AZ")
     city_events_month("san antonio", "TX")
     city_events_month("san diego", "CA")
     city_events_month("dallas", "TX")
