@@ -5,3 +5,7 @@ end
 task :update_events => :environment do
   update_events
 end
+
+task :clean_artists_database => :environment do
+  clean_artists_database
+end

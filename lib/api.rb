@@ -142,7 +142,7 @@ module Api
       else
         update_events_search(city_date.date, city_date.city, city_date.state)
       end
-      search_bandsintown(city_date.date + 31, city_date.city, city_date.state)
+      search_bandsintown(city_date.date + 30, city_date.city, city_date.state)
     end
   end
 
@@ -210,5 +210,19 @@ module Api
         return false
       end
       return found_events
+  end
+
+  def clean_artists_database
+    Artist.all.each do |artist|
+      query = artist.name.gsub(" ", "+")
+      begin
+        base = RestClient.get("http://api.bandsintown.com/artists/#{query}.json?app_id=dffddsafdsfsdf3242wf")
+        found_artist = JSON.parse(base)
+        puts "#{found_artist['name']}"
+        artist.destroy if found_artist['upcoming_events_count'] == 0
+      rescue => e
+        puts "#{query}: #{e}"
+      end
+    end
   end
 end
