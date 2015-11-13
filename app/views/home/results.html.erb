@@ -40,7 +40,7 @@
         <div class="buy-tickets">
           <a href="<%= @events[i].ticket_url %>" target="_blank" class="btn btn-primary">Get Tickets</a>
         </div>
-        <a class="home-btn" href="/"><i class="fa fa-arrow-circle-o-left"></i>&nbsp; search again</a>
+        <a class="home-btn" href="/"><i class="fa fa-long-arrow-left"></i>&nbsp; search again</a>
       </div>
       <% i += 1 %>
     <% end %>
@@ -87,9 +87,9 @@
   $(".back-btn").on("click", function() {
     pauseAllAudio();
     $(".forward-btn").show();
-    $("#event-wrapper-" + i).effect("slide", {direction: "left", mode:"hide"}, 200);
+    $("#event-wrapper-" + i).effect("slide", {direction: "right", mode:"hide"}, 200);
     i--
-    $("#event-wrapper-" + i).delay(200).effect("slide", {direction: "right", mode:"show"}, 600);
+    $("#event-wrapper-" + i).delay(200).effect("slide", {direction: "left", mode:"show"}, 600);
     if (i === 0) {
       document.querySelector("#back-btn-0").style.color = "#CA5447"
       document.querySelector("#back-btn-0").style.cursor = "default"
