@@ -137,8 +137,9 @@ module Api
 
   def update_events
     CityDate.all.each do |city_date|
-      if CityDate.date < Date.today
-        CityDate.destroy
+      if city_date.date < Date.today
+        city_date.destroy
+        puts city_date.city + " " + city_date.date.to_s
       else
         update_events_search(city_date.date, city_date.city, city_date.state)
       end
@@ -162,7 +163,8 @@ module Api
         if CityDate.find_by(date: date, city: city, state:state)
           city_date = CityDate.find_by(date: date, city: city, state:state)
         else
-          city_date = CityDate.create(date: date, city: city, state:state)
+          city_date.destroy
+          return false
         end
 
         found_artist = nil

@@ -130,6 +130,7 @@ html, body {
   background: #CA5447;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
   overflow-x: hidden;
   height: 100%;
   width: 100%;
@@ -156,9 +157,11 @@ html, body {
 .btn {
   border-radius: 0px;
   transition: all 0.4s ease-out;
-  min-width: 20rem;
-  height: 5rem;
-  line-height: 3.2rem;
+  margin-bottom: 3%;
+  font-size: 2rem;
+  width: 25rem;
+  height: 6rem;
+  line-height: 2;
 }
 
 .btn-primary {
@@ -189,15 +192,16 @@ html, body {
     border: transparent;
     margin-left:0;
     outline: none;
-    height: 4rem;
-    width: 22rem;
+    height: 6rem;
+    width: 27rem;
     text-align:center;
+    font-size: 2rem;
   }
   .datepicker {
     cursor: pointer;
   }
   #city-input {
-    width: 30rem;
+    width: 34rem;
     -webkit-text-fill-color: white !important;
   }
   #city-input:-webkit-autofill,
@@ -208,14 +212,15 @@ html, body {
   }
   #state-input {
     background: rgba(0,0,0,0.1);
+    font-size: 2rem;
     outline: none;
-    width: 14rem;
+    width: 19rem;
     padding-left: 1.5rem;
     cursor: pointer;
     line-height: 1;
     border: 0;
     border-radius: 0;
-    height: 4rem;
+    height: 6rem;
     opacity:0.75;
     -webkit-appearance: none;
   }
@@ -231,9 +236,10 @@ html, body {
   display:none;
   background: rgba(255,255,255,0.8);
   color: $primary-very-dark;
-  width: 22rem;
+  width: 27rem;
   text-align:center;
   padding: 5px 5px 5px 5px;
+  font-size: 2rem;
   &:hover {
     cursor: pointer;
   }
@@ -375,7 +381,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
   #about-content {
     background: rgba(0,0,0,0.1);
     color: $primary-light;
-    text-align: left;
+    text-align: center;
     -webkit-box-flex: 1;
     -moz-box-flex: 1;
     -webkit-flex: 1;
@@ -394,7 +400,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
   text-align:center;
   color: $primary-very-light;
   .event-wrapper {
-    width: 50%;
+    width: 65%;
     margin:auto;
     .back-btn, .forward-btn {
       cursor: pointer;
@@ -430,7 +436,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
         -webkit-flex: 1;
         -ms-flex: 1;
         flex: 1;
-        padding: 9% 2% 8% 2%;
+        padding: 9% 3% 8% 3%;
         font-size: 2.5rem;
       }
       .venue-box {
@@ -447,16 +453,6 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
   }
 }
 
-.buy-tickets {
-  margin-bottom: 3%;
-  a {
-    font-size: 2rem;
-    width: 25rem;
-    height: 6rem;
-    line-height: 2;
-  }
-}
-
 .home-btn {
   font-size: 2rem;
   color: $primary;
@@ -465,4 +461,12 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
     color: $primary-dark;
     text-decoration: none;
   }
+}
+
+.glyphicon-volume-up, .glyphicon-pause {
+  font-size: 1.6rem;
+}
+
+.modal-backdrop {
+  z-index: -1;
 }

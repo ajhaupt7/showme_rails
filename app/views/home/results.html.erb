@@ -1,7 +1,9 @@
 <div class="container">
   <div class="header">
     <h1><%= @city_date.city %></h1>
-    <h3><%= @city_date.date %></h3>
+    <h3><%= " #{@events.length} events on " if @events.length > 1 %>
+    <%= " #{@events.length} event on " if @events.length == 1 %>
+    <%= @city_date.date %></h3>
   </div>
 
   <div id="all-events-container">
@@ -15,10 +17,10 @@
               <% j = 0 %>
               <% while j < @events[i].artists.length %>
                 <div id="artist-wrapper-<%=i%>-<%=j%>" class="artist-wrapper row">
+                  <%= @events[i].artists[j].name %>&nbsp;
                   <audio id="audio-<%=i%>-<%=j%>" src="<%=@events[i].artists[j].song_preview%>"></audio>
-                  <span id="play-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                  <span id="play-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>
                   <span id="pause-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
-                  <%= @events[i].artists[j].name %>
                 </div>
               <% j += 1 %>
               <% end %>
@@ -47,7 +49,6 @@
 <script type="text/javascript">
   events = <%= raw @events.to_json(:include => :artists) %>
   artists = <%= raw @artists.to_json %>
-
   function pauseAllAudio() {
     var audios = document.getElementsByTagName('audio');
     for(var h = 0; h < audios.length; h++){
@@ -61,7 +62,11 @@
   document.querySelector("#back-btn-0").style.color = "#CA5447"
   document.querySelector("#back-btn-0").style.cursor = "default"
   $("#back-btn-0").off();
-
+  if (events.length === 1) {
+    document.querySelector("#forward-btn-" + i).style.color = "#CA5447"
+    document.querySelector("#forward-btn-" + i).style.cursor = "default"
+    $("#forward-btn-" + i).off();
+  }
 
   $(".forward-btn").on("click", function() {
     pauseAllAudio();
@@ -107,7 +112,7 @@
                 }
               }
             $('.glyphicon-pause').hide();
-            $('.glyphicon-play').show();
+            $('.glyphicon-volume-up').show();
             $('#play-btn-' + itemID).hide();
             $('#pause-btn-' + itemID).show();
             document.getElementById("audio-" + itemID).play();
