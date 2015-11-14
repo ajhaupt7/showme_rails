@@ -1,12 +1,14 @@
+<a id="howitworks-modal-btn" data-toggle="modal" data-target="#howitworks-modal"><i class="fa fa-question-circle"></i></a>
+
 <!-- Modal -->
-<div id="artist-modal-<%=i%>-<%=j%>" class="modal fade" role="dialog">
+<div id="howitworks-modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><%= @events[i].artists[j].name %></h4>
+        <h4 class="modal-title">How it Works</h4>
       </div>
       <div class="modal-body">
         <p>Some text in the modal.</p>

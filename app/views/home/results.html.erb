@@ -20,10 +20,29 @@
               <% j = 0 %>
               <% while j < @events[i].artists.length %>
                 <div id="artist-wrapper-<%=i%>-<%=j%>" class="artist-wrapper row">
-                  <%= @events[i].artists[j].name %>&nbsp;
+                  <span id="modal-trigger-<%=i%>-<%=j%>", class="modal-trigger"><%= @events[i].artists[j].name %></span>&nbsp;
                   <audio id="audio-<%=i%>-<%=j%>" src="<%=@events[i].artists[j].song_preview%>"></audio>
                   <span id="play-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>
                   <span id="pause-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                  <div id="artist-modal-<%=i%>-<%=j%>" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-sm">
+
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title"><%= @events[i].artists[j].name %></h4>
+                        </div>
+                        <div class="modal-body">
+                          <%= image_tag "#{@events[i].artists[j].image_url}" %>
+                        </div>
+                        <div class="modal-footer">
+                          <a href="<%=@events[i].artists[j].spotify_link%>" target="_blank" id="spotify-link"><%=image_tag "listen_on_spotify-black"%></a>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
                 </div>
               <% j += 1 %>
               <% end %>
@@ -100,13 +119,14 @@
   $(".glyphicon-pause").hide();
   for (var j=0; j < events.length; j++) {
       var eventsWrapper = document.querySelector("#event-wrapper-" + j);
-      eventsWrapper.addEventListener("click", playToggle, false);
+      eventsWrapper.addEventListener("click", actionToggle, false);
   }
 
-  function playToggle(e) {
+  function actionToggle(e) {
       if (e.target !== e.currentTarget) {
           var clickedItem = e.target.id;
-          var itemID = clickedItem.substring((clickedItem.indexOf("n-") + 2), clickedItem.length)
+          var playItemID = clickedItem.substring((clickedItem.indexOf("n-") + 2), clickedItem.length)
+          var modalItemID = clickedItem.substring((clickedItem.indexOf("r-") + 2), clickedItem.length)
           if (clickedItem.charAt(1) === "l") {
             var audios = document.getElementsByTagName('audio');
               for(var h = 0; h < audios.length; h++){
@@ -116,13 +136,16 @@
               }
             $('.glyphicon-pause').hide();
             $('.glyphicon-volume-up').show();
-            $('#play-btn-' + itemID).hide();
-            $('#pause-btn-' + itemID).show();
-            document.getElementById("audio-" + itemID).play();
+            $('#play-btn-' + playItemID).hide();
+            $('#pause-btn-' + playItemID).show();
+            document.getElementById("audio-" + playItemID).play();
           } else if (clickedItem.charAt(1) === "a") {
-            $('#play-btn-' + itemID).show();
-            $('#pause-btn-' + itemID).hide();
-            document.getElementById("audio-" + itemID).pause();
+            $('#play-btn-' + playItemID).show();
+            $('#pause-btn-' + playItemID).hide();
+            document.getElementById("audio-" + playItemID).pause();
+          } else if (clickedItem.charAt(0) === "m") {
+            debugger;
+            $('#artist-modal-' + modalItemID).modal();
           }
       }
     e.stopPropagation();
