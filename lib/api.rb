@@ -178,7 +178,6 @@ module Api
             city_date.events << new_event
 
             event['artists'].each do |artist|
-              artist['name'].sub!('+', "Plus")
               spotify_search_result = search_spotify(artist['name'].downcase)
                 if spotify_search_result != nil
                   if (Artist.find_by(song_preview:spotify_search_result.top_tracks(:US).first.preview_url) != nil)

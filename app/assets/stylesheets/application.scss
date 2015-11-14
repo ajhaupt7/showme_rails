@@ -505,10 +505,12 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
 
 .modal-body img {
   width: 25rem;
+  box-shadow: 1px 1px 4px #333;
 }
 
 #spotify-link img {
   display: block;
   margin: auto;
   width: 20rem;
+  box-shadow: 1px 1px 2px #333;
 }
