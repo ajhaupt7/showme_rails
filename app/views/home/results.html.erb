@@ -90,9 +90,10 @@
       latLng = new google.maps.LatLng(latitude, longitude)
       var mapOptions = {
         center: latLng,
-        zoom: 13,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         zoomControl: true,
+        styles:  [{"stylers":[{"hue":"#dd0d0d"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]}]
       }
       map = new google.maps.Map(document.getElementById('map-canvas-' + i), mapOptions);
     var marker = new google.maps.Marker({
