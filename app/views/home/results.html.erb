@@ -48,33 +48,8 @@
               <% end %>
           </div>
           <div class="venue-box">
-            <div class="venue-name">
-            <span id="venue-modal-trigger-<%=i%>" class="modal-trigger">@ <%= @events[i].venue_name %></span>
-            </div>
-            <div class="event-time">
-              <%= @events[i].datetime.strftime("%I:%M %p") %>
-            </div>
-            <div id="map-canvas-<%=i%>" style="width: 300px; height: 200px"><div id="map-<%=i%>" style="height:100%;"></div></div>
-
-            <div id="venue-modal-<%=i%>" class="modal fade" role="dialog">
-              <div class="modal-dialog modal-sm">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"><%= @events[i].venue_name %></h4>
-                  </div>
-                  <div class="modal-body">
-                  </div>
-                  <div class="modal-footer">
-
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
+            <%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %>
+            <div id="map-canvas-<%=i%>" class="venue-map"><div id="map-<%=i%>" style="height:100%;"></div></div>
           </div>
         </div>
         <div class="buy-tickets">
@@ -113,10 +88,13 @@
       latitude = parseFloat(events[i].venue_lat)
       longitude = parseFloat(events[i].venue_long)
       latLng = new google.maps.LatLng(latitude, longitude)
-      map = new google.maps.Map(document.getElementById('map-canvas-' + i), {
-      center: latLng,
-      zoom: 13
-    });
+      var mapOptions = {
+        center: latLng,
+        zoom: 13,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoomControl: true,
+      }
+      map = new google.maps.Map(document.getElementById('map-canvas-' + i), mapOptions);
     var marker = new google.maps.Marker({
       position: latLng,
       map: map,
@@ -124,6 +102,9 @@
   }
 
   google.maps.event.addDomListener(window, 'load', initMap);
+  $("#venue-modal-0").on("shown.bs.modal", function () {
+      google.maps.event.trigger(map, "resize");
+  });
 
   function pauseAllAudio() {
     var audios = document.getElementsByTagName('audio');
