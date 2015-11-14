@@ -20,7 +20,7 @@
               <% j = 0 %>
               <% while j < @events[i].artists.length %>
                 <div id="artist-wrapper-<%=i%>-<%=j%>" class="artist-wrapper row">
-                  <span id="modal-trigger-<%=i%>-<%=j%>", class="modal-trigger"><%= @events[i].artists[j].name %></span>&nbsp;
+                  <span id="artist-modal-trigger-<%=i%>-<%=j%>" class="modal-trigger"><%= @events[i].artists[j].name %></span>&nbsp;
                   <audio id="audio-<%=i%>-<%=j%>" src="<%=@events[i].artists[j].song_preview%>"></audio>
                   <span id="play-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>
                   <span id="pause-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
@@ -49,11 +49,32 @@
           </div>
           <div class="venue-box">
             <div class="venue-name">
-              @ <%= @events[i].venue_name %>
+            <span id="venue-modal-trigger-<%=i%>" class="modal-trigger">@ <%= @events[i].venue_name %></span>
             </div>
             <div class="event-time">
               <%= @events[i].datetime.strftime("%I:%M %p") %>
             </div>
+            <div id="map-canvas-<%=i%>" style="width: 300px; height: 200px"><div id="map-<%=i%>" style="height:100%;"></div></div>
+
+            <div id="venue-modal-<%=i%>" class="modal fade" role="dialog">
+              <div class="modal-dialog modal-sm">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><%= @events[i].venue_name %></h4>
+                  </div>
+                  <div class="modal-body">
+                  </div>
+                  <div class="modal-footer">
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
         </div>
         <div class="buy-tickets">
@@ -64,8 +85,6 @@
       <% i += 1 %>
     <% end %>
   </div>
-
-  <div id="map-canvas" style="width: 300px; height: 300px"><div id="map" style="height:100%;"></div></div>
 
 </div>
 
@@ -81,6 +100,31 @@
 <script type="text/javascript">
   events = <%= raw @events.to_json(:include => :artists) %>
   artists = <%= raw @artists.to_json %>
+
+  // Venue maps
+
+  var latitude;
+  var longitude;
+  var latLng;
+  var map;
+  var i = 0;
+
+  function initMap() {
+      latitude = parseFloat(events[i].venue_lat)
+      longitude = parseFloat(events[i].venue_long)
+      latLng = new google.maps.LatLng(latitude, longitude)
+      map = new google.maps.Map(document.getElementById('map-canvas-' + i), {
+      center: latLng,
+      zoom: 13
+    });
+    var marker = new google.maps.Marker({
+      position: latLng,
+      map: map,
+    });
+  }
+
+  google.maps.event.addDomListener(window, 'load', initMap);
+
   function pauseAllAudio() {
     var audios = document.getElementsByTagName('audio');
     for(var h = 0; h < audios.length; h++){
@@ -88,8 +132,8 @@
     }
   }
 
+  // Initialize
   $(".event-wrapper").hide();
-  var i = 0
   $("#event-wrapper-" + i).show();
   document.querySelector("#back-btn-0").style.color = "#CA5447"
   document.querySelector("#back-btn-0").style.cursor = "default"
@@ -100,12 +144,14 @@
     $("#forward-btn-" + i).off();
   }
 
+  // Loading New Event on Click
   $(".forward-btn").on("click", function() {
     pauseAllAudio();
     $(".back-btn").show();
     $("#event-wrapper-" + i).effect("slide", {direction: "left", mode:"hide"}, 200);
     i++
     $("#event-wrapper-" + i).effect("slide", {direction: "right", mode:"show"}, 800);
+    initMap();
     if (i === events.length - 1) {
       document.querySelector("#forward-btn-" + i).style.color = "#CA5447"
       document.querySelector("#forward-btn-" + i).style.cursor = "default"
@@ -153,26 +199,13 @@
             $('#play-btn-' + playItemID).show();
             $('#pause-btn-' + playItemID).hide();
             document.getElementById("audio-" + playItemID).pause();
-          } else if (clickedItem.charAt(0) === "m") {
-            debugger;
+          } else if (clickedItem.charAt(0) === "a") {
             $('#artist-modal-' + modalItemID).modal();
+          } else if (clickedItem.charAt(0) === "v") {
+            $('#venue-modal-' + modalItemID).modal();
           }
       }
     e.stopPropagation();
   }
-
-
-  var latitude = parseFloat(events[0].venue_lat)
-  var longitude = parseFloat(events[0].venue_long)
-  var latLng = new google.maps.LatLng(latitude, longitude)
-
-  function initMap() {
-    var map = new google.maps.Map(document.getElementById('map-canvas'), {
-      center: latLng,
-      zoom: 11
-    });
-  }
-
-  google.maps.event.addDomListener(window, 'load', initMap);
 
 </script>
