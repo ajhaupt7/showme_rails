@@ -420,6 +420,9 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
 @media(max-width: 500px) {
   .event-wrapper {
     width: 95% !important;
+    .back-btn, .forward-btn {
+      margin-top: 48% !important;
+    }
     .event-flexbox {
       .artist-box {
         font-size: 2rem !important;
