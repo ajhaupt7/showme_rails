@@ -27,8 +27,6 @@
                   <span id="pause-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
                   <div id="artist-modal-<%=i%>-<%=j%>" class="modal fade" role="dialog">
                     <div class="modal-dialog modal-sm">
-
-                      <!-- Modal content-->
                       <div class="modal-content">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -41,7 +39,6 @@
                           <a href="<%=@events[i].artists[j].spotify_link%>" target="_blank" id="spotify-link"><%=image_tag "listen_on_spotify-black.png"%></a>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -107,6 +104,8 @@
       google.maps.event.trigger(map, "resize");
   });
 
+
+  // Pause All Audio When Navigating to Next Event
   function pauseAllAudio() {
     var audios = document.getElementsByTagName('audio');
     for(var h = 0; h < audios.length; h++){
@@ -117,6 +116,7 @@
   // Initialize
   $(".event-wrapper").hide();
   $("#event-wrapper-" + i).show();
+  $(".glyphicon-pause").hide();
   document.querySelector("#back-btn-0").style.color = "#CA5447"
   document.querySelector("#back-btn-0").style.cursor = "default"
   $("#back-btn-0").off();
@@ -126,8 +126,8 @@
     $("#forward-btn-" + i).off();
   }
 
-  // Loading New Event on Click
-  $(".forward-btn").on("click", function() {
+  // Next Event Action Callback
+  function nextEvent() {
     pauseAllAudio();
     $(".back-btn").show();
     $("#event-wrapper-" + i).effect("slide", {direction: "left", mode:"hide"}, 200);
@@ -139,9 +139,10 @@
       document.querySelector("#forward-btn-" + i).style.cursor = "default"
       $("#forward-btn-" + i).off();
     }
-  });
-  $("#event-wrapper-" + i).show();
-  $(".back-btn").on("click", function() {
+  }
+
+  // Previous Event Action Callback
+  function previousEvent() {
     pauseAllAudio();
     $(".forward-btn").show();
     $("#event-wrapper-" + i).effect("slide", {direction: "right", mode:"hide"}, 200);
@@ -152,12 +153,34 @@
       document.querySelector("#back-btn-0").style.cursor = "default"
       $("#back-btn-" + i).off();
     }
+  }
+
+  // Click Events
+  $(".forward-btn").on("click", function() {
+    nextEvent();
   });
 
-  $(".glyphicon-pause").hide();
+  $(".back-btn").on("click", function() {
+    previousEvent();
+  });
+
+  // Left/Right Arrow Events
+  $('body').keydown(function(e){
+    if (event.which === 37) {
+      if (i !== 0) {
+        previousEvent();
+      }
+    } else if (event.which === 39) {
+      if (i !== events.length - 1) {
+        nextEvent();
+      }
+    }
+  });
+
+  // Event Handlers for Play/Pause and Artist Modals
   for (var j=0; j < events.length; j++) {
-      var eventsWrapper = document.querySelector("#event-wrapper-" + j);
-      eventsWrapper.addEventListener("click", actionToggle, false);
+    var eventsWrapper = document.querySelector("#event-wrapper-" + j);
+    eventsWrapper.addEventListener("click", actionToggle, false);
   }
 
   function actionToggle(e) {
