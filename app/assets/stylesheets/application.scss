@@ -96,13 +96,22 @@ html, body {
   }
 }
 
-#howitworks-modal-btn {
-  width: 20rem;
-  height: 3rem;
-  font-size: 1rem;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  line-height: 2;
+#howitworks-modal-trigger {
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 2rem;
+  color: $primary;
+  transition: all 0.5s ease-out;
+  &:hover, &:active, &:focus {
+    color: $primary-dark;
+    text-decoration: none;
+  }
+}
+
+.howitworks-modal-body {
+  color: $primary-very-dark;
 }
 
 #search-form {
