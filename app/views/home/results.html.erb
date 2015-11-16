@@ -1,63 +1,60 @@
-<div class="container">
-  <a class="home-btn" href="/"><i class="fa fa-arrow-circle-left"></i>&nbsp; search again</a>
-  <div class="header">
-    <h1><%= @city_date.city %></h1>
-    <h3><%= " #{@events.length} events on " if @events.length > 1 %>
-    <%= " #{@events.length} event on " if @events.length == 1 %>
-    <%= @city_date.date %></h3>
-  </div>
+<a class="home-btn" href="/"><i class="fa fa-arrow-circle-left"></i>&nbsp; search again</a>
+<div class="header">
+  <h1><%= @city_date.city %></h1>
+  <h3><%= " #{@events.length} events on " if @events.length > 1 %>
+  <%= " #{@events.length} event on " if @events.length == 1 %>
+  <%= @city_date.date %></h3>
+</div>
 
-  <div id="all-events-container">
-    <% if @events.length == 0 %>
-    <br><br><br>  <h1>No events today <br><a class="home-btn" href="/"><i class="fa fa-arrow-circle-o-left"></i>&nbsp; search again</a></h1>
-    <% end %>
-    <% i = 0 %>
-    <% while i < @events.length %>
-      <div id="event-wrapper-<%=i%>" class="event-wrapper">
-        <span class="glyphicon glyphicon-chevron-left back-btn" id="back-btn-<%=i%>"></span>
-        <span class="glyphicon glyphicon-chevron-right forward-btn" id="forward-btn-<%=i%>"></span>
-        <div class="event-flexbox">
-          <div class="artist-box">
-              <% j = 0 %>
-              <% while j < @events[i].artists.length %>
-                <div id="artist-wrapper-<%=i%>-<%=j%>" class="artist-wrapper row">
-                  <span id="artist-modal-trigger-<%=i%>-<%=j%>" class="modal-trigger"><%= @events[i].artists[j].name %></span>&nbsp;
-                  <audio id="audio-<%=i%>-<%=j%>" src="<%=@events[i].artists[j].song_preview%>"></audio>
-                  <span id="play-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>
-                  <span id="pause-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
-                  <div id="artist-modal-<%=i%>-<%=j%>" class="modal fade" role="dialog">
-                    <div class="modal-dialog modal-sm">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          <h4 class="modal-title"><%= @events[i].artists[j].name %></h4>
-                        </div>
-                        <div class="modal-body">
-                          <%= image_tag "#{@events[i].artists[j].image_url}" %>
-                        </div>
-                        <div class="modal-footer">
-                          <a href="<%=@events[i].artists[j].spotify_link%>" target="_blank" id="spotify-link"><%=image_tag "listen_on_spotify-black.png"%></a>
-                        </div>
+<div id="all-events-container">
+  <% if @events.length == 0 %>
+  <br><br><br>  <h1>No events today <br><a class="home-btn" href="/"><i class="fa fa-arrow-circle-o-left"></i>&nbsp; search again</a></h1>
+  <% end %>
+  <% i = 0 %>
+  <% while i < @events.length %>
+    <div id="event-wrapper-<%=i%>" class="event-wrapper">
+      <span class="glyphicon glyphicon-chevron-left back-btn" id="back-btn-<%=i%>"></span>
+      <span class="glyphicon glyphicon-chevron-right forward-btn" id="forward-btn-<%=i%>"></span>
+      <div class="event-flexbox">
+        <div class="artist-box">
+            <% j = 0 %>
+            <% while j < @events[i].artists.length %>
+              <div id="artist-wrapper-<%=i%>-<%=j%>" class="artist-wrapper row">
+                <span id="artist-modal-trigger-<%=i%>-<%=j%>" class="modal-trigger"><%= @events[i].artists[j].name %></span>&nbsp;
+                <audio id="audio-<%=i%>-<%=j%>" src="<%=@events[i].artists[j].song_preview%>"></audio>
+                <span id="play-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>
+                <span id="pause-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                <div id="artist-modal-<%=i%>-<%=j%>" class="modal fade" role="dialog">
+                  <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><%= @events[i].artists[j].name %></h4>
+                      </div>
+                      <div class="modal-body">
+                        <%= image_tag "#{@events[i].artists[j].image_url}" %>
+                      </div>
+                      <div class="modal-footer">
+                        <a href="<%=@events[i].artists[j].spotify_link%>" target="_blank" id="spotify-link"><%=image_tag "listen_on_spotify-black.png"%></a>
                       </div>
                     </div>
                   </div>
                 </div>
-              <% j += 1 %>
-              <% end %>
-          </div>
-          <div class="venue-box">
-            <%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %>
-            <div id="map-canvas-<%=i%>" class="venue-map"><div id="map-<%=i%>" style="height:100%;"></div></div>
-          </div>
+              </div>
+            <% j += 1 %>
+            <% end %>
         </div>
-        <div class="buy-tickets">
-          <a href="<%= @events[i].ticket_url %>" target="_blank" class="btn btn-primary">Get Tickets</a>
+        <div class="venue-box">
+          <%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %>
+          <div id="map-canvas-<%=i%>" class="venue-map"><div id="map-<%=i%>" style="height:100%;"></div></div>
         </div>
       </div>
-      <% i += 1 %>
-    <% end %>
-  </div>
-
+      <div class="buy-tickets">
+        <a href="<%= @events[i].ticket_url %>" target="_blank" class="btn btn-primary">Get Tickets</a>
+      </div>
+    </div>
+    <% i += 1 %>
+  <% end %>
 </div>
 
 <script type="text/javascript"
