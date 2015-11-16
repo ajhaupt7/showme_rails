@@ -1,4 +1,5 @@
 <a class="home-btn" href="/"><i class="fa fa-arrow-circle-left"></i>&nbsp; search again</a>
+
 <div class="header">
   <h1><%= @city_date.city %></h1>
   <h3><%= " #{@events.length} events on " if @events.length > 1 %>
@@ -173,6 +174,10 @@
       }
     }
   });
+
+  $('body').on("swiperight", function() {
+    alert("swiped right");
+  })
 
   // Event Handlers for Play/Pause and Artist Modals
   for (var j=0; j < events.length; j++) {
