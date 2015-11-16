@@ -11,7 +11,6 @@ module Api
       artists.each do |artist|
         if artist.name.downcase == query
           found_artist = artist
-          puts "#{artist.name}"
           break
         end
       end
@@ -88,7 +87,7 @@ module Api
     current_date = DateTime.now
     input_date = current_date.strftime("%Y-%m-%d")
     i = 0
-    while i < 31
+    while i < 15
       search_bandsintown(input_date, city, state)
       i += 1
       current_date = DateTime.now + i
@@ -136,14 +135,14 @@ module Api
   end
 
   def update_events
+    biggest_cities = %w(seattle milwaukee new\ orleans minneapolis raleigh omaha atlanta kansas\ city las\ vegas portland oklahoma\ city baltimore nashville boston memphis washington denver el\ paso detroit charlotte fort\ worth columbus san\ francisco indianapolis jacksonville austin san\ jose dallas san\ antonio san\ diego phoenix philadelphia houston chicago los\ angeles new\ york)
     CityDate.all.each do |city_date|
-      if city_date.date < Date.today
+      if city_date.date < Date.today || !biggest_cities.include?(city_date.city.downcase)
         city_date.destroy
-        puts city_date.city + " " + city_date.date.to_s
       else
         update_events_search(city_date.date, city_date.city, city_date.state)
       end
-      search_bandsintown(city_date.date + 30, city_date.city, city_date.state)
+      search_bandsintown(city_date.date + 14, city_date.city, city_date.state)
     end
   end
 
