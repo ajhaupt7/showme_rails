@@ -134,23 +134,61 @@ module Api
     city_events_month("milwaukee", "WI")
   end
 
+  def update_biggest_cities
+    search_bandsintown(Date.today + 14, "seattle", "WA")
+    search_bandsintown(Date.today + 14, "new york", "NY")
+    search_bandsintown(Date.today + 14, "los angeles", "CA")
+    search_bandsintown(Date.today + 14, "chicago", "IL")
+    search_bandsintown(Date.today + 14, "houston", "TX")
+    search_bandsintown(Date.today + 14, "philadelphia", "PA")
+    search_bandsintown(Date.today + 14, "phoenix", "AZ")
+    search_bandsintown(Date.today + 14, "san antonio", "TX")
+    search_bandsintown(Date.today + 14, "san diego", "CA")
+    search_bandsintown(Date.today + 14, "dallas", "TX")
+    search_bandsintown(Date.today + 14, "san jose", "CA")
+    search_bandsintown(Date.today + 14, "austin", "TX")
+    search_bandsintown(Date.today + 14, "jacksonville", "FL")
+    search_bandsintown(Date.today + 14, "indianapolis", "IN")
+    search_bandsintown(Date.today + 14, "san francisco", "CA")
+    search_bandsintown(Date.today + 14, "columbus", "OH")
+    search_bandsintown(Date.today + 14, "fort worth", "TX")
+    search_bandsintown(Date.today + 14, "charlotte", "NC")
+    search_bandsintown(Date.today + 14, "detroit", "MI")
+    search_bandsintown(Date.today + 14, "el paso", "TX")
+    search_bandsintown(Date.today + 14, "denver", "CO")
+    search_bandsintown(Date.today + 14, "washington", "DC")
+    search_bandsintown(Date.today + 14, "memphis", "TN")
+    search_bandsintown(Date.today + 14, "boston", "MA")
+    search_bandsintown(Date.today + 14, "nashville", "TN")
+    search_bandsintown(Date.today + 14, "baltimore", "MD")
+    search_bandsintown(Date.today + 14, "oklahoma city", "OK")
+    search_bandsintown(Date.today + 14, "portland", "OR")
+    search_bandsintown(Date.today + 14, "las vegas", "NV")
+    search_bandsintown(Date.today + 14, "kansas city", "MO")
+    search_bandsintown(Date.today + 14, "atlanta", "GA")
+    search_bandsintown(Date.today + 14, "omaha", "NE")
+    search_bandsintown(Date.today + 14, "raleigh", "NC")
+    search_bandsintown(Date.today + 14, "minneapolis", "MN")
+    search_bandsintown(Date.today + 14, "new orleans", "LA")
+    search_bandsintown(Date.today + 14, "milwaukee", "WI")
+  end
+
   def update_events
     biggest_cities = %w(seattle milwaukee new\ orleans minneapolis raleigh omaha atlanta kansas\ city las\ vegas portland oklahoma\ city baltimore nashville boston memphis washington denver el\ paso detroit charlotte fort\ worth columbus san\ francisco indianapolis jacksonville austin san\ jose dallas san\ antonio san\ diego phoenix philadelphia houston chicago los\ angeles new\ york)
     CityDate.all.each do |city_date|
       if city_date.date < Date.today || !biggest_cities.include?(city_date.city.downcase)
         city_date.destroy
+        puts city_date.date + " " + city_date.city
       else
         update_events_search(city_date.date, city_date.city, city_date.state)
       end
-      search_bandsintown(city_date.date + 14, city_date.city, city_date.state)
     end
+    update_biggest_cities
   end
 
   def update_events_search(date, city, state)
     city.downcase!
-    found_events = []
       begin
-
         base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city},#{state}"
         unclean = RestClient.get(base_url)
         events = JSON.parse(unclean)
@@ -159,20 +197,17 @@ module Api
           return false
         end
 
-        if CityDate.find_by(date: date, city: city, state:state)
-          city_date = CityDate.find_by(date: date, city: city, state:state)
-        else
-          city_date.destroy
-          return false
-        end
+        city_date = CityDate.find_by(date: date, city: city, state:state)
 
         found_artist = nil
 
         events.each do |event|
           if Event.find_by(bandsintown_id:event['id']) != nil
             Event.find_by(bandsintown_id:event['id']).destroy if event['ticket_status'] == 'unavailable'
+            binding.pry
 
           elsif event['ticket_status'] == 'available' && Event.find_by(bandsintown_id:event['id']) == nil
+            binding.pry
             new_event = Event.create(datetime:DateTime.parse(event['datetime']), ticket_url:event['ticket_url'], venue_name:event['venue']['name'], venue_lat:event['venue']['latitude'], venue_long:event['venue']['longitude'], bandsintown_id:event['id'])
             city_date.events << new_event
 
@@ -202,26 +237,16 @@ module Api
             new_event.destroy if !new_event.artists.any?
           end
         end
-
-      rescue Timeout::Error => e
-        puts "Timeout #{e}"
       rescue => e
         puts "Something went terribly wrong: #{e}"
         return false
       end
-      return found_events
   end
 
   def clean_artists_database
     Artist.all.each do |artist|
-      query = artist.name.gsub(" ", "+")
-      begin
-        base = RestClient.get("http://api.bandsintown.com/artists/#{query}.json?app_id=dffddsafdsfsdf3242wf")
-        found_artist = JSON.parse(base)
-        puts "#{found_artist['name']}"
-        artist.destroy if found_artist['upcoming_events_count'] == 0
-      rescue => e
-        puts "#{query}: #{e}"
+      if artist.events == []
+        artist.destroy
       end
     end
   end
