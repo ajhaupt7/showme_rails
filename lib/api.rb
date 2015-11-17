@@ -87,7 +87,7 @@ module Api
     current_date = DateTime.now
     input_date = current_date.strftime("%Y-%m-%d")
     i = 0
-    while i < 15
+    while i < 31
       search_bandsintown(input_date, city, state)
       i += 1
       current_date = DateTime.now + i
@@ -95,88 +95,23 @@ module Api
     end
   end
 
+  @@biggest_cities = [ ["seattle", "WA"], ["new york", "NY"], ["los angeles", "CA"], ["chicago", "IL"], ["houston", "TX"], ["philadelphia", "PA"], ["phoenix", "AZ"], ["san antonio", "TX"], ["san diego", "CA"], ["dallas", "TX"], ["san jose", "CA"], ["austin", "TX"], ["jacksonville", "FL"], ["indianapolis", "IN"], ["san francisco", "CA"], ["columbus", "OH"], ["fort worth", "TX"], ["charlotte", "NC"], ["detroit", "MI"], ["el paso", "TX"], ["denver", "CO"], ["washington", "DC"], ["memphis", "TN"], ["boston", "MA"], ["nashville", "TN"], ["baltimore", "MD"], ["oklahoma city", "OK"], ["portland", "OR"], ["las vegas", "NV"], ["kansas city", "MO"], ["atlanta", "GA"], ["omaha", "NE"], ["raleigh", "NC"], ["minneapolis", "MN"], ["new orleans", "LA"], ["milwaukee", "WI"] ]
+
   def biggest_cities_events
-    city_events_month("seattle", "WA")
-    city_events_month("new york", "NY")
-    city_events_month("los angeles", "CA")
-    city_events_month("chicago", "IL")
-    city_events_month("houston", "TX")
-    city_events_month("philadelphia", "PA")
-    city_events_month("phoenix", "AZ")
-    city_events_month("san antonio", "TX")
-    city_events_month("san diego", "CA")
-    city_events_month("dallas", "TX")
-    city_events_month("san jose", "CA")
-    city_events_month("austin", "TX")
-    city_events_month("jacksonville", "FL")
-    city_events_month("indianapolis", "IN")
-    city_events_month("san francisco", "CA")
-    city_events_month("columbus", "OH")
-    city_events_month("fort worth", "TX")
-    city_events_month("charlotte", "NC")
-    city_events_month("detroit", "MI")
-    city_events_month("el paso", "TX")
-    city_events_month("denver", "CO")
-    city_events_month("washington", "DC")
-    city_events_month("memphis", "TN")
-    city_events_month("boston", "MA")
-    city_events_month("nashville", "TN")
-    city_events_month("baltimore", "MD")
-    city_events_month("oklahoma city", "OK")
-    city_events_month("portland", "OR")
-    city_events_month("las vegas", "NV")
-    city_events_month("kansas city", "MO")
-    city_events_month("atlanta", "GA")
-    city_events_month("omaha", "NE")
-    city_events_month("raleigh", "NC")
-    city_events_month("minneapolis", "MN")
-    city_events_month("new orleans", "LA")
-    city_events_month("milwaukee", "WI")
+    @@biggest_cities.each do |city|
+      city_events_month(city[0], city[1])
+    end
   end
 
   def update_biggest_cities
-    search_bandsintown(Date.today + 14, "seattle", "WA")
-    search_bandsintown(Date.today + 14, "new york", "NY")
-    search_bandsintown(Date.today + 14, "los angeles", "CA")
-    search_bandsintown(Date.today + 14, "chicago", "IL")
-    search_bandsintown(Date.today + 14, "houston", "TX")
-    search_bandsintown(Date.today + 14, "philadelphia", "PA")
-    search_bandsintown(Date.today + 14, "phoenix", "AZ")
-    search_bandsintown(Date.today + 14, "san antonio", "TX")
-    search_bandsintown(Date.today + 14, "san diego", "CA")
-    search_bandsintown(Date.today + 14, "dallas", "TX")
-    search_bandsintown(Date.today + 14, "san jose", "CA")
-    search_bandsintown(Date.today + 14, "austin", "TX")
-    search_bandsintown(Date.today + 14, "jacksonville", "FL")
-    search_bandsintown(Date.today + 14, "indianapolis", "IN")
-    search_bandsintown(Date.today + 14, "san francisco", "CA")
-    search_bandsintown(Date.today + 14, "columbus", "OH")
-    search_bandsintown(Date.today + 14, "fort worth", "TX")
-    search_bandsintown(Date.today + 14, "charlotte", "NC")
-    search_bandsintown(Date.today + 14, "detroit", "MI")
-    search_bandsintown(Date.today + 14, "el paso", "TX")
-    search_bandsintown(Date.today + 14, "denver", "CO")
-    search_bandsintown(Date.today + 14, "washington", "DC")
-    search_bandsintown(Date.today + 14, "memphis", "TN")
-    search_bandsintown(Date.today + 14, "boston", "MA")
-    search_bandsintown(Date.today + 14, "nashville", "TN")
-    search_bandsintown(Date.today + 14, "baltimore", "MD")
-    search_bandsintown(Date.today + 14, "oklahoma city", "OK")
-    search_bandsintown(Date.today + 14, "portland", "OR")
-    search_bandsintown(Date.today + 14, "las vegas", "NV")
-    search_bandsintown(Date.today + 14, "kansas city", "MO")
-    search_bandsintown(Date.today + 14, "atlanta", "GA")
-    search_bandsintown(Date.today + 14, "omaha", "NE")
-    search_bandsintown(Date.today + 14, "raleigh", "NC")
-    search_bandsintown(Date.today + 14, "minneapolis", "MN")
-    search_bandsintown(Date.today + 14, "new orleans", "LA")
-    search_bandsintown(Date.today + 14, "milwaukee", "WI")
+    @@biggest_cities.each do |city|
+      search_bandsintown(DateTime.now + 30, city[0], city[1])
+    end
   end
 
   def update_events
-    biggest_cities = %w(seattle milwaukee new\ orleans minneapolis raleigh omaha atlanta kansas\ city las\ vegas portland oklahoma\ city baltimore nashville boston memphis washington denver el\ paso detroit charlotte fort\ worth columbus san\ francisco indianapolis jacksonville austin san\ jose dallas san\ antonio san\ diego phoenix philadelphia houston chicago los\ angeles new\ york)
     CityDate.all.each do |city_date|
-      if city_date.date < Date.today || !biggest_cities.include?(city_date.city.downcase)
+      if city_date.date < Date.today || !@@biggest_cities.include?(city_date.city.downcase)
         city_date.destroy
         puts city_date.date + " " + city_date.city
       else
