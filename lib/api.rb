@@ -118,6 +118,7 @@ module Api
         end
       rescue => e
         puts "Something went wrong: #{e}"
+      end
     end
   end
 
