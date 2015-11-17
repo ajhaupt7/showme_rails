@@ -4,13 +4,38 @@
   <title>The page you were looking for doesn't exist (404)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-  
+    html, body {
+      background: #CA5447;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+      height: 100%;
+      width: 100%;
+    }
+
+    .header {
+      color: $primary;
+      text-align: center;
+      h1 {
+        font-size: 8rem;
+      }
+      h3 {
+        font-size: 2.5rem;
+      }
+      img:first-child {
+        width: 12rem;
+      }
+      #showme {
+        width: 40rem;
+      }
+    }
   </style>
 </head>
 
 <body>
   <!-- This file lives in public/404.html -->
-  <div class="dialog">
+  <div class="dialog header container">
     <div>
       <h1>The page you were looking for doesn't exist.</h1>
       <p>You may have mistyped the address or the page may have moved.</p>
