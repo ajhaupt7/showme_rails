@@ -3,7 +3,6 @@ require 'rest_client'
 
 module Api
   def search_spotify(query)
-    puts "Query: #{query}"
     result = nil
     begin
       artists = RSpotify::Artist.search(query)
@@ -103,7 +102,7 @@ module Api
     end
   end
 
-  def update_biggest_cities
+  def biggest_cities_next_day
     @@biggest_cities.each do |city|
       search_bandsintown(DateTime.now + 30, city[0], city[1])
     end
@@ -111,18 +110,16 @@ module Api
 
   def update_events
     CityDate.all.each do |city_date|
-      if city_date.date < Date.today || !@@biggest_cities.include?(city_date.city.downcase)
+      if city_date.date < Date.today || !@@biggest_cities.include?([city_date.city, city_date.state])
         city_date.destroy
         puts city_date.date + " " + city_date.city
       else
         update_events_search(city_date.date, city_date.city, city_date.state)
       end
     end
-    update_biggest_cities
   end
 
   def update_events_search(date, city, state)
-    city.downcase!
       begin
         base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city},#{state}"
         unclean = RestClient.get(base_url)
@@ -139,10 +136,8 @@ module Api
         events.each do |event|
           if Event.find_by(bandsintown_id:event['id']) != nil
             Event.find_by(bandsintown_id:event['id']).destroy if event['ticket_status'] == 'unavailable'
-            binding.pry
 
           elsif event['ticket_status'] == 'available' && Event.find_by(bandsintown_id:event['id']) == nil
-            binding.pry
             new_event = Event.create(datetime:DateTime.parse(event['datetime']), ticket_url:event['ticket_url'], venue_name:event['venue']['name'], venue_lat:event['venue']['latitude'], venue_long:event['venue']['longitude'], bandsintown_id:event['id'])
             city_date.events << new_event
 
@@ -163,9 +158,6 @@ module Api
                     end
                     new_artist.save
                     new_event.artists << new_artist
-                  end
-                  if !found_events.include?(event)
-                    found_events.push(event)
                   end
                 end
             end
