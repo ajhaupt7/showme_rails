@@ -36,6 +36,11 @@ hr {
   border-top: transparent;
 }
 
+.modal-header {
+  border-bottom: 1px solid $primary-dark;
+  border-top: transparent;
+}
+
 // Application
 
 html, body {
