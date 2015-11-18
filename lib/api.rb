@@ -123,6 +123,7 @@ module Api
   end
 
   def update_events_search(date, city, state)
+    city.downcase!
       begin
         base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city},#{state}"
         unclean = RestClient.get(base_url)

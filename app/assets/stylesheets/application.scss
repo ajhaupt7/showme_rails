@@ -106,9 +106,9 @@ html, body {
 #howitworks-modal-trigger {
   cursor: pointer;
   position: absolute;
-  top: 5px;
-  left: 5px;
-  font-size: 1.5rem;
+  top: 15px;
+  left: 15px;
+  font-size: 2rem;
   color: $primary;
   transition: all 0.5s ease-out;
   &:hover, &:active, &:focus {
@@ -175,6 +175,13 @@ html, body {
   }
   .btn-primary {
     width: 27rem !important;
+  }
+  #howitworks-modal-trigger {
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 1.4rem;
   }
 }
 
@@ -423,9 +430,9 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
 
 .home-btn {
   position: absolute;
-  top: 5px;
-  left: 5px;
-  font-size: 1.5rem;
+  top: 15px;
+  left: 15px;
+  font-size: 2rem;
   color: $primary;
   transition: all 0.5s ease-out;
   &:hover, &:active, &:focus {
@@ -462,6 +469,16 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
         margin-bottom: 7% !important;
       }
     }
+  }
+  .home-btn {
+    top: 5px;
+    left: 5px;
+    font-size: 1.4rem;
+  }
+  .header {
+    width: 90%;
+    display: block;
+    margin: auto;
   }
 }
 
