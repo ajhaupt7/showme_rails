@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   end
 
   def results
-    params[:city].strip!.downcase!
+    params[:city].strip!
     if CityDate.find_by(date: params[:date], city: params[:city], state:params[:state]) == nil
       result = search_bandsintown(params[:date], params[:city], params[:state])
       if result == false
