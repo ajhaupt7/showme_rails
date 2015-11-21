@@ -1,6 +1,6 @@
 <a class="home-btn" href="/"><i class="fa fa-arrow-circle-left"></i>&nbsp; search again</a>
 
-<div class="header">
+<div class="header" id="city-result">
   <h1><%= @city_date.city %></h1>
   <h3><%= " #{@events.length} events on " if @events.length > 1 %>
   <%= " #{@events.length} event on " if @events.length == 1 %>

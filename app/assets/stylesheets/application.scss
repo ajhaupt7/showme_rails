@@ -359,10 +359,11 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
 
 // Results Page
 
-.tickets {
-  div {
-    display: inline;
-  }
+.buy-tickets {
+  margin-top: -2%;
+}
+
+#city-result {
 }
 
 .glyphicon {
@@ -452,6 +453,14 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
 }
 
 @media(max-width: 500px) {
+  #city-result {
+    h1 {
+      font-size: 12vw;
+    }
+    h3 {
+      font-size: 4.5vw;
+    }
+  }
   .event-wrapper {
     width: 95% !important;
     .back-btn, .forward-btn {
