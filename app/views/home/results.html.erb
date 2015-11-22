@@ -63,11 +63,6 @@
 </script>
 
 <script type="text/javascript">
-
-</script>
-
-
-<script type="text/javascript">
   events = <%= raw @events.to_json(:include => :artists) %>
   artists = <%= raw @artists.to_json %>
 
@@ -175,9 +170,15 @@
     }
   });
 
-  $('body').on("swiperight", function() {
-    alert("swiped right");
-  })
+  $(".event-wrapper").swipe( {
+    swipe:function(event, direction, distance, duration, fingerCount) {
+      if ((direction === "left") && (i !== events.length - 1)) {
+        nextEvent();
+      } else if ((direction === "right") && (i !== 0)) {
+        previousEvent();
+      }
+    }
+  });
 
   // Event Handlers for Play/Pause and Artist Modals
   for (var j=0; j < events.length; j++) {
