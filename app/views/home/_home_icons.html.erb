@@ -1,4 +1,20 @@
-<a id="howitworks-modal-trigger" data-toggle="modal" data-target="#howitworks-modal"><i class="fa fa-question-circle"></i>&nbsp;how it works</a>
+<div class="social-icons">
+  <a data-toggle="tooltip" data-placement="auto right" title="Share on Facebook" onclick="window.open('http://www.facebook.com/sharer/sharer.php?u=showmelivemusic.com&title=find+live+music+and+shows', '', 'height=500, width=600')">
+    <div id="fb-share" class="social-icons-circles">
+      <i class="fa fa-facebook"></i>
+    </div>
+  </a>
+  <a data-toggle="tooltip" data-placement="auto right" title="Tweet it" href='http://twitter.com/intent/tweet?status=find+live+music+and+shows+with+tickets+available+at+showmelivemusic.com'>
+    <div id="twitter-share" class="social-icons-circles">
+      <i class="fa fa-twitter"></i>
+    </div>
+  </a>
+  <a id="howitworks-modal-trigger" data-toggle="modal" data-target="#howitworks-modal">
+    <div data-toggle="tooltip" data-placement="auto right" title="How does this work?" class="social-icons-circles">
+      <i class="fa fa-question"></i>
+    </div>
+  </a>
+</div>
 
 <div id="howitworks-modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -18,3 +34,7 @@
 
   </div>
 </div>
+
+<script>
+    $('[data-toggle="tooltip"]').tooltip();
+</script>

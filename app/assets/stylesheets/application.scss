@@ -41,6 +41,50 @@ hr {
   border-top: transparent;
 }
 
+.social-icons {
+  font-size: 2rem;
+  line-height: 2.35;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  a {
+    color: $primary;
+  }
+  .social-icons-circles {
+    background: transparent;
+    border: 2px solid $primary;
+    border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+    transition: all 0.4s;
+    text-align: center;
+    margin-bottom:10%;
+    cursor: pointer;
+    &:hover {
+      background: rgba(255,255,255,0.15);
+    }
+  }
+}
+
+.tooltip.right {
+  width: 20rem;
+  font-family: 'Montserrat', sans-serif;
+  border-right-color: rgba(255,255,255,0.3);
+  font-size: 1.35rem;
+}
+
+.tooltip-arrow {
+  border-right: transparent;
+}
+
+.tooltip-inner,  {
+  background: rgba(0,0,0,0.1);
+  height: 3.5rem;
+  border-radius: 0px;
+  color: #fff;
+  line-height: 1.9;
+}
+
 // Application
 
 html, body {
@@ -100,20 +144,6 @@ html, body {
     background: $primary-dark;
     border: 3px solid $primary-dark;
     outline: none;
-  }
-}
-
-#howitworks-modal-trigger {
-  cursor: pointer;
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  font-size: 2rem;
-  color: $primary;
-  transition: all 0.5s ease-out;
-  &:hover, &:active, &:focus {
-    color: $primary-dark;
-    text-decoration: none;
   }
 }
 
