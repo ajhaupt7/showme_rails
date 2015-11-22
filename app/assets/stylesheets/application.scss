@@ -206,12 +206,8 @@ html, body {
   .btn-primary {
     width: 27rem !important;
   }
-  #howitworks-modal-trigger {
-    cursor: pointer;
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    font-size: 1.4rem;
+  #fb-share, #twitter-share {
+    display: none;
   }
 }
 
