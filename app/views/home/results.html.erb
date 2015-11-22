@@ -48,7 +48,7 @@
         <div class="venue-box">
           <%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %>
         </div>
-        <div id="map-canvas-<%=i%>" class="venue-map"><div id="map-<%=i%>" style="height:100%;"></div></div>
+        <div id="map-canvas-<%=i%>" class="venue-map noSwipe"><div id="map-<%=i%>" style="height:100%;"></div></div>
       </div>
       <div class="mobile-swipe-alert">
         <p id ="flash" class="alert">Swipe through events if you are on mobile.
