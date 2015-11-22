@@ -13,7 +13,7 @@ $primary-dark: darken($primary, 10%);
 $primary-very-dark: darken($primary, 35%);
 
 //
-#flash {
+.alert-danger {
   position:absolute;
   top: 5%;
   left:0;
@@ -461,10 +461,19 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
       font-size: 4.5vw;
     }
   }
+  .container-fluid {
+    padding: 0px;
+  }
+  #all-events-container {
+    width: 100% !important;
+  }
   .event-wrapper {
-    width: 95% !important;
-    .back-btn, .forward-btn {
-      margin-top: 48% !important;
+    width: 100% !important;
+    .forward-btn {
+      display:none;
+    }
+    .back-btn {
+      display:none;
     }
     .event-flexbox {
       .artist-box {
@@ -472,10 +481,12 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
       }
       .venue-box {
         font-size: 1.5rem !important;
+        padding: 0px !important;
       }
       .venue-map {
         margin-top: 7% !important;
-        margin-bottom: 7% !important;
+        margin-bottom: 0px !important;
+        width: 100%;
       }
     }
   }

@@ -50,6 +50,9 @@
           <div id="map-canvas-<%=i%>" class="venue-map"><div id="map-<%=i%>" style="height:100%;"></div></div>
         </div>
       </div>
+      <div class="mobile-swipe-alert">
+        <p id ="flash" class="alert">Swipe through events if you are on mobile.</p>
+      </div>
       <div class="buy-tickets">
         <a href="<%= @events[i].ticket_url %>" target="_blank" class="btn btn-primary">Get Tickets</a>
       </div>
@@ -122,7 +125,9 @@
   // Next Event Action Callback
   function nextEvent() {
     pauseAllAudio();
-    $(".back-btn").show();
+    if ($(".container-fluid").css("padding") !== "0px" ){
+      $(".back-btn").show();
+    }
     $("#event-wrapper-" + i).effect("slide", {direction: "left", mode:"hide"}, 200);
     i++
     $("#event-wrapper-" + i).effect("slide", {direction: "right", mode:"show"}, 800);
@@ -137,7 +142,9 @@
   // Previous Event Action Callback
   function previousEvent() {
     pauseAllAudio();
-    $(".forward-btn").show();
+    if ($(".container-fluid").css("padding") !== "0px" ){
+      $(".forward-btn").show();
+    }
     $("#event-wrapper-" + i).effect("slide", {direction: "right", mode:"hide"}, 200);
     i--
     $("#event-wrapper-" + i).delay(200).effect("slide", {direction: "left", mode:"show"}, 600);
@@ -170,7 +177,7 @@
     }
   });
 
-  $(".event-wrapper").swipe( {
+  $("body").swipe( {
     swipe:function(event, direction, distance, duration, fingerCount) {
       if ((direction === "left") && (i !== events.length - 1)) {
         nextEvent();

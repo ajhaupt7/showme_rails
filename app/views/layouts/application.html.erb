@@ -20,7 +20,7 @@
 </head>
 <body>
 
-  <div class="container site-wrapper">
+  <div class="container-fluid site-wrapper">
     <% if notice %>
       <p id ="flash" class="alert alert-success"><%= notice %></p>
     <% end %>
@@ -33,7 +33,7 @@
   <script type="text/javascript">
     $(document).ready(function(){
       setTimeout(function(){
-        $('#flash').fadeOut();
+        $('.alert-danger').fadeOut();
       }, 2500);
     })
   </script>
