@@ -51,7 +51,9 @@
         </div>
       </div>
       <div class="mobile-swipe-alert">
-        <p id ="flash" class="alert">Swipe through events if you are on mobile.</p>
+        <p id ="flash" class="alert">Swipe through events if you are on mobile.
+          <button class="close">×</button>
+        </p>
       </div>
       <div class="buy-tickets">
         <a href="<%= @events[i].ticket_url %>" target="_blank" class="btn btn-primary">Get Tickets</a>
@@ -68,6 +70,10 @@
 <script type="text/javascript">
   events = <%= raw @events.to_json(:include => :artists) %>
   artists = <%= raw @artists.to_json %>
+
+  $(".close").on("click", function() {
+    $(".mobile-swipe-alert").fadeOut();
+  })
 
   // Venue maps
 

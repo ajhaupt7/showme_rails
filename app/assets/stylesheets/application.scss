@@ -442,6 +442,10 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
   }
 }
 
+.mobile-swipe-alert {
+  display: none;
+}
+
 .glyphicon-volume-up, .glyphicon-pause {
   font-size: 1.6rem;
 }
@@ -459,6 +463,19 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
     }
     h3 {
       font-size: 4.5vw;
+    }
+  }
+  .buy-tickets {
+    margin-top: 10%;
+  }
+  .mobile-swipe-alert {
+    display: block;
+    width: 100%;
+    background: rgba(255,255,255,0.6);
+    color: $primary-dark;
+    margin: auto;
+    .close {
+      transition: all 0.4s;
     }
   }
   .container-fluid {
