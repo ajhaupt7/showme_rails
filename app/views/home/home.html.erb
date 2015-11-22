@@ -30,10 +30,11 @@
     </div>
     <div class="form-group">
       <%= text_field_tag :city, nil, placeholder:"Enter a City", id:"city-input", required: true %>
+    </div>
+    <div class="form-group">
       <%= select_tag :state, options_for_select(us_states), id:"state-input", prompt: "Select a State ↓", required: true %>
     </div>
     <div class="form-group">
-      <br><br>
       <button type="submit" class="btn btn-primary" id="search-btn">Search</button>
     </div>
   <% end %>

@@ -13,6 +13,7 @@ $primary-dark: darken($primary, 10%);
 $primary-very-dark: darken($primary, 35%);
 
 //
+
 .alert-danger {
   position:absolute;
   top: 5%;
@@ -123,7 +124,7 @@ html, body {
   transition: all 0.4s ease-out;
   margin-bottom: 3%;
   font-size: 2rem;
-  width: 25rem;
+  width: 30rem;
   height: 6rem;
   line-height: 2;
 }
@@ -161,7 +162,7 @@ html, body {
     margin-left:0;
     outline: none;
     height: 6rem;
-    width: 27rem;
+    width: 30rem;
     text-align:center;
     font-size: 2rem;
   }
@@ -169,7 +170,6 @@ html, body {
     cursor: pointer;
   }
   #city-input {
-    width: 34rem;
     -webkit-text-fill-color: white !important;
   }
   #city-input:-webkit-autofill,
@@ -182,8 +182,9 @@ html, body {
     background: rgba(0,0,0,0.1);
     font-size: 2rem;
     outline: none;
-    width: 19rem;
-    padding-left: 1.5rem;
+    width: 30rem;
+    padding-left: 7.5rem;
+    text-align: center;
     cursor: pointer;
     line-height: 1;
     border: 0;
@@ -191,21 +192,13 @@ html, body {
     height: 6rem;
     opacity:0.75;
     -webkit-appearance: none;
+    option {
+      background: transparent;
+    }
   }
 }
 
 @media(max-width: 563px) {
-  #city-input {
-    width: 27rem !important;
-  }
-  #state-input {
-    margin-top: 4%;
-    width: 27rem !important;
-    padding-left: 13% !important;
-  }
-  .btn-primary {
-    width: 27rem !important;
-  }
   #fb-share, #twitter-share {
     display: none;
   }
@@ -229,7 +222,7 @@ html, body {
   display:none;
   background: rgba(255,255,255,0.8);
   color: $primary-very-dark;
-  width: 27rem;
+  width: 30rem;
   text-align:center;
   padding: 5px 5px 5px 5px;
   font-size: 2rem;
@@ -387,9 +380,6 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
 
 .buy-tickets {
   margin-top: -2%;
-}
-
-#city-result {
 }
 
 .glyphicon {
