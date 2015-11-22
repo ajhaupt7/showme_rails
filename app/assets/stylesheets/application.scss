@@ -49,7 +49,7 @@ hr {
   top: 15px;
   left: 15px;
   a {
-    color: $primary;
+    color: rgba(255,255,255,0.9);
   }
   .social-icons-circles {
     background: transparent;
@@ -62,7 +62,7 @@ hr {
     margin-bottom:10%;
     cursor: pointer;
     &:hover {
-      background: rgba(255,255,255,0.15);
+      background: $primary;
     }
   }
 }
