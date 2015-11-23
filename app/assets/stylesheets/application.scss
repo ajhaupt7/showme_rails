@@ -11,6 +11,7 @@ $primary-light: lighten($primary, 15%);
 $primary-very-light: lighten($primary, 25%);
 $primary-dark: darken($primary, 10%);
 $primary-very-dark: darken($primary, 35%);
+$background: #CA5447;
 
 //
 
@@ -89,7 +90,7 @@ hr {
 // Application
 
 html, body {
-  background: #CA5447;
+  background: $background;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
@@ -428,7 +429,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
         -webkit-flex: 1;
         -ms-flex: 1;
         flex: 1;
-        padding: 6% 3% 3% 3%;
+        padding: 2% 2% 2% 2%;
         font-size: 2.5rem;
       }
       .venue-box {
@@ -439,10 +440,21 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
         -webkit-flex: 1;
         -ms-flex: 1;
         flex: 2;
-        padding: 0 2% 5% 0;
+        padding: 2% 2% 2% 2%;
+        border-bottom: 2px solid $background;
       }
     }
   }
+}
+
+.artist-image {
+  width: 100%;
+  height: 30rem;
+  display:block;
+  margin:auto;
+  background-size: cover;
+  background-position-y: 0%;
+  background-repeat: no-repeat;
 }
 
 .home-btn {

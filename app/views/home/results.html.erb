@@ -17,38 +17,24 @@
       <span class="glyphicon glyphicon-chevron-left back-btn" id="back-btn-<%=i%>"></span>
       <span class="glyphicon glyphicon-chevron-right forward-btn" id="forward-btn-<%=i%>"></span>
       <div class="event-flexbox">
-        <div class="artist-box">
+        <div class="venue-box">
+          <%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %>
+        </div>
+        <div class="artist-box row">
             <% j = 0 %>
             <% while j < @events[i].artists.length %>
-              <div id="artist-wrapper-<%=i%>-<%=j%>" class="artist-wrapper row">
-                <span id="artist-modal-trigger-<%=i%>-<%=j%>" class="modal-trigger"><%= @events[i].artists[j].name %></span>&nbsp;
+              <div id="artist-wrapper-<%=i%>-<%=j%>" class="artist-wrapper">
+                <%= @events[i].artists[j].name %><br>
+                <div class="artist-image" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(<%=@events[i].artists[j].image_url%>);"></div>
+                <%= @events[i].artists[j].song_name %>
                 <audio id="audio-<%=i%>-<%=j%>" src="<%=@events[i].artists[j].song_preview%>"></audio>
                 <span id="play-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>
                 <span id="pause-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
-                <div id="artist-modal-<%=i%>-<%=j%>" class="modal fade" role="dialog">
-                  <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"><%= @events[i].artists[j].name %></h4>
-                      </div>
-                      <div class="modal-body">
-                        <%= image_tag "#{@events[i].artists[j].image_url}" %>
-                      </div>
-                      <div class="modal-footer">
-                        <a href="<%=@events[i].artists[j].spotify_link%>" target="_blank" id="spotify-link"><%=image_tag "listen_on_spotify-black.png"%></a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             <% j += 1 %>
             <% end %>
         </div>
-        <div class="venue-box">
-          <%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %>
-        </div>
-        <div id="map-canvas-<%=i%>" class="venue-map noSwipe"><div id="map-<%=i%>" style="height:100%;"></div></div>
+        <!-- <div id="map-canvas-<%=i%>" class="venue-map noSwipe"><div id="map-<%=i%>" style="height:100%;"></div></div> -->
       </div>
       <div class="mobile-swipe-alert">
         <p id ="flash" class="alert">Swipe through events if you are on mobile.

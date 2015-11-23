@@ -56,7 +56,7 @@ module Api
                     retrieved_artist = Artist.find_by(song_preview:spotify_search_result.top_tracks(:US).first.preview_url)
                     new_event.artists << retrieved_artist unless new_event.artists.include?(retrieved_artist)
                   else
-                    new_artist = Artist.new(name: artist['name'], song_preview:spotify_search_result.top_tracks(:US).first.preview_url, spotify_link:spotify_search_result.top_tracks(:US).first.external_urls['spotify'])
+                    new_artist = Artist.new(name: artist['name'], song_preview:spotify_search_result.top_tracks(:US).first.preview_url, spotify_link:spotify_search_result.top_tracks(:US).first.external_urls['spotify'], song_name:spotify_search_result.top_tracks(:US).first.name)
                     if spotify_search_result.images != []
                       new_artist.image_url = spotify_search_result.images[0]['url']
                     elsif spotify_search_result.top_tracks(:US)[0].album.images != []
