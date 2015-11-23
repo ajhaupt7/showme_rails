@@ -178,6 +178,9 @@ a {
   font-size:2rem;
   color: $primary;
   padding: auto 3% auto 3%;
+  span {
+    margin-right: 2%;
+  }
   input {
     background: transparent;
     border: transparent;
@@ -240,6 +243,8 @@ a {
     width: 100%;
     padding-top: 5%;
     padding-bottom: 3.5%;
+    padding-left: 2%;
+    padding-right: 2%;
   }
 }
 
@@ -253,6 +258,11 @@ a {
     }
     p {
       font-size: 2rem;
+    }
+  }
+  #search-form {
+    span {
+      display: block;
     }
   }
 }
