@@ -556,8 +556,15 @@ input:-ms-input-placeholder { color: #fff }
   }
 }
 
-.mobile-swipe-alert {
-  display: none;
+.navigation-alert {
+  width: 70%;
+  background: rgba(255,255,255,0.6);
+  color: $primary-dark;
+  margin: auto;
+  text-align: center;
+  .close {
+    transition: all 0.4s;
+  }
 }
 
 .glyphicon-volume-up, .glyphicon-pause {
@@ -581,16 +588,6 @@ input:-ms-input-placeholder { color: #fff }
   }
   .buy-tickets {
     margin-top: 10%;
-  }
-  .mobile-swipe-alert {
-    display: block;
-    width: 100%;
-    background: rgba(255,255,255,0.6);
-    color: $primary-dark;
-    margin: auto;
-    .close {
-      transition: all 0.4s;
-    }
   }
   .container-fluid {
     padding: 0px;
@@ -624,5 +621,8 @@ input:-ms-input-placeholder { color: #fff }
     width: 90%;
     display: block;
     margin: auto;
+  }
+  .navigation-alert {
+    width: 100%;
   }
 }
