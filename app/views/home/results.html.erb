@@ -18,7 +18,9 @@
       <span class="glyphicon glyphicon-chevron-right forward-btn" id="forward-btn-<%=i%>"></span>
       <div class="event-flexbox">
         <div class="venue-box">
-          <span class="event-number"><%= i %></span><%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %>
+          <span class="event-number"><%= i %></span>
+          <%= @events[i].datetime.strftime("%I:%M %p") %> @
+          <a href="https://www.google.com/maps/search/<%=@events[i].gmaps_venue%>/@<%=@events[i].venue_lat%>,<%=@events[i].venue_long%>" target="_blank"><%= @events[i].venue_name %></a>
         </div>
         <div class="artist-box row">
             <% j = 0 %>
