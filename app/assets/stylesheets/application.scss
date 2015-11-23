@@ -261,9 +261,12 @@ a {
     }
   }
   #search-form {
-    span {
-      display: block;
-    }
+    // span {
+    //   display: block;
+    // }
+  }
+  #city-input {
+    width: 15rem !important;
   }
 }
 
