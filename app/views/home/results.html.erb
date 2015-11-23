@@ -24,12 +24,17 @@
             <% j = 0 %>
             <% while j < @events[i].artists.length %>
               <div id="artist-wrapper-<%=i%>-<%=j%>" class="artist-wrapper">
-                <%= @events[i].artists[j].name %><br>
-                <div class="artist-image" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(<%=@events[i].artists[j].image_url%>);"></div>
-                <%= @events[i].artists[j].song_name %>
-                <audio id="audio-<%=i%>-<%=j%>" src="<%=@events[i].artists[j].song_preview%>"></audio>
-                <span id="play-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>
-                <span id="pause-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                <div class="artist-image" style="background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(<%=@events[i].artists[j].image_url%>);">
+                  <header>
+                    <div class="artist-name"><%= @events[i].artists[j].name %></div>
+                    <div class="song-preview">
+                      <%= @events[i].artists[j].song_name %><br>
+                      <audio id="audio-<%=i%>-<%=j%>" src="<%=@events[i].artists[j].song_preview%>"></audio>
+                      <span id="play-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-play-circle" aria-hidden="true"></span>
+                      <span id="pause-btn-<%=i%>-<%=j%>" class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                    </div>
+                  </header>
+                </div>
               </div>
             <% j += 1 %>
             <% end %>
@@ -199,7 +204,7 @@
                 }
               }
             $('.glyphicon-pause').hide();
-            $('.glyphicon-volume-up').show();
+            $('.glyphicon-play-circle').show();
             $('#play-btn-' + playItemID).hide();
             $('#pause-btn-' + playItemID).show();
             document.getElementById("audio-" + playItemID).play();
