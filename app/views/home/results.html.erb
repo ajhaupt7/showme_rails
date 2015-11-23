@@ -4,7 +4,7 @@
   <h1><%= @city_date.city %></h1>
   <h3><%= " #{@events.length} events on " if @events.length > 1 %>
   <%= " #{@events.length} event on " if @events.length == 1 %>
-  <%= @city_date.date %></h3>
+  <%= @city_date.date.strftime("%m-%d-%Y") %></h3>
 </div>
 
 <div id="all-events-container">
