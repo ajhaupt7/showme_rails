@@ -18,7 +18,7 @@
       <span class="glyphicon glyphicon-chevron-right forward-btn" id="forward-btn-<%=i%>"></span>
       <div class="event-flexbox">
         <div class="venue-box">
-          <%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %>
+          <span class="event-number"><%= i %></span><%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %>
         </div>
         <div class="artist-box row">
             <% j = 0 %>

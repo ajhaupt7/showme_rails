@@ -422,6 +422,11 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
       -webkit-flex-flow: column wrap;
       justify-content: space-around;
       background: rgba(0,0,0,0.07);
+      .event-number {
+        font-size: 0.65em;
+        float: left;
+        color: $primary;
+      }
       .artist-box {
         text-align: center;
         -webkit-box-flex: 1;
@@ -451,9 +456,13 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
             }
             .song-preview {
               font-size: 2rem;
-              span, a {
+              span {
                 margin-top: 1%;
                 font-size: 3rem;
+                transition: all 0.4s;
+                &:hover {
+                  color: $primary;
+                }
               }
             }
             #spotify-link {
