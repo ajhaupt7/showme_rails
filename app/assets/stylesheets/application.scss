@@ -176,7 +176,7 @@ a {
   display: block;
   text-align:center;
   font-size:2rem;
-  color: $primary;
+  color: $primary-light;
   padding: auto 3% auto 3%;
   span {
     margin-right: 2%;
@@ -192,7 +192,7 @@ a {
     height: 6rem;
     width: 20rem;
     text-align:center;
-    color: $primary-light;
+    color: #fff;
   }
   .datepicker {
     cursor: pointer;
@@ -211,14 +211,14 @@ a {
     background: transparent;
     border: transparent;
     border-bottom: 2px dashed rgba(0,0,0,0.2);
-    color: $primary-very-light;
+    color: #fff;
     outline: none;
     width: 10rem;
     padding-left: 2rem;
     cursor: pointer;
     line-height: 3.75;
     height: 6rem;
-    opacity:0.75;
+    // opacity:0.75;
     -webkit-appearance: none;
     option {
       background: transparent;
@@ -227,7 +227,7 @@ a {
 }
 
 .form-wrapper {
-  background: rgba(0,0,0,0.07);
+  background: rgb(183, 76, 65);
   width: 60%;
   display: block;
   margin:auto auto 3% auto;
@@ -259,11 +259,6 @@ a {
     p {
       font-size: 2rem;
     }
-  }
-  #search-form {
-    // span {
-    //   display: block;
-    // }
   }
   #city-input {
     width: 15rem !important;
@@ -317,10 +312,10 @@ a {
   }
 }
 
-input::-webkit-input-placeholder { color: #fff; opacity:0.75 }
-input:-moz-placeholder { color: #fff; opacity:0.75 }
-input::-moz-placeholder { color: #fff; opacity:0.75 }
-input:-ms-input-placeholder { color: #fff; opacity:0.75 }
+input::-webkit-input-placeholder { color: #fff }
+input:-moz-placeholder { color: #fff }
+input::-moz-placeholder { color: #fff }
+input:-ms-input-placeholder { color: #fff }
 
 .spinner {
   margin: 5rem auto;
@@ -472,7 +467,8 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
       display: flex;
       -webkit-flex-flow: column wrap;
       justify-content: space-around;
-      background: rgba(0,0,0,0.07);
+      background: rgb(183, 76, 65);
+      overflow: hidden;
       .event-number {
         font-size: 0.65em;
         float: left;
@@ -485,7 +481,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
         -webkit-flex: 1;
         -ms-flex: 1;
         flex: 1;
-        padding: 0% 2.1% 0% 2.1%;
+        padding: 0% 0% 0% 0%;
         font-size: 2.5rem;
         .artist-image {
           width: 100%;
@@ -496,6 +492,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
           background-position-y: 15%;
           background-repeat: no-repeat;
           position: relative;
+          border-top: 6px solid $background;
           header {
             position: absolute;
             width: 90%;
@@ -518,8 +515,8 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
             }
             #spotify-link {
               position: absolute;
-              bottom: -60%;
-              left: -5.5%;
+              bottom: -58.5%;
+              left: -5%;
               img {
                 width: 15rem;
                 opacity: 0.65;
