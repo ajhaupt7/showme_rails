@@ -583,11 +583,6 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
       .venue-box {
         font-size: 1.5rem !important;
       }
-      .venue-map {
-        margin-top: 7% !important;
-        margin-bottom: 0px !important;
-        width: 100%;
-      }
     }
   }
   .home-btn {
@@ -600,43 +595,4 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
     display: block;
     margin: auto;
   }
-}
-
-//Artist Modal
-
-.modal-backdrop {
-  z-index: -1;
-}
-
-.modal {
-  background:rgba(0,0,0,0.5);
-}
-
-.modal-trigger {
-  cursor: pointer;
-  transition: all 0.4s ease;
-  &:hover {
-    color: $primary;
-  }
-}
-
-.modal-content {
-  background:rgba(255,255,255,0.8);
-  border-radius: 0px;
-}
-
-.modal-title {
-  color: $primary-dark;
-}
-
-.modal-body img {
-  width: 25rem;
-  box-shadow: 1px 1px 4px #333;
-}
-
-.venue-map {
-  display: block;
-  margin: auto auto auto auto;
-  width: 100%;
-  height: 18rem;
 }
