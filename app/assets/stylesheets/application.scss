@@ -175,21 +175,28 @@ a {
   margin:5rem auto 0 auto;
   display: block;
   text-align:center;
+  font-size:2rem;
+  color: $primary;
+  padding: auto 3% auto 3%;
   input {
-    background: rgba(0,0,0,0.1);
+    background: transparent;
     border: transparent;
+    line-height: 3.75;
+    border-bottom: 2px dashed rgba(0,0,0,0.2);
     margin-left:0;
+    padding-bottom: -5px;
     outline: none;
     height: 6rem;
-    width: 30rem;
+    width: 20rem;
     text-align:center;
-    font-size: 2rem;
+    color: $primary-light;
   }
   .datepicker {
     cursor: pointer;
   }
   #city-input {
     -webkit-text-fill-color: white !important;
+    width: 20rem;
   }
   #city-input:-webkit-autofill,
   #city-input:-webkit-autofill:hover,
@@ -198,16 +205,15 @@ a {
       transition: background-color 5000s ease-in-out 0s;
   }
   #state-input {
-    background: rgba(0,0,0,0.1);
-    font-size: 2rem;
+    background: transparent;
+    border: transparent;
+    border-bottom: 2px dashed rgba(0,0,0,0.2);
+    color: $primary-very-light;
     outline: none;
-    width: 30rem;
-    padding-left: 7.5rem;
-    text-align: center;
+    width: 10rem;
+    padding-left: 2rem;
     cursor: pointer;
-    line-height: 1;
-    border: 0;
-    border-radius: 0;
+    line-height: 3.75;
     height: 6rem;
     opacity:0.75;
     -webkit-appearance: none;
@@ -217,9 +223,23 @@ a {
   }
 }
 
-@media(max-width: 563px) {
+.form-wrapper {
+  background: rgba(0,0,0,0.07);
+  width: 60%;
+  display: block;
+  margin:auto auto 3% auto;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+@media(max-width: 800px) {
   #fb-share, #twitter-share {
     display: none;
+  }
+  .form-wrapper {
+    width: 100%;
+    padding-top: 5%;
+    padding-bottom: 3.5%;
   }
 }
 
@@ -241,10 +261,10 @@ a {
   display:none;
   background: rgba(255,255,255,0.8);
   color: $primary-very-dark;
-  width: 30rem;
+  width: 20rem;
   text-align:center;
   padding: 5px 5px 5px 5px;
-  font-size: 2rem;
+  font-size: 1.75rem;
   &:hover {
     cursor: pointer;
   }
