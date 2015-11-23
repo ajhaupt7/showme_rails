@@ -399,7 +399,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
       cursor: pointer;
       font-size: 2.5rem;
       color: $primary-light;
-      margin-top: 23%;
+      margin-top: 17.5%;
     }
     .back-btn {
       float: left;
@@ -429,7 +429,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
         -webkit-flex: 1;
         -ms-flex: 1;
         flex: 1;
-        padding: 0% 2% 0% 2%;
+        padding: 0% 2.1% 0% 2.1%;
         font-size: 2.5rem;
         .artist-image {
           width: 100%;
@@ -437,7 +437,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
           display:block;
           margin:auto;
           background-size: cover;
-          background-position-y: 0%;
+          background-position-y: 15%;
           background-repeat: no-repeat;
           position: relative;
           header {
@@ -451,8 +451,22 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
             }
             .song-preview {
               font-size: 2rem;
-              span {
+              span, a {
+                margin-top: 1%;
                 font-size: 3rem;
+              }
+            }
+            #spotify-link {
+              position: absolute;
+              bottom: -60%;
+              left: -5.5%;
+              img {
+                width: 15rem;
+                opacity: 0.65;
+                transition: all 0.4s;
+                &:hover {
+                  opacity: 1;
+                }
               }
             }
           }
@@ -466,8 +480,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
         -webkit-flex: 1;
         -ms-flex: 1;
         flex: 2;
-        padding: 2% 2% 2% 2%;
-        // border-bottom: 2px solid $background;
+        padding: 2% 3% 2% 3%;
       }
     }
   }
@@ -500,7 +513,7 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
   }
 }
 
-@media(max-width: 500px) {
+@media(max-width: 800px) {
   #city-result {
     h1 {
       font-size: 12vw;
@@ -592,13 +605,6 @@ input:-ms-input-placeholder { color: #fff; opacity:0.75 }
 .modal-body img {
   width: 25rem;
   box-shadow: 1px 1px 4px #333;
-}
-
-#spotify-link img {
-  display: block;
-  margin: auto;
-  width: 20rem;
-  box-shadow: 1px 1px 2px #333;
 }
 
 .venue-map {
