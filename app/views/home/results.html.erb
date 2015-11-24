@@ -24,10 +24,8 @@
           <span class="event-number"><%= i + 1 %></span>
             <a id="map-reveal-<%=i%>"><%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %></a>
         </div>
-        <div class="map-wrapper" id="map-wrapper-<%=i%>">
-          <div id="map-canvas-<%=i%>" class="venue-map noSwipe">
-            <div id="map-<%=i%>" style="height:100%;"></div>
-          </div>
+        <div id="map-canvas-<%=i%>" class="venue-map noSwipe">
+          <div id="map-<%=i%>" style="height:100%;"></div>
         </div>
         <div class="artist-box row">
             <% j = 0 %>
@@ -83,7 +81,7 @@
   $(".event-wrapper").hide();
   $("#event-wrapper-" + i).show();
   $(".glyphicon-pause").hide();
-  $(".map-wrapper").hide();
+  $(".venue-map").hide();
 
   // Venue maps
   var latitude;
@@ -103,10 +101,11 @@
         styles:  [{"stylers":[{"hue":"#dd0d0d"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]}]
       }
       map = new google.maps.Map(document.getElementById('map-canvas-' + i), mapOptions);
-    var marker = new google.maps.Marker({
-      position: latLng,
-      map: map,
-    });
+      var marker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+      });
+      google.maps.event.trigger(map, 'resize')
   }
 
   google.maps.event.addDomListener(window, 'load', initMap);
@@ -179,7 +178,10 @@
             $('#pause-btn-' + playItemID).hide();
             document.getElementById("audio-" + playItemID).pause();
           } else if (clickedItem.charAt(0) === "m" && clickedItem.charAt(1) === "a") {
-            $("#map-wrapper-" + i).show();
+            $("#map-canvas-" + i).slideToggle('fast', function() {
+              google.maps.event.trigger(map, 'resize');
+              map.setCenter(latLng)
+            });
           }
       }
     e.stopPropagation();
