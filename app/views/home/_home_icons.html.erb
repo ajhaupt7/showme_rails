@@ -10,7 +10,7 @@
     </div>
   </a>
   <a id="howitworks-modal-trigger" data-toggle="modal" data-target="#howitworks-modal">
-    <div data-toggle="tooltip" data-placement="auto right" title="How does this work?" class="social-icons-circles">
+    <div id="modal-tooltip" data-toggle="tooltip" data-placement="auto right" title="How does this work?" class="social-icons-circles">
       <i class="fa fa-question"></i>
     </div>
   </a>
@@ -37,7 +37,7 @@
 
 <script>
     $('[data-toggle="tooltip"]').tooltip();
-    $("#howitworks-modal-trigger").on("click", function() {
-      $(this).tooltip('hide');
+    $("body").on("click", function() {
+      $('#modal-tooltip').tooltip('hide');
     })
 </script>
