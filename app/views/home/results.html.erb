@@ -22,7 +22,7 @@
       <div class="event-flexbox">
         <div class="venue-box id="venue-<%=i%>">
           <span class="event-number"><%= i + 1 %></span>
-            <a id="map-reveal-<%=i%>"><%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %></a>
+          <a id="map-reveal-<%=i%>"><%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %></a>
         </div>
         <div id="map-canvas-<%=i%>" class="venue-map noSwipe">
           <div id="map-<%=i%>" style="height:100%;"></div>
@@ -125,6 +125,7 @@
     $("#event-wrapper-" + i).effect("slide", {direction: "right", mode:"hide"}, 200);
     i--
     $("#event-wrapper-" + i).delay(200).effect("slide", {direction: "left", mode:"show"}, 600);
+    initMap();
   }
 
   // Left/Right Arrow Events
