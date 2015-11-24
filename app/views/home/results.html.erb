@@ -8,8 +8,8 @@
 </div>
 
 <div id="all-events-container">
-  <div class="navigation-alert">
-    <p id ="flash" class="alert">Swipe or use left/right arrow keys to navigate events.
+  <div class="navigation-alert" id ="flash">
+    <p class="alert">Swipe or use left/right arrow keys to navigate events.
     <button class="close">×</button>
     </p>
   </div>
@@ -20,10 +20,14 @@
   <% while i < @events.length %>
     <div id="event-wrapper-<%=i%>" class="event-wrapper">
       <div class="event-flexbox">
-        <div class="venue-box">
+        <div class="venue-box id="venue-<%=i%>">
           <span class="event-number"><%= i + 1 %></span>
-          <%= @events[i].datetime.strftime("%I:%M %p") %> @
-          <a href="https://www.google.com/maps/search/<%=@events[i].gmaps_venue%>/@<%=@events[i].venue_lat%>,<%=@events[i].venue_long%>" target="_blank"><%= @events[i].venue_name %></a>
+            <a id="map-reveal-<%=i%>"><%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %></a>
+        </div>
+        <div class="map-wrapper" id="map-wrapper-<%=i%>">
+          <div id="map-canvas-<%=i%>" class="venue-map noSwipe">
+            <div id="map-<%=i%>" style="height:100%;"></div>
+          </div>
         </div>
         <div class="artist-box row">
             <% j = 0 %>
@@ -45,7 +49,6 @@
             <% j += 1 %>
             <% end %>
         </div>
-        <!-- <div id="map-canvas-<%=i%>" class="venue-map noSwipe"><div id="map-<%=i%>" style="height:100%;"></div></div> -->
       </div>
       <div class="buy-tickets">
         <a href="<%= @events[i].ticket_url %>" target="_blank" class="btn btn-primary">Get Tickets</a>
@@ -56,7 +59,7 @@
 </div>
 
 <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-4LxOVQWA-hGejsU5YOa1WCJZe60qnUs&sensor=false">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-4LxOVQWA-hGejsU5YOa1WCJZe60qnUs">
 </script>
 
 <script type="text/javascript">
@@ -80,6 +83,33 @@
   $(".event-wrapper").hide();
   $("#event-wrapper-" + i).show();
   $(".glyphicon-pause").hide();
+  $(".map-wrapper").hide();
+
+  // Venue maps
+  var latitude;
+  var longitude;
+  var latLng;
+  var map;
+
+  function initMap() {
+      latitude = parseFloat(events[i].venue_lat)
+      longitude = parseFloat(events[i].venue_long)
+      latLng = new google.maps.LatLng(latitude, longitude)
+      var mapOptions = {
+        center: latLng,
+        zoom: 12,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoomControl: true,
+        styles:  [{"stylers":[{"hue":"#dd0d0d"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"geometry","stylers":[{"lightness":100},{"visibility":"simplified"}]}]
+      }
+      map = new google.maps.Map(document.getElementById('map-canvas-' + i), mapOptions);
+    var marker = new google.maps.Marker({
+      position: latLng,
+      map: map,
+    });
+  }
+
+  google.maps.event.addDomListener(window, 'load', initMap);
 
   // Next Event Action Callback
   function nextEvent() {
@@ -87,6 +117,7 @@
     $("#event-wrapper-" + i).effect("slide", {direction: "left", mode:"hide"}, 200);
     i++
     $("#event-wrapper-" + i).effect("slide", {direction: "right", mode:"show"}, 800);
+    initMap();
   }
 
   // Previous Event Action Callback
@@ -143,10 +174,12 @@
             $('#play-btn-' + playItemID).hide();
             $('#pause-btn-' + playItemID).show();
             document.getElementById("audio-" + playItemID).play();
-          } else if (clickedItem.charAt(1) === "a") {
+          } else if (clickedItem.charAt(0) === "p" && clickedItem.charAt(1) === "a") {
             $('#play-btn-' + playItemID).show();
             $('#pause-btn-' + playItemID).hide();
             document.getElementById("audio-" + playItemID).pause();
+          } else if (clickedItem.charAt(0) === "m" && clickedItem.charAt(1) === "a") {
+            $("#map-wrapper-" + i).show();
           }
       }
     e.stopPropagation();
