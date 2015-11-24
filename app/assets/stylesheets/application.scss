@@ -266,6 +266,14 @@ a {
   #city-input {
     width: 15rem !important;
   }
+  .social-icons {
+    font-size: 1.5rem;
+    line-height: 2.1;
+    .social-icons-circles {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+  }
 }
 
 #ui-datepicker-div {
