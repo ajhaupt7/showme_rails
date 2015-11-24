@@ -41,6 +41,8 @@ hr {
 .modal-header {
   border-bottom: 1px solid $primary-dark;
   border-top: transparent;
+  color: $primary-dark;
+  text-align:center;
 }
 
 .social-icons {
@@ -640,6 +642,6 @@ input:-ms-input-placeholder { color: #fff }
   border-radius: 0px;
 }
 
-.modal-backdrop {
-  z-index: -1;
+.modal {
+  background:rgba(0,0,0,0.4);
 }
