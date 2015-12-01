@@ -173,7 +173,7 @@
 
   function findEvent(e) {
     var eventID = (e.currentTarget.id);
-    var eventNumber = eventID[eventID.length - 1]
+    var eventNumber = eventID.substring((eventID.indexOf("l-") + 2), eventID.length)
     pauseAllAudio();
     $("#event-wrapper-" + i).effect("slide", {direction: "left", mode:"hide"}, 200);
     $('#all-events-modal').modal('hide');
