@@ -7,26 +7,35 @@
   <%= @city_date.date.strftime("%m-%d-%Y") %></h3>
 </div>
 
+<%= render 'result_icons' %>
+
 <div id="all-events-container">
+
   <div class="navigation-alert" id ="flash">
     <p class="alert">Swipe or use left/right arrow keys to navigate events.
     <button class="close">×</button>
     </p>
   </div>
+
   <% if @events.length == 0 %>
-  <br><br><br>  <h1>No events today <br><a class="home-btn" href="/"><i class="fa fa-arrow-circle-o-left"></i>&nbsp; search again</a></h1>
+    <br><br><br>
+    <h1>No events today
+    <br><a class="home-btn" href="/"><i class="fa fa-arrow-circle-o-left"></i>&nbsp; search again</a></h1>
   <% end %>
+
   <% i = 0 %>
   <% while i < @events.length %>
     <div id="event-wrapper-<%=i%>" class="event-wrapper">
       <div class="event-flexbox">
+
         <div class="venue-box id="venue-<%=i%>">
           <span class="event-number"><%= i + 1 %></span>
-          <a id="map-reveal-<%=i%>"><%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %></a>
+          <a id="map-reveal-<%=i%>">  <%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %></a>
         </div>
         <div id="map-canvas-<%=i%>" class="venue-map noSwipe">
           <div id="map-<%=i%>" style="height:100%;"></div>
         </div>
+
         <div class="artist-box row">
             <% j = 0 %>
             <% while j < @events[i].artists.length %>
@@ -47,7 +56,9 @@
             <% j += 1 %>
             <% end %>
         </div>
+
       </div>
+
       <div class="buy-tickets">
         <a href="<%= @events[i].ticket_url %>" target="_blank" class="btn btn-primary">Get Tickets</a>
       </div>
@@ -65,7 +76,7 @@
   artists = <%= raw @artists.to_json %>
 
   $(".close").on("click", function() {
-    $(".navigation-alert").fadeOut();
+    $(".navigation-alert").hide();
   })
 
   // Pause All Audio When Navigating to Next Event

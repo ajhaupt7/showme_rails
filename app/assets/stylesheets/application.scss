@@ -1,6 +1,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
+
 /*
  *= require jquery-ui/datepicker
  */
@@ -38,23 +39,25 @@ hr {
   border-top: transparent;
 }
 
-.modal-header {
-  border-bottom: 1px solid $primary-dark;
-  border-top: transparent;
-  color: $primary-dark;
-  text-align:center;
-}
-
-.social-icons {
-  font-size: 2rem;
-  line-height: 2.35;
+.absolute-left {
   position: absolute;
   top: 15px;
   left: 15px;
+}
+
+.absolute-right {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.floating-icons{
+  font-size: 2rem;
+  line-height: 2.35;
   a {
     color: rgba(255,255,255,0.9);
   }
-  .social-icons-circles {
+  .floating-icons-circles {
     background: transparent;
     border: 2px solid $primary;
     border-radius: 50%;
@@ -168,10 +171,6 @@ a {
     border: 3px solid $primary-dark;
     outline: none;
   }
-}
-
-.howitworks-modal-body {
-  color: $primary-very-dark;
 }
 
 #search-form {
@@ -311,7 +310,6 @@ a {
     font-weight: 700;
   }
   table {
-    // display:block;
     margin-left:auto;
     margin-right:auto;
   }
@@ -382,6 +380,7 @@ input:-ms-input-placeholder { color: #fff }
 }
 
 // Slider Tagline
+
 #slideshow {
     margin: 0.4rem auto;
     position: relative;
@@ -397,41 +396,6 @@ input:-ms-input-placeholder { color: #fff }
     left: 10px;
     right: 10px;
     bottom: 10px;
-}
-
-// About
-
-#how-it-works {
-  margin-top: 10%;
-  text-align: center;
-}
-
-#about-wrapper {
-  margin-top: 2%;
-  max-width: 70%;
-  margin-left: auto;
-  margin-right: auto;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flexbox;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  justify-content: space-around;
-  font-size: 1.3em;
-  #about-content {
-    background: rgba(0,0,0,0.1);
-    color: $primary-light;
-    text-align: center;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    padding: 5%;
-
-  }
 }
 
 // Results Page
@@ -570,7 +534,7 @@ input:-ms-input-placeholder { color: #fff }
 
 .navigation-alert {
   width: 70%;
-  background: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.9);
   color: $primary-dark;
   margin: auto auto -1% auto;
   text-align: center;
@@ -648,8 +612,18 @@ input:-ms-input-placeholder { color: #fff }
 
 .modal-content {
   border-radius: 0px;
+  background: rgb(155, 60, 60);
+  color: $primary-light;
+  box-shadow: none;
+  border: transparent;
 }
 
-.modal {
-  background:rgba(0,0,0,0.4);
+.modal-backdrop {
+  background: rgb(195, 96, 86);
+}
+
+.modal-header {
+  border-bottom: 10px solid rgb(195, 96, 86);
+  border-top: transparent;
+  text-align:center;
 }
