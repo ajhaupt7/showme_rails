@@ -1,5 +1,5 @@
-<div class="floating-icons absolute-right" data-toggle="modal" data-target="#all-events-modal">
-  <a>
+<div class="floating-icons absolute-right" id="all-events-modal-trigger" data-toggle="modal" data-target="#all-events-modal">
+  <a data-toggle="tooltip" data-placement="auto left" title="See All Events" id="all-events-tooltip">
     <div class="floating-icons-circles">
       <i class="fa fa-th-list"></i>
     </div>
@@ -36,3 +36,10 @@
 
   </div>
 </div>
+
+<script>
+    $('[data-toggle="tooltip"]').tooltip();
+    $("body").on("click", function() {
+      $('#all-events-tooltip').tooltip('hide');
+    })
+</script>

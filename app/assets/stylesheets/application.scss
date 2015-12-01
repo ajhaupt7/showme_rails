@@ -73,7 +73,7 @@ hr {
   }
 }
 
-.tooltip.right {
+.tooltip.right, .tooltip.left {
   width: 20rem;
   font-family: 'Montserrat', sans-serif;
   border-right-color: rgba(255,255,255,0.3);
@@ -82,6 +82,7 @@ hr {
 
 .tooltip-arrow {
   border-right: transparent;
+  border-left: transparent;
 }
 
 .tooltip-inner,  {
@@ -265,12 +266,22 @@ a {
   #city-input {
     width: 15rem !important;
   }
-  .social-icons {
+  .floating-icons {
     font-size: 1.5rem;
     line-height: 2.1;
-    .social-icons-circles {
+    .floating-icons-circles {
       width: 3.5rem;
       height: 3.5rem;
+    }
+  }
+  #all-events-modal-trigger {
+    font-size: 1.5rem;
+    line-height: 2.0;
+    top: 0;
+    right: 0;
+    div {
+      border-radius: 0px;
+      border: transparent;
     }
   }
 }
