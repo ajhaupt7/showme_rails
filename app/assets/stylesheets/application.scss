@@ -631,4 +631,8 @@ input:-ms-input-placeholder { color: #fff }
 
 .event-modal-content {
   cursor: pointer;
+  transition: all 0.4s;
+  &:hover {
+    color: $primary-very-light;
+  }
 }
