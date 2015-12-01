@@ -616,6 +616,7 @@ input:-ms-input-placeholder { color: #fff }
   color: $primary-light;
   box-shadow: none;
   border: transparent;
+  font-size: 1.6rem;
 }
 
 .modal-backdrop {
@@ -626,4 +627,8 @@ input:-ms-input-placeholder { color: #fff }
   border-bottom: 10px solid rgb(195, 96, 86);
   border-top: transparent;
   text-align:center;
+}
+
+.event-modal-content {
+  cursor: pointer;
 }

@@ -166,7 +166,19 @@
   // Event Handlers for Play/Pause and Artist Modals
   for (var j=0; j < events.length; j++) {
     var eventsWrapper = document.querySelector("#event-wrapper-" + j);
+    var eventModal = document.querySelector("#event-modal-" + j);
     eventsWrapper.addEventListener("click", actionToggle, false);
+    eventModal.addEventListener("click", findEvent, false);
+  }
+
+  function findEvent(e) {
+    var eventID = (e.currentTarget.id);
+    var eventNumber = eventID[eventID.length - 1]
+    pauseAllAudio();
+    $("#event-wrapper-" + i).effect("slide", {direction: "left", mode:"hide"}, 200);
+    i = eventNumber
+    $("#event-wrapper-" + i).effect("slide", {direction: "right", mode:"show"}, 800);
+    $('#all-events-modal').modal('hide')
   }
 
   function actionToggle(e) {
