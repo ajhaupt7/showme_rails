@@ -199,7 +199,7 @@ a {
     cursor: pointer;
   }
   #city-input {
-    -webkit-text-fill-color: $primary !important;
+    // -webkit-text-fill-color: $primary !important;
     width: 20rem;
   }
   #city-input:-webkit-autofill,
@@ -225,6 +225,11 @@ a {
     }
   }
 }
+
+input::-webkit-input-placeholder { color: $primary-light }
+input:-moz-placeholder { color: $primary-light }
+input::-moz-placeholder { color: $primary-light }
+input:-ms-input-placeholder { color: $primary-light }
 
 .form-wrapper {
   background: rgb(183, 76, 65);

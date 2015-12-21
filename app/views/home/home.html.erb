@@ -28,11 +28,15 @@
     <div class="form-wrapper">
       <div class="form-group">
         i want to see a show on &nbsp;
-        <input id="date" type="text" name="date" required readonly=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
+        <% if session[:last_date] %>
+          <input id="date" type="text" name="date" required readonly=true class="datepicker" value="<%= session[:last_date] %>" />
+        <% else %>
+          <input id="date" type="text" name="date" required readonly=true class="datepicker" value="<%= Time.now.strftime("%Y-%m-%d") %>" />
+        <% end %>
       </div>
       <div class="form-group"><span>in</span>
-        <%= text_field_tag :city, nil, placeholder:"city", id:"city-input", required:true, autofocus:true %>, &nbsp;
-        <%= select_tag :state, options_for_select(us_states), id:"state-input", prompt: "state ↓", required: true %>
+        <%= text_field_tag :city, nil, placeholder:"city", id:"city-input", required:true, autofocus:true, value:"#{session[:last_city] if session[:last_city]}" %>, &nbsp;
+        <%= select_tag :state, options_for_select(us_states), id:"state-input", prompt: "state ↓", required:true, value:"#{session[:last_state] if session[:last_state]}" %>
       </div>
     </div>
       <div class="form-group">
