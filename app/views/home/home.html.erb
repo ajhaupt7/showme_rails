@@ -36,7 +36,7 @@
       </div>
       <div class="form-group"><span>in</span>
         <%= text_field_tag :city, nil, placeholder:"city", id:"city-input", required:true, autofocus:true, value:"#{session[:last_city] if session[:last_city]}" %>, &nbsp;
-        <%= text_field_tag :state, nil, placeholder:"state", id:"state-input", size:"2", required:true, value:"#{session[:last_state] if session[:last_state]}" %>
+        <%= text_field_tag :state, nil, placeholder:"state", pattern:"[a-zA-Z]{2}", title:"Please use the two letter state abbreviation", id:"state-input", required:true, value:"#{session[:last_state] if session[:last_state]}" %>
       </div>
     </div>
       <div class="form-group">

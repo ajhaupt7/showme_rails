@@ -194,12 +194,17 @@ a {
     width: 20rem;
     text-align:center;
     color: #fff;
+    &:-webkit-autofill {
+      -webkit-text-fill-color: #fff !important;
+    }
+    &:-webkit-autofill:focus {
+      -webkit-text-fill-color: #fff !important;
+    }
   }
   .datepicker {
     cursor: pointer;
   }
   #city-input {
-    // -webkit-text-fill-color: $primary !important;
     width: 20rem;
   }
   #city-input:-webkit-autofill,
@@ -209,23 +214,20 @@ a {
       transition: background-color 5000s ease-in-out 0s;
   }
   #state-input {
-    background: transparent;
-    border: transparent;
-    border-bottom: 2px dashed rgba(0,0,0,0.2);
-    color: #fff;
-    outline: none;
-    width: 10rem;
-    height: 4.5rem;
-    option {
-      background: transparent;
-    }
+    width: 8rem;
+  }
+  #state-input:-webkit-autofill,
+  #state-input:-webkit-autofill:hover,
+  #state-input:-webkit-autofill:focus,
+  #state-input:-webkit-autofill:active {
+      transition: background-color 5000s ease-in-out 0s;
   }
 }
 
-input::-webkit-input-placeholder { color: $primary-light }
-input:-moz-placeholder { color: $primary-light }
-input::-moz-placeholder { color: $primary-light }
-input:-ms-input-placeholder { color: $primary-light }
+input::-webkit-input-placeholder { color: $primary-light !important}
+input:-moz-placeholder { color: $primary-light !important}
+input::-moz-placeholder { color: $primary-light !important}
+input:-ms-input-placeholder { color: $primary-light !important}
 
 .form-wrapper {
   background: rgb(183, 76, 65);

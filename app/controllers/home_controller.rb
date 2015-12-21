@@ -8,6 +8,9 @@ class HomeController < ApplicationController
   end
 
   def results
+    session[:last_city] = params[:city]
+    session[:last_date] = params[:date]
+    session[:last_state] = params[:state]
     begin
       params[:city].strip!
       if params[:city].downcase == "new york city"
@@ -31,9 +34,6 @@ class HomeController < ApplicationController
           @artists.push(artist)
         end
       end
-      session[:last_city] = params[:city]
-      session[:last_date] = params[:date]
-      session[:last_state] = params[:state]
     rescue => e
       flash[:alert] = "Sorry, something went wrong with your request. Try again!"
       puts "Error: #{e}"
