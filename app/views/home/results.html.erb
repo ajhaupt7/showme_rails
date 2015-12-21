@@ -26,8 +26,9 @@
   <% i = 0 %>
   <% while i < @events.length %>
     <div id="event-wrapper-<%=i%>" class="event-wrapper">
+      <span class="nav-btn nav-left"> ← </span>
+      <span class="nav-btn nav-right"> → </span>
       <div class="event-flexbox">
-
         <div class="venue-box id="venue-<%=i%>">
           <span class="event-number"><%= i + 1 %></span>
           <a id="map-reveal-<%=i%>">  <%= @events[i].datetime.strftime("%I:%M %p") %> @ <%= @events[i].venue_name %></a>
@@ -58,7 +59,6 @@
         </div>
 
       </div>
-
       <div class="buy-tickets">
         <a href="<%= @events[i].ticket_url %>" target="_blank" class="btn btn-primary">Get Tickets</a>
       </div>
@@ -151,6 +151,19 @@
       }
     }
   });
+
+  $('.nav-left').on("click", function() {
+    if (i > 0) {
+      previousEvent();
+    }
+  })
+
+  $('.nav-right').on("click", function() {
+    if (i < events.length - 1) {
+      console.log(i)
+      nextEvent();
+    }
+  })
 
   $("body").swipe( {
     swipe:function(event, direction, distance, duration, fingerCount) {
