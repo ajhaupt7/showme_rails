@@ -187,12 +187,10 @@ a {
   input {
     background: transparent;
     border: transparent;
-    line-height: 3.75;
     border-bottom: 2px dashed rgba(0,0,0,0.2);
     margin-left:0;
-    padding-bottom: -5px;
     outline: none;
-    height: 6rem;
+    height: 4.5rem;
     width: 20rem;
     text-align:center;
     color: #fff;
@@ -201,7 +199,7 @@ a {
     cursor: pointer;
   }
   #city-input {
-    -webkit-text-fill-color: white !important;
+    -webkit-text-fill-color: $primary !important;
     width: 20rem;
   }
   #city-input:-webkit-autofill,
@@ -219,10 +217,9 @@ a {
     width: 10rem;
     padding-left: 2rem;
     cursor: pointer;
-    line-height: 3.75;
-    height: 6rem;
-    // opacity:0.75;
+    height: 4.5rem;
     -webkit-appearance: none;
+    -moz-appearance: none;
     option {
       background: transparent;
     }
@@ -331,11 +328,6 @@ a {
     }
   }
 }
-
-input::-webkit-input-placeholder { color: #fff }
-input:-moz-placeholder { color: #fff }
-input::-moz-placeholder { color: #fff }
-input:-ms-input-placeholder { color: #fff }
 
 .spinner {
   margin: 5rem auto;
