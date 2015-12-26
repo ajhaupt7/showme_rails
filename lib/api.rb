@@ -23,7 +23,7 @@ module Api
     return result
   end
 
-  def search_bandsintown(date, city, state)
+  def search_bandsintown(date, city)
     city.downcase!
     found_events = []
       begin
