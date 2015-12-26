@@ -16,17 +16,16 @@ class HomeController < ApplicationController
     end
     session[:last_city] = params[:city]
     session[:last_date] = params[:date]
-    session[:last_state] = params[:state]
     begin
-      if CityDate.find_by(date: params[:date], city: params[:city], state:params[:state]) == nil
-        result = search_bandsintown(params[:date], params[:city], params[:state])
+      if CityDate.find_by(date: params[:date], city: params[:city]) == nil
+        result = search_bandsintown(params[:date], params[:city])
         if result == false
           flash[:alert] = "We either couldn't find that location or there were no events that day. Try again!"
           redirect_to root_path
           return
         end
       end
-      @city_date = CityDate.find_by(date: params[:date], city: params[:city], state:params[:state])
+      @city_date = CityDate.find_by(date: params[:date], city: params[:city])
       @events = @city_date.events
       @artists = []
       @events.each do |event|

@@ -27,7 +27,7 @@ module Api
     city.downcase!
     found_events = []
       begin
-        base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city},#{state}"
+        base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city}"
         unclean = RestClient.get(base_url)
         events = JSON.parse(unclean)
 
@@ -35,10 +35,10 @@ module Api
           return false
         end
 
-        if CityDate.find_by(date: date, city: city, state:state)
-          city_date = CityDate.find_by(date: date, city: city, state:state)
+        if CityDate.find_by(date: date, city: city)
+          city_date = CityDate.find_by(date: date, city: city)
         else
-          city_date = CityDate.create(date: date, city: city, state:state)
+          city_date = CityDate.create(date: date, city: city)
         end
 
         found_artist = nil
@@ -82,39 +82,39 @@ module Api
       return found_events
   end
 
-  def city_events_month(city, state)
+  def city_events_month(city)
     current_date = DateTime.now
     input_date = current_date.strftime("%Y-%m-%d")
     i = 0
     while i < 31
-      search_bandsintown(input_date, city, state)
+      search_bandsintown(input_date, city)
       i += 1
       current_date = DateTime.now + i
       input_date = current_date.strftime("%Y-%m-%d")
     end
   end
 
-  @@biggest_cities = [ ["seattle", "WA"], ["new york", "NY"], ["los angeles", "CA"], ["chicago", "IL"], ["houston", "TX"], ["philadelphia", "PA"], ["phoenix", "AZ"], ["san antonio", "TX"], ["san diego", "CA"], ["dallas", "TX"], ["san jose", "CA"], ["austin", "TX"], ["jacksonville", "FL"], ["indianapolis", "IN"], ["san francisco", "CA"], ["columbus", "OH"], ["fort worth", "TX"], ["charlotte", "NC"], ["detroit", "MI"], ["el paso", "TX"], ["denver", "CO"], ["washington", "DC"], ["memphis", "TN"], ["boston", "MA"], ["nashville", "TN"], ["baltimore", "MD"], ["oklahoma city", "OK"], ["portland", "OR"], ["las vegas", "NV"], ["kansas city", "MO"], ["atlanta", "GA"], ["omaha", "NE"], ["raleigh", "NC"], ["minneapolis", "MN"], ["new orleans", "LA"], ["milwaukee", "WI"] ]
+  @@biggest_cities = [ ["seattle"], ["new york"], ["los angeles"], ["chicago"], ["houston"], ["philadelphia"], ["phoenix"], ["san antonio"], ["san diego"], ["dallas"], ["san jose"], ["austin"], ["jacksonville"], ["indianapolis"], ["san francisco"], ["columbus"], ["fort worth"], ["charlotte"], ["detroit"], ["el paso"], ["denver"], ["washington"], ["memphis"], ["boston"], ["nashville"], ["baltimore"], ["oklahoma city"], ["portland"], ["las vegas"], ["kansas city"], ["atlanta"], ["omaha"], ["raleigh"], ["minneapolis"], ["new orleans"], ["milwaukee"] ]
 
   def biggest_cities_events
     @@biggest_cities.each do |city|
-      city_events_month(city[0], city[1])
+      city_events_month(city[0])
     end
   end
 
   def biggest_cities_next_day
     @@biggest_cities.each do |city|
-      search_bandsintown(DateTime.now + 30, city[0], city[1])
+      search_bandsintown(DateTime.now + 30, city[0])
     end
   end
 
   def update_events
     CityDate.all.each do |city_date|
       begin
-        if city_date.date < Date.today || !@@biggest_cities.include?([city_date.city, city_date.state])
+        if city_date.date < Date.today || !@@biggest_cities.include?([city_date.city])
           city_date.destroy
         else
-          update_events_search(city_date.date, city_date.city, city_date.state)
+          update_events_search(city_date.date, city_date.city)
         end
       rescue => e
         puts "Something went wrong: #{e}"
@@ -122,10 +122,10 @@ module Api
     end
   end
 
-  def update_events_search(date, city, state)
+  def update_events_search(date, city)
     city.downcase!
       begin
-        base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city},#{state}"
+        base_url = "http://api.bandsintown.com/events/search.json?api_version=2.0&app_id=#{ENV['BANDSINTOWN_ID']}&date=#{date}&location=#{city}"
         unclean = RestClient.get(base_url)
         events = JSON.parse(unclean)
 
@@ -133,10 +133,10 @@ module Api
           return false
         end
 
-        if CityDate.find_by(date: date, city: city, state:state)
-          city_date = CityDate.find_by(date: date, city: city, state:state)
+        if CityDate.find_by(date: date, city: city)
+          city_date = CityDate.find_by(date: date, city: city)
         else
-          city_date = CityDate.create(date: date, city: city, state:state)
+          city_date = CityDate.create(date: date, city: city)
         end
 
         found_artist = nil
