@@ -8,16 +8,16 @@ class HomeController < ApplicationController
   end
 
   def results
+    params[:city].strip!
+    if params[:city].downcase == "new york city"
+      params[:city] = "new york"
+    elsif params[:city].downcase == "washington dc" || params[:city].downcase == "washington d.c."
+      params[:city] = "washington"
+    end
     session[:last_city] = params[:city]
     session[:last_date] = params[:date]
     session[:last_state] = params[:state]
     begin
-      params[:city].strip!
-      if params[:city].downcase == "new york city"
-        params[:city] = "new york"
-      elsif params[:city].downcase == "washington dc" || params[:city].downcase == "washington d.c."
-        params[:city] = "washington"
-      end
       if CityDate.find_by(date: params[:date], city: params[:city], state:params[:state]) == nil
         result = search_bandsintown(params[:date], params[:city], params[:state])
         if result == false
