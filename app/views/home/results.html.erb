@@ -93,6 +93,7 @@
   $("#event-wrapper-" + i).show();
   $(".glyphicon-pause").hide();
   $(".venue-map").hide();
+  $('.nav-left').css("visibility", "hidden")
 
   // Venue maps
   var latitude;
@@ -128,6 +129,10 @@
     i++
     $("#event-wrapper-" + i).effect("slide", {direction: "right", mode:"show"}, 800);
     initMap();
+    if (i === events.length - 1) {
+      $('.nav-right').css("visibility", "hidden")
+    } 
+    $('.nav-left').css("visibility", "visible")
   }
 
   // Previous Event Action Callback
@@ -137,6 +142,10 @@
     i--
     $("#event-wrapper-" + i).delay(200).effect("slide", {direction: "left", mode:"show"}, 600);
     initMap();
+    if (i === 0) {
+      $('.nav-left').css("visibility", "hidden")
+    }
+    $('.nav-right').css("visibility", "visible")
   }
 
   // Left/Right Arrow Events
@@ -160,7 +169,6 @@
 
   $('.nav-right').on("click", function() {
     if (i < events.length - 1) {
-      console.log(i)
       nextEvent();
     }
   })
@@ -190,9 +198,19 @@
     pauseAllAudio();
     $("#event-wrapper-" + i).effect("slide", {direction: "left", mode:"hide"}, 200);
     $('#all-events-modal').modal('hide');
-    i = eventNumber
+    i = parseInt(eventNumber);
     $("#event-wrapper-" + i).effect("slide", {direction: "right", mode:"show"}, 800);
     initMap();
+    if (i === events.length - 1) {
+      $('.nav-right').css("visibility", "hidden")
+      $('.nav-left').css("visibility", "visible")
+    } else if (i === 0) {
+      $('.nav-left').css("visibility", "hidden")
+      $('.nav-right').css("visibility", "visible")
+    } else {
+      $('.nav-left').css("visibility", "visible")
+      $('.nav-right').css("visibility", "visible")
+    }
   }
 
   function actionToggle(e) {
